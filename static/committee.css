@@ -1,0 +1,13 @@
+@media (max-width: 792px) {
+    ul {
+        padding: 2px 2px;
+        list-style-type:none
+    }
+}
+
+
+.square-image {
+    max-width: 100%;
+    object-fit: cover;
+    border-radius:35%;
+}
