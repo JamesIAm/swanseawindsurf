@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Meet the Committee</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="Description" content="Each year at our AGM, SUWC elects a new committee to continue bringing you the best windsurfing experience in south wales. Here is a little bit of info about each member and what their role is in the club!">
+		<link rel="stylesheet" type="text/css" href="static/committee.css">
+		<link rel="stylesheet" type="text/css" href="static/style.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/favicon/site.webmanifest">
+        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <meta charset="UTF-8">
+	</head>
+	<body>
+		<div class="header-container"></div>
+		<div class="navbutton"><button id="menu" onclick="menu()">Menu   ≡</button></div>
+		<div class="navigation"></div>
+		
+		<div class="fluid-container">
+			<h2 class="col-12">Meet the Committee</h2>
+			<p class="col-12">Each year at our AGM, SUWC elects a new committee to continue bringing you the best windsurfing experience in south wales. Here is a little bit of info about each member and what their role is in the club!</p>
+			    <div class="row">
+        		    <div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/joe.jpg" alt="Photo of the captain" class="img-fluid">
+        			
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Joe</li>
+            					<li>Position: President</li>
+            				</ul>
+        				</div>
+        			</div><!--Joe-->
+        			<div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/harry.jpg" alt="Photo of the vice captain" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Harry</li>
+            					<li>Position: Vice President</li>
+            				</ul>
+        			    </div>
+    			    </div><!--Harry-->
+        			<div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/owen.jpg" alt="Photo of the treasurer" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Owen</li>
+            					<li>Position: Treasurer</li>
+            				</ul>
+        				</div>
+        			</div><!--Owen-->
+    			</div>
+    			<div class="row">
+        		    
+        			<div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/max.jpg" alt="Photo of the secratary" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Max</li>
+            					<li>Position: Secretary</li>
+            				</ul>
+        				</div>
+    	            </div><!--Max-->
+        			<div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/guy.jpg" alt="Photo of the social secratary" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Guy</li>
+            					<li>Position: Social Secratary</li>
+            				</ul>
+        				</div>
+        			</div><!--Guy-->
+        			<div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/iva.jpg" alt="Photo of the social secratary" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: Iva</li>
+            					<li>Position: Social Secratary</li>
+            				</ul>
+        				</div>
+        			</div><!--Iva-->
+    			</div>
+    			<div class="row">
+    			    <div class="col-lg-4 col-sm-12">
+        			    <img src="images/committee/james.jpg" alt="Photo of the events manager" class="img-fluid">
+        			    <div class="col-12">
+            				<ul>
+            					<li>Name: James</li>
+            					<li>Position: Events Manager</li>
+            				</ul>
+        				</div>
+        			</div><!--James-->
+    			</div>
+	    </div>
+		<div class="footer"></div>
+		<script>
+			$(".navigation").load("./shared_files/navigation.html");
+			$(".footer").load("./shared_files/footer.html");
+			$(".header-container").load("./shared_files/header.html");
+		</script>
+        <script>
+        function menu () {
+              var navshow = document.getElementById("navlist");
+              if (navshow.style.display === "none") {
+                navshow.style.display = "block";
+              } else {
+                navshow.style.display = "none";
+              }
+        };
+    </script>
+	</body>
+</html>

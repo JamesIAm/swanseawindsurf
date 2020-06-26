@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>SWA Events</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" type="text/css" href="static/style.css">
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/favicon/site.webmanifest">
+        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <meta charset="UTF-8">
+    </head>
+    
+    <body>
+    	<div class="header-container"></div>
+    	<div class="navigation"></div>
+    	<div class="container-fluid">
+    		<h2 class="content-text">SWA Events</h2>
+        	<div class="row">
+        		<p class="col-10">Student Windsurfing in the UK is supported by the <a href="https://www.studentwindsurfing.co.uk/" class="content-text">Student Windsurfing Association</a>. It coordinates and advertises 8 student events around the UK each year, each hosted by different universities, all of which are a lot of fun, even in the case that the wind doesn't show up! Hundereds of student windsurfers turn out for these each year, with Swansea always producing a strong showing. Here are some pics to show you what is on offer each year!</p>
+        		<!--img class="col-2" src="images/swa.png"-->
+        	</div>
+        	<div class="row">
+            	<div class="col-6">
+            		<img src="images/brum.jpg" class="content-image">
+            		<h4 class="content-text">Up the Brum III</h4>
+            		<p class="content-text">
+            			Birmingham hosted their third SWA event this year. With absolutely ripping conditions at the West Midlands reservoir, it made for some gnarly, albeit freezing, competition. Swansea's fancy dress theme for the Saturday night was Crystal Balls, so everyone got sparkly af on Broad Street!
+            		</p>
+            	</div>
+            	<div class="col-6">
+            		<img src="images/SS3.jpg" class="content-image">
+            		<h4 class="content-text">Swansea Seamen III</h4>
+            		<p class="content-text">
+            			Swansea got the chance to host our second 'Wave' event and third SWA event in December 2018. We are blessed here in South Wales with consistent wind and waves, making it one of the best spots in the UK to have a wave sailing event. It was great to see newbies taking their first steps into wave sailing before smashing Wind Street and Tooters later on! 
+            		</p>
+            	</div>
+        	</div>
+        	<div class="row">
+            	<div class="col-6">
+            		<img src="images/AK17.jpg" class="content-image">
+            		<h4 class="content-text">Aussie Kiss 17</h4>
+            		<p class="content-text">
+            			Aussie Kiss is a massive student windsurfing festival hosted by the SWA to bring in the new windsurfing season each year. In 2018 it found a new home at Llandegfedd Reservoir in South Wales, just north of Newport (very convenient for Swansea!). This year unfortunately the wind did not deliver, but thankfully the party did, with the big tent put up to house the lash antics absolutely bouncing for both nights. It's one of the best weekends in the windsurfing calender, and absolutely not to be missed. If you're thinking about doing windsurfing at uni, this weekend will convince you!
+            		</p>
+            	</div>
+            	<div class="col-6">
+            		<img src="images/NM9.jpg" class="content-image">
+            		<h4 class="content-text">Northern Monkey IX</h4>
+            		<p class="content-text">
+            			Swansea made the trip up to Liverpool in early November fresh from the hype built from Aussie Kiss - and were not disappointed! Our gracious host had us straight into the action as soon as we stepped through their door on Friday night, and didn't let up all weekend. One of the best weekends of the year, any Swan who was there will fondly recall the various entities consumed via shoe by some of the more unfortunate participants in truth or dare.
+            		</p>
+            	</div>
+        	</div>
+    	</div>
+	    <div class="footer"></div>
+        <script>
+            $(".navigation").load("./shared_files/navigation.html");
+            $(".footer").load("./shared_files/footer.html");
+            $(".header-container").load("./shared_files/header.html");
+        </script>
+        <script>
+        function menu () {
+              var navshow = document.getElementById("navlist");
+              if (navshow.style.display === "none") {
+                navshow.style.display = "block";
+              } else {
+                navshow.style.display = "none";
+              }
+        };
+    </script>
+    </body>
+</html>

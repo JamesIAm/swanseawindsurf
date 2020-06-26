@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Homepage</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="Description" CONTENT="Sports club offering Windsurfing and Paddleboarding">
+    	<link rel="stylesheet" type="text/css" href="static/style.css">
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/favicon/site.webmanifest">
+        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="shortcut icon" href="/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    	<div class="header-container"></div>
+    	<div class="navbutton"><button id="menu" onclick="menu()">Menu   ≡</button></div>
+    	<div class="navigation"></div>
+		<div class="content">
+			<h2 class="content-text">About the club</h2>
+			<p class="content-text">Welcome to the Swansea University Windsurfing Club website. We run a club suitable for all levels of windsurfing, from beginners to PWA shredders, both for Swansea University students and members of the public. Check out our club info page for more details on how to get involved.</p>
+            <meta title="keywords" content="sports, windsurfing, windsurf, swansea, university, swansea university, SWA, student, student windsurfing association, aussie kiss, SUP, stand up paddleboarding, paddleboarding">
+		</div>
+	<br>
+    <div class="footer"></div>
+    <script>
+        $(".navigation").load("./shared_files/navigation.html");
+        $(".footer").load("./shared_files/footer.html");
+        $(".header-container").load("./shared_files/header.html");
+    </script>
+        <script>
+        function menu () {
+              var navshow = document.getElementById("navlist");
+              if (navshow.style.display === "none") {
+                navshow.style.display = "block";
+              } else {
+                navshow.style.display = "none";
+              }
+        };
+    </script>
+	</body>
+
+</html>
