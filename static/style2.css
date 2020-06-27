@@ -12,13 +12,56 @@ body {
     background-color:   var(--color-3)!important;
 }
 .header {
-    background-image : 
+    background-color: var(--color-4);
+    /*background-image : 
         linear-gradient(150deg, rgba(33,86,48,1) 20%, rgba(0,0,0,0)),
-        url("/images/index/topbar.jpg");
-    height: 20vh;
+        url("/images/index/topbar.jpg");*/
+    height: auto;
     background-size: cover;
-    background-position: center;
     /*width:100%;*/ 
     max-width: 100%;
+}
+.header h1{
+    color:var(--color-3);
+    font-family: 'Muli', sans-serif;
+    text-align: center;
+    padding: 10px 0px;
+    margin: 0;
+}
+/*NAVIGATION STUFF*/
+.navlist {
+    height: auto;/*Line height and (height + top + bot padding) should be the same*/
+    padding: 15px 0px;
+    margin: 0px;
+    background-color: var(--color-4);
+}
+.navlist li{
+    list-style-type: none;
+    display: inline-block;
+    padding: 10px;
+}
+@media (min-width:850px) {
+    .navlist {
+        text-align: justify;
+        min-width: 500px;
+        line-height: 24px;
+        height: 54px;/*Line height and (height + top + bot padding) should be the same*/
+        padding: 15px 50px;
+        margin: 0px;
+        background-color: var(--color-4);
+    }
+    .navlist:after {/*Makes the navlist span the full width*/
+        content: '';
+        display: inline-block;
+        width: 100%;
+    }
+    .navlist li{
+        padding: 0;
+        list-style-type: none;
+        display: inline-block;
+    }
+}
+.navlist li a{
+    color: var(--color-3);
 }
 
