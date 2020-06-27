@@ -1,13 +1,23 @@
 :root {
     --color-1: #064789;
     --color-2: #6da34d;
-    --color-3: #fffff4;
+    --color-3: #FFFFFF;
     --color-4: #215630;
     --color-5: #1e212f;
 }
 * {
-    color:              var(--color-5)!important;
+    /*color:              var(--color-5)!important;*/
 }
 body {
     background-color:   var(--color-3)!important;
+}
+.header {
+    background-image : 
+        linear-gradient(150deg, rgba(33,86,48,1) 20%, rgba(0,0,0,0)),
+        url("/images/index/topbar.jpg");
+    height: 20vh;
+    background-size: cover;
+    background-position: center;
+    /*width:100%;*/ 
+    max-width: 100%;
 }
