@@ -1,0 +1,15 @@
+/*Library and article is specific to index*/
+.library {
+    margin: 0vh 15vw;
+}
+.article {
+    margin: 10vh 0vw;
+}
+.article img {
+    /*margin: 1vh 5vw;*/
+    max-width: 100%;
+    align: right;
+}
+.article h2, .article p {
+    text-align: center;
+}
