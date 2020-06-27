@@ -21,3 +21,10 @@ body {
     /*width:100%;*/ 
     max-width: 100%;
 }
+.article {
+    
+}
+.article img {
+    margin: 1vh 5vw;
+    max-width: 80%;
+}
