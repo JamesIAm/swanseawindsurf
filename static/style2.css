@@ -4,6 +4,7 @@
     --color-3: #FFFFFF;
     --color-4: #215630;
     --color-5: #1e212f;
+    --mobileMode: 850px;
 }
 * {
     /*color:              var(--color-5)!important;*/
@@ -24,44 +25,95 @@ body {
 .header h1{
     color:var(--color-3);
     font-family: 'Muli', sans-serif;
+    font-size: 3vw;
     text-align: center;
     padding: 10px 0px;
     margin: 0;
+    width: 100%;
 }
 /*NAVIGATION STUFF*/
-.navlist {
-    height: auto;/*Line height and (height + top + bot padding) should be the same*/
-    padding: 15px 0px;
-    margin: 0px;
+#navigation-div{
+    width: 100vw;
+    height: 54px;
     background-color: var(--color-4);
 }
-.navlist li{
-    list-style-type: none;
-    display: inline-block;
-    padding: 10px;
+#navlist {
+    margin: 0px;
 }
-@media (min-width:850px) {
-    .navlist {
+#navlist li{
+    list-style-type: none;
+
+}
+@media (max-width: 849px) {/*@MEDIA HERE**********************************/
+    #navigation-div{
+        position: absolute;
+    }
+    #navlist {
+        height: auto;
+        padding: 15px 0px;
+        display: none
+    }
+    #navlist li{
+        padding: 10px;
+        background-color: var(--color-4);
+    }
+    #mobile_nav_button {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        color: var(--color-3);
+        background-color: var(--color-4);
+        border-color: var(--color-5);
+        border-radius: 4px;
+        vertical-align: center;
+        box-shadow: 0px 0px 2px var(--color-5);
+    }
+}
+@media (min-width:850px) {/*@MEDIA HERE**********************************/
+    #navigation-div {
+        position: static;
+    }
+    #navlist {
+        display:block;
         text-align: justify;
         min-width: 500px;
         line-height: 24px;
         height: 54px;/*Line height and (height + top + bot padding) should be the same*/
         padding: 15px 50px;
-        margin: 0px;
-        background-color: var(--color-4);
+        width: 100%;
     }
-    .navlist:after {/*Makes the navlist span the full width*/
+    #navlist:after {/*Makes the navlist span the full width*/
         content: '';
         display: inline-block;
         width: 100%;
     }
-    .navlist li{
+    #navlist li{
         padding: 0;
-        list-style-type: none;
         display: inline-block;
     }
+    #mobile_nav_button {
+        display: none;
+    }
 }
-.navlist li a{
+#navlist li a{
     color: var(--color-3);
+}
+/*Sticks navlist to the top*/
+.sticky {
+    position: fixed !important;
+    top: 0px;
+    z-index:1000;/*Brings to the front*/
+}
+@media (min-width:850px) {/*@MEDIA HERE**********************************/
+    .sticky + #content {
+        padding-top: 54px; /*Must be the same as the #navigation-div height*/
+    }
+}
+
+/*FOOTER*/
+.footer img {
+    max-width: 64px;/*Hard coded to the size of the images*/
+    width: 8vw;
 }
 
