@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- User scalable stops mobile wiggle -->
         <meta name="robots" content="noindex">
 		<link rel="stylesheet" type="text/css" href="static/style2.css">
 		<link rel="stylesheet" type="text/css" href="static/index.css">
@@ -29,7 +29,7 @@
 		<!--<div class="navbutton"><button id="menu" onclick="menu()">Menu   ≡</button></div>-->
 			<h1>Swansea University<br>Windsurfing Club</h1>
 		</div>
-		<div class="navigation"></div>
+		<div id="navigation-div"></div>
     	
 		<!-- New article format
 			<div class="article row">
@@ -42,8 +42,9 @@
 				</div>
 			</div>
 		-->
-		<img class="hero" src="/images/index/hero-image.jpg">
-		<div class="library">
+		<div id="content"><!--Contains everything except header navbar and footer-->
+			<img class="hero" src="/images/index/hero-image.jpg">
+			<div class="library">
 			<div class="article row">
 				<div class="col-xs-12 col-lg-4">
 					<h2>Sign up for weekly sessions</h2>
@@ -79,24 +80,49 @@
 						 fermentum mauris dignissim id.</p>
 				</div>
 			</div>
+			</div>
 		</div>
 	    
     	<div class="footer"></div>
-    <script>
-        $(".navigation").load("./shared_files/navigation.html");
+    <script>//Load parts of the page
+        $("#navigation-div").load("./shared_files/navigation.html");
         $(".footer").load("./shared_files/footer.html");
         $(".header-container").load("./shared_files/header.html");
     </script>
-    <script>
-        function menu () {
-              var navshow = document.getElementById("navlist");
-              if (navshow.style.display === "none") {
-                navshow.style.display = "block";
-              } else {
-                navshow.style.display = "none";
-              }
-        };
-    </script>
+    <script>//Makes the navbar sticky, and minimises in mobile on scroll
+        
+		window.onscroll = function() {stickyNav()};
+		
+		//Finds the offset of the content part of the page
+		var navdiv = document.getElementById("navigation-div");
+		var	threshold = navdiv.offsetTop;
+		const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+		const mobileMode = 850;
+		//Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+		//Also minimises the navbar on scroll 
+		function stickyNav() {
+			navdiv = document.getElementById("navigation-div");
+			if (window.pageYOffset >= threshold) {
+				navdiv.classList.add("sticky");
+			} else {
+				navdiv.classList.remove("sticky");
+			}
+			if (vw < mobileMode) {
+				var navlist = document.getElementById("navlist");
+				navlist.style.display = "none";
+			}
+		}
+	</script>
+	<script>//Makes mobile navbar button work
+		function displayNav() {
+			var navlist = document.getElementById("navlist");
+			if (navlist.style.display === "block") {
+				navlist.style.display = "none";
+			} else {
+				navlist.style.display = "block";
+			}
+		}
+	</script>
 </body>
 
 </html>
