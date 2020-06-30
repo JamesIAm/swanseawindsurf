@@ -6,12 +6,16 @@
     --color-5: #1e212f;
     --mobileMode: 850px;
 }
+
 body {
-    background-color:   var(--color-3)!important;
+    background-color: var(--color-3)!important;
 }
+
 #content {
-    margin-top: 54px;/*Height of navbar*/
+    margin-top: 54px;
+    /*Height of navbar*/
 }
+
 .header {
     background-color: var(--color-4);
     /*background-image : 
@@ -19,11 +23,12 @@ body {
         url("/images/index/topbar.jpg");*/
     height: auto;
     background-size: cover;
-    /*width:100%;*/ 
+    /*width:100%;*/
     max-width: 100%;
 }
-.header h1{
-    color:var(--color-3);
+
+.header h1 {
+    color: var(--color-3);
     font-family: 'Muli', sans-serif;
     font-size: 3vw;
     text-align: center;
@@ -31,22 +36,28 @@ body {
     margin: 0;
     width: 100%;
 }
+
 /*NAVIGATION STUFF*/
-#navigation-div{
+
+#navigation-div {
     width: 100vw;
     height: 54px;
     background-color: var(--color-4);
-    z-index:1000;/*Brings to the front*/
+    z-index: 1000;
+    /*Brings to the front*/
 }
+
 #navlist {
     margin: 0px;
 }
-#navlist li{
-    list-style-type: none;
 
+#navlist li {
+    list-style-type: none;
 }
-@media (max-width: 849px) {/*@MEDIA HERE**********************************/
-    #navigation-div{
+
+@media (max-width: 849px) {
+    /*@MEDIA HERE**********************************/
+    #navigation-div {
         position: absolute;
     }
     #navlist {
@@ -54,7 +65,7 @@ body {
         padding: 15px 0px;
         display: none
     }
-    #navlist li{
+    #navlist li {
         padding: 10px;
         background-color: var(--color-4);
     }
@@ -71,25 +82,29 @@ body {
         box-shadow: 0px 0px 2px var(--color-5);
     }
 }
-@media (min-width:850px) {/*@MEDIA HERE**********************************/
+
+@media (min-width:850px) {
+    /*@MEDIA HERE**********************************/
     #navigation-div {
         position: static;
     }
     #navlist {
-        display:block;
+        display: block;
         text-align: justify;
         min-width: 500px;
         line-height: 24px;
-        height: 54px;/*Line height and (height + top + bot padding) should be the same*/
+        height: 54px;
+        /*Line height and (height + top + bot padding) should be the same*/
         padding: 15px 50px;
         width: 100%;
     }
-    #navlist:after {/*Makes the navlist span the full width*/
+    #navlist:after {
+        /*Makes the navlist span the full width*/
         content: '';
         display: inline-block;
         width: 100%;
     }
-    #navlist li{
+    #navlist li {
         padding: 0;
         display: inline-block;
     }
@@ -97,23 +112,30 @@ body {
         display: none;
     }
 }
-#navlist li a{
+
+#navlist li a {
     color: var(--color-3);
 }
+
 /*Sticks navlist to the top*/
+
 .sticky {
     position: fixed !important;
     top: 0px;
 }
-@media (min-width:850px) {/*@MEDIA HERE**********************************/
-    .sticky + #content {
-        padding-top: 54px; /*Must be the same as the #navigation-div height*/
+
+@media (min-width:850px) {
+    /*@MEDIA HERE**********************************/
+    .sticky+#content {
+        padding-top: 54px;
+        /*Must be the same as the #navigation-div height*/
     }
 }
 
 /*FOOTER*/
+
 .footer img {
-    max-width: 64px;/*Hard coded to the size of the images*/
+    max-width: 64px;
+    /*Hard coded to the size of the images*/
     width: 8vw;
 }
-
