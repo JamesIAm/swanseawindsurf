@@ -1,115 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    	<title>Sign Up</title>
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- User scalable stops mobile wiggle -->
-    	<link rel="stylesheet" type="text/css" href="static/style.css">
-    	<link rel="stylesheet" type="text/css" href="static/sign_up.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-        <link rel="manifest" href="/favicon/site.webmanifest">
-        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
-        <link rel="shortcut icon" href="/favicon/favicon.ico">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="msapplication-config" content="/favicon/browserconfig.xml">
-        <meta name="theme-color" content="#ffffff">
-        <meta charset="UTF-8">
-    </head>
-    
+
+<head>
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- User scalable stops mobile wiggle -->
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="static/sign_up.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <meta charset="UTF-8">
+</head>
+
 <body>
-    	<div class="header-container"></div>
-    	<div class="navbutton"><button id="menu" onclick="menu()">Menu   ≡</button></div>
-    	<div class="navigation"></div>
-	<div class="content">
-		<h2 class="content-text">Sign up here for next week's session!</h2>
-	</div>
-	<!--Sign up form -->
-	<div class="content">
-		<form action="./php/attendees.php" method="POST">
-			<h2 class="content-text">Enter your details:</h2>
-			<ul>
+    <div class="header">
+        <h1>Swansea University<br>Windsurfing Club</h1>
+    </div>
+    <div id="navigation-div"></div>
+    <div class="content">
+        <h2 class="content-text">Sign up here for next week's session!</h2>
+    </div>
+    <!--Sign up form -->
+    <div class="content">
+        <form action="./php/attendees.php" method="POST">
+            <h2 class="content-text">Enter your details:</h2>
+            <ul>
 
-				<section class="content content-text">
+                <section class="content content-text">
 
-					<label for="fullname"><b>Full Name</b></label>
-					<input type="text" id="fullname" name="name">
+                    <label for="fullname"><b>Full Name</b></label>
+                    <input type="text" id="fullname" name="name">
 
-				</section>
+                </section>
 
-				<br>
+                <br>
 
-				<section class="content content-text">
+                <section class="content content-text">
 
-					<label for="email"><b>E-Mail Address</b></label>
-					<input type="email" id="email" name="email">
+                    <label for="email"><b>E-Mail Address</b></label>
+                    <input type="email" id="email" name="email">
 
-				</section>
+                </section>
 
-				<br>
+                <br>
 
-				<section class="content content-text">
+                <section class="content content-text">
 
-					<span><b>Would you like picking up from Singleton Campus or Bay Campus?</b><br></span>
+                    <span><b>Would you like picking up from Singleton Campus or Bay Campus?</b><br></span>
 
-					<!--<input type="text" id="location" name="location">-->
+                    <!--<input type="text" id="location" name="location">-->
                     <input type="radio" id="location" name="location" value="Singleton">Singleton<br>
                     <input type="radio" id="location" name="location" value="Bay">Bay<br>
                     <input type="radio" id="location" name="location" value="Other">N/A
-				</section>
+                </section>
 
-				<br>
-				
-				<section class="content content-text" id="session form">
-				    <span><b>Which session would you like to book for?</b><br><br></span>
-				</section>
+                <br>
 
-				<section class="submission">
-					<button type="submit">
-						Submit Details
-					</button>
-				</section>
-			</ul>
-		</form>
-	</div>
+                <section class="content content-text" id="session form">
+                    <span><b>Which session would you like to book for?</b><br><br></span>
+                </section>
+
+                <section class="submission">
+                    <button type="submit">
+                        Submit Details
+                    </button>
+                </section>
+            </ul>
+        </form>
+    </div>
 
     <script>//Adds all currently available sessions to the display
-    (async() => {
-        let response = await fetch("./php/activeSessions.php");
-        let body = await response.json();
-        for (let session of body) {
-            var x = document.createElement("INPUT");
-            x.setAttribute("type","radio");
-            x.setAttribute("id",session[0]);
-            x.setAttribute("name","session_id");
-            x.setAttribute("value", session[0])
-            document.getElementById("session form").appendChild(x);
-            var y = document.createElement("LABEL");
-            var ukDate = session[2].substring(8,11) + session[2].substring(4,8) + session[2].substring(0,4);
-            y.innerText = session[1] + " " + ukDate + " " + session[3];
-            document.getElementById("session form").appendChild(y);
-            var z = document.createElement("P");//Find more elegant solution for this.
-            document.getElementById("session form").appendChild(z);
-        }
-    })();
+        (async () => {
+            let response = await fetch("./php/activeSessions.php");
+            let body = await response.json();
+            for (let session of body) {
+                var x = document.createElement("INPUT");
+                x.setAttribute("type", "radio");
+                x.setAttribute("id", session[0]);
+                x.setAttribute("name", "session_id");
+                x.setAttribute("value", session[0])
+                document.getElementById("session form").appendChild(x);
+                var y = document.createElement("LABEL");
+                var ukDate = session[2].substring(8, 11) + session[2].substring(4, 8) + session[2].substring(0, 4);
+                y.innerText = session[1] + " " + ukDate + " " + session[3];
+                document.getElementById("session form").appendChild(y);
+                var z = document.createElement("P");//Find more elegant solution for this.
+                document.getElementById("session form").appendChild(z);
+            }
+        })();
     </script>
-        	<div class="footer"></div>
-        <script>
-            $(".navigation").load("./shared_files/navigation.html");
-            $(".footer").load("./shared_files/footer.html");
-            $(".header-container").load("./shared_files/header.html");
-        </script>
-        <script>
-        function menu () {
-              var navshow = document.getElementById("navlist");
-              if (navshow.style.display === "none") {
+    <div class="footer"></div>
+    <script>
+        $(".navigation").load("./shared_files/navigation.html");
+        $(".footer").load("./shared_files/footer.html");
+        $(".header-container").load("./shared_files/header.html");
+    </script>
+    <script>
+        function menu() {
+            var navshow = document.getElementById("navlist");
+            if (navshow.style.display === "none") {
                 navshow.style.display = "block";
-              } else {
+            } else {
                 navshow.style.display = "none";
-              }
+            }
         };
     </script>
 </body>

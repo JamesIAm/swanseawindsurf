@@ -6,36 +6,41 @@
     /*box-shadow: 2px 2px 5px black;*/
     padding: 2%;
 }
+
 .top_trump .row {
-    margin:0;
+    margin: 0;
 }
+
 .name_box {
     position: relative
-    
 }
+
 .name_text {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
 }
+
 .left_text {
     left: 10%;
 }
+
 .right_text {
-    right:10%;
+    right: 10%;
     text-align: right;
 }
+
 @media (min-width: 850px) {
-    .top_trump {
-    }
+    .top_trump {}
 }
 
 .top_trump img {
     max-width: 50%;
     object-fit: cover;
-    border-radius:10%;
+    border-radius: 10%;
 }
+
 ul {
     padding: 2px 2px;
-    list-style-type:none
+    list-style-type: none
 }
