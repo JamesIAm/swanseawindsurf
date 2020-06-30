@@ -6,7 +6,7 @@ Style update:
         Where can I join
     competition results
     sardinia 18
-    session sign up
+    session sign up - Want to check it still works online before continuing
     sign up complete
 sardinia 19
 Update text
