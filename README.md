@@ -3,7 +3,7 @@
 TODO:
 Style update:
     
-    competition results
+    
     
 sardinia 19
 Update text
@@ -18,10 +18,11 @@ Style update completed:
     Index - Library
     swa events - Library
     meet the committee - Top trumps
-	session sign up - Want to check it still works online before continuing
-    sign up complete - Could also do with more work once online
+	session sign up - Want to check it still works online before continuing - article
+    sign up complete - Could also do with more work once online - article
 	Club info - Gallery, article
 	sardinia 18 - Gallery, article
+	competition results - article
 For all pages:
 
 <!DOCTYPE html>
