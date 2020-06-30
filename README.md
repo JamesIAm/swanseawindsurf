@@ -2,9 +2,8 @@
 
 TODO:
 Style update:
-    Club info
+    
     competition results
-    sardinia 18 - NEEDS COMPLETING AFTER ARTICLE STYLESHEET IS FINISHED
     
 sardinia 19
 Update text
@@ -13,6 +12,7 @@ Admin account
 Anon feedback
 Where can I join
 Footer image sizing
+Modal images
 
 Style update completed:
     Index - Library
@@ -20,6 +20,8 @@ Style update completed:
     meet the committee - Top trumps
 	session sign up - Want to check it still works online before continuing
     sign up complete - Could also do with more work once online
+	Club info - Gallery, article
+	sardinia 18 - Gallery, article
 For all pages:
 
 <!DOCTYPE html>
