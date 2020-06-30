@@ -2,9 +2,29 @@
 	margin: 5vh 10vw;
 	padding: 3vw;
 	box-shadow: 4px 6px 10px grey;
+	position: relative;
+	overflow: hidden;
+}
+.article .right_image {
+	
+	/*position: absolute;
+	right: 3vw;*/
+	float: right;
+}
+.article .left_image {
+	width: 80%;
+	margin: 0% 10%;
+	height: 50vh;
+	object-fit: cover;
+	object-position: center;
 }
 @media (max-width: 850px) {
 	.article {
 		margin: 5vh 5vw;
 	}
+}
+.article p{
+}
+.article h3 {
+	width: 100%;
 }

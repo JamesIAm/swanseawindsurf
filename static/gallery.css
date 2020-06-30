@@ -1,0 +1,27 @@
+.gallery img {
+	float: left;
+	padding: 1% 1%;
+}
+.fifths {
+	width: 20%
+}
+.quarters {
+	width: 25%;
+}
+.halfs {
+	width: 50%;
+}
+.full {
+	width: 100%;
+}
+@media (max-width: 850px) {
+	.fifths {
+		width: 50%
+	}
+	.quarters {
+		width: 50%;
+	}
+	.halfs {
+		width: 100%;
+	}
+}
