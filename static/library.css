@@ -20,7 +20,6 @@
 .snippet img {
     /*margin: 1vh 5vw;*/
     max-width: 100%;
-    align: right;
     position: relative;
     transform: translate(0%, -50%);
     top: 50%;
