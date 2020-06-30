@@ -8,6 +8,7 @@
 		/>
 		<!-- User scalable stops mobile wiggle -->
 		<link rel="stylesheet" type="text/css" href="static/style.css" />
+		<link rel="stylesheet" type="text/css" href="static/article.css" />
 		<link
 			rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -53,20 +54,25 @@
 		</div>
 		<div id="navigation-div"></div>
 		<div id="content">
-			<h2 class="content-text">Sign up here for next week's session!</h2>
+			<div class="article">
+				<h2 class="content-text">
+					Sign up here for next week's session!
+				</h2>
 
-			<br />
+				<br />
 
-			<!--Redirect, repeated code leads to unupdated pages-->
-			<div class="content">
-				<h3 class="content-text">Sign up complete!</h3>
-				<p>
-					Click <a href="./session_sign_up.html">here</a> to sign up
-					for another session
-				</p>
+				<!--Redirect, repeated code leads to unupdated pages-->
+				<div class="content">
+					<h3 class="content-text">Sign up complete!</h3>
+					<p>
+						Click <a href="./session_sign_up.html">here</a> to sign
+						up for another session
+					</p>
+				</div>
 			</div>
 			<div class="footer"></div>
 		</div>
+
 		<script>
 			//Load parts of the page
 			$("#navigation-div").load("./shared_files/navigation.html");

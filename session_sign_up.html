@@ -8,6 +8,7 @@
 		/>
 		<!-- User scalable stops mobile wiggle -->
 		<link rel="stylesheet" type="text/css" href="static/style.css" />
+		<link rel="stylesheet" type="text/css" href="static/article.css" />
 		<link
 			rel="stylesheet"
 			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -53,72 +54,73 @@
 		</div>
 		<div id="navigation-div"></div>
 		<div id="content">
-			<h2 class="content-text">Sign up here for next week's session!</h2>
-		</div>
-		<!--Sign up form -->
-		<div class="content">
-			<form action="./php/attendees.php" method="POST">
-				<h2 class="content-text">Enter your details:</h2>
-				<ul>
-					<section class="content content-text">
-						<label for="fullname"><b>Full Name</b></label>
-						<input type="text" id="fullname" name="name" />
-					</section>
+			<div class="article">
+				<h2 class="content-text">
+					Sign up here for next week's session!
+				</h2>
+				<form action="./php/attendees.php" method="POST">
+					<h2 class="content-text">Enter your details:</h2>
+					<ul>
+						<section class="content content-text">
+							<label for="fullname"><b>Full Name</b></label>
+							<input type="text" id="fullname" name="name" />
+						</section>
 
-					<br />
+						<br />
 
-					<section class="content content-text">
-						<label for="email"><b>E-Mail Address</b></label>
-						<input type="email" id="email" name="email" />
-					</section>
+						<section class="content content-text">
+							<label for="email"><b>E-Mail Address</b></label>
+							<input type="email" id="email" name="email" />
+						</section>
 
-					<br />
+						<br />
 
-					<section class="content content-text">
-						<span
-							><b
-								>Would you like picking up from Singleton Campus
-								or Bay Campus?</b
-							><br
-						/></span>
+						<section class="content content-text">
+							<span
+								><b
+									>Would you like picking up from Singleton
+									Campus or Bay Campus?</b
+								><br
+							/></span>
 
-						<!--<input type="text" id="location" name="location">-->
-						<input
-							type="radio"
-							id="location"
-							name="location"
-							value="Singleton"
-						/>Singleton<br />
-						<input
-							type="radio"
-							id="location"
-							name="location"
-							value="Bay"
-						/>Bay<br />
-						<input
-							type="radio"
-							id="location"
-							name="location"
-							value="Other"
-						/>N/A
-					</section>
+							<!--<input type="text" id="location" name="location">-->
+							<input
+								type="radio"
+								id="location"
+								name="location"
+								value="Singleton"
+							/>Singleton<br />
+							<input
+								type="radio"
+								id="location"
+								name="location"
+								value="Bay"
+							/>Bay<br />
+							<input
+								type="radio"
+								id="location"
+								name="location"
+								value="Other"
+							/>N/A
+						</section>
 
-					<br />
+						<br />
 
-					<section class="content content-text" id="session form">
-						<span
-							><b>Which session would you like to book for?</b
-							><br /><br
-						/></span>
-					</section>
+						<section class="content content-text" id="session form">
+							<span
+								><b>Which session would you like to book for?</b
+								><br /><br
+							/></span>
+						</section>
 
-					<section class="submission">
-						<button type="submit">
-							Submit Details
-						</button>
-					</section>
-				</ul>
-			</form>
+						<section class="submission">
+							<button type="submit">
+								Submit Details
+							</button>
+						</section>
+					</ul>
+				</form>
+			</div>
 		</div>
 		<div class="footer"></div>
 		<!--Adds all currently available sessions to the display-->
