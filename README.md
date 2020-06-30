@@ -3,28 +3,29 @@
 TODO:
 Style update:
     Club info
-        Where can I join
     competition results
     sardinia 18
-    session sign up - Want to check it still works online before continuing
-    sign up complete
+    
 sardinia 19
 Update text
 Gallery
 Admin account
 Anon feedback
+Where can I join
 
 Style update completed:
     Index - Library
     swa events - Library
     meet the committee - Top trumps
+	session sign up - Want to check it still works online before continuing
+    sign up complete - Could also do with more work once online
 
 For all pages:
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    	<title>SWA Events</title>
+    	<title></title>
     	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- User scalable stops mobile wiggle -->
 		<link rel="stylesheet" type="text/css" href="static/style.css">
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -45,11 +46,13 @@ For all pages:
     <body>
     	<div class="header"><h1>Swansea University<br>Windsurfing Club</h1></div>
 		<div id="navigation-div"></div>
+			<div id="content">
 
     ******************************************************************************************************************************
                 CONTENT
     ******************************************************************************************************************************
-	    <div class="footer"></div>
+	    	<div class="footer"></div>
+		</div>
 		<script>//Load parts of the page
 			$("#navigation-div").load("./shared_files/navigation.html");
 			$(".footer").load("./shared_files/footer.html");
