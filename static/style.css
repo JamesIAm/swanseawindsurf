@@ -59,7 +59,7 @@ body {
 @media (max-width: 849px) {
     /*@MEDIA HERE**********************************/
     #navigation-div {
-        position: absolute;
+        position: relative;
     }
     #navlist {
         position: absolute;
@@ -128,13 +128,12 @@ body {
     top: 0px;
 }
 
-@media (min-width:850px) {
-    /*@MEDIA HERE**********************************/
-    .sticky+#content {
-        padding-top: 54px;
-        /*Must be the same as the #navigation-div height*/
-    }
+
+.sticky+#content {
+    padding-top: 54px;
+    /*Must be the same as the #navigation-div height*/
 }
+
 
 /*FOOTER*/
 .footer {

@@ -4,7 +4,7 @@ TODO:
 Style update:
     Club info
     competition results
-    sardinia 18
+    sardinia 18 - NEEDS COMPLETING AFTER ARTICLE STYLESHEET IS FINISHED
     
 sardinia 19
 Update text
@@ -12,6 +12,7 @@ Gallery
 Admin account
 Anon feedback
 Where can I join
+Footer image sizing
 
 Style update completed:
     Index - Library
@@ -19,7 +20,6 @@ Style update completed:
     meet the committee - Top trumps
 	session sign up - Want to check it still works online before continuing
     sign up complete - Could also do with more work once online
-
 For all pages:
 
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ For all pages:
     <body>
     	<div class="header"><h1>Swansea University<br>Windsurfing Club</h1></div>
 		<div id="navigation-div"></div>
-			<div id="content">
+		<div id="content">
 
     ******************************************************************************************************************************
                 CONTENT
