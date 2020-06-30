@@ -14,6 +14,7 @@ body {
 #content {
     /*margin-top: 54px;*/
     /*Height of navbar*/
+    min-height: 90vh;
 }
 
 .header {
@@ -136,9 +137,16 @@ body {
 }
 
 /*FOOTER*/
-
+.footer {
+    width: 100%;
+}
+#socialMedia {
+    margin:0;
+    padding:0;
+}
 .footer img {
     max-width: 64px;
-    /*Hard coded to the size of the images*/
-    width: 8vw;
+    max-width: 8vw;
+    margin:0;
+    
 }

@@ -1,0 +1,10 @@
+.article {
+	margin: 5vh 10vw;
+	padding: 3vw;
+	box-shadow: 4px 6px 10px grey;
+}
+@media (max-width: 850px) {
+	.article {
+		margin: 5vh 5vw;
+	}
+}
