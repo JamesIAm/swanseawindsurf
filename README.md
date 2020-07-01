@@ -12,16 +12,18 @@ Style update completed:
 	sardinia 18 - Gallery, article
 	competition results - article
     
-    
+Speed up images
 sardinia 19
-Update text
+Where can I join - Snippet - home screen
+
 Gallery
-Admin account
-Anon feedback
-Where can I join
-Footer image sizing
 Modal images
+Footer image sizing
+
+Anon feedback
+Admin account
 User accounts
+Sign up require session selection
 
 
 For all pages:
