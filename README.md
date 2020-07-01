@@ -13,6 +13,7 @@ Anon feedback
 Where can I join
 Footer image sizing
 Modal images
+User accounts
 
 Style update completed:
     Index - Library
