@@ -21,4 +21,5 @@
     } else {
         echo json_encode("No sessions available");
     }
+    $dbc = null;
 ?>

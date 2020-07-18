@@ -55,6 +55,9 @@ body {
 #navlist li {
     list-style-type: none;
 }
+#navlist li a {
+    color: var(--color-3);
+}
 
 @media (max-width: 849px) {
     /*@MEDIA HERE**********************************/
@@ -117,9 +120,6 @@ body {
     }
 }
 
-#navlist li a {
-    color: var(--color-3);
-}
 
 /*Sticks navlist to the top*/
 
@@ -148,4 +148,9 @@ body {
     max-width: 8vw;
     margin:0;
     
+}
+/*PHP STUFF*/
+.notification {
+    background-color: #318148;
+    border-color: --color-4;
 }

@@ -1,0 +1,8 @@
+# Group 1
+User-agent: *
+Disallow: /shared_files/
+Diasllow: /static/
+Disallow: /php/
+Disallow: /images/
+Disallow: /favicon/
+Diasllow: /test.html
