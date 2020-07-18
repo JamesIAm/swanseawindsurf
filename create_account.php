@@ -1,4 +1,50 @@
-<!DOCTYPE html>
+<?php
+
+require_once ('./php/connectionfile.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = cleanData($_POST['nameInput']);
+    $email = strtolower(cleanData($_POST['emailInput']));
+    $password = $_POST['passwordInput'];
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+    if ($dbc->connect_error) {
+      die("Something weird happened");
+    }
+    
+    set_error_handler("errorFunction");
+    
+    $query = "INSERT INTO accounts (name, email, password) VALUES (?,?,?)";
+    $preparedQuery = $dbc->prepare($query);
+    $preparedQuery->bind_param("sss", $name, $email, $hashedPassword);//s for string, i for int, f for float etc.
+    $preparedQuery->execute(); 
+    $affectedRows = ($preparedQuery->affected_rows);
+    //END OF CONNECTION
+    $preparedQuery -> close();
+    $dbc = null;
+    redirect($affectedRows);
+}
+function errorFunction ($errno, $errstr) {
+    die("Something weird happened");
+}
+function cleanData ($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+function redirect($affectedRows) {
+    if ($affectedRows === 1) {
+        $msg=("<p>Account created sucessfully</p>");
+    } else if ($affectedRows === -1) {
+        $msg=("<p>That email seems to already be in use</p>");
+    } else {
+        echo ("Something went wrong, please try again");
+    }
+}
+
+
+?>
 <html lang="en">
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- User scalable stops mobile wiggle -->
@@ -25,15 +71,15 @@
 		<div class="header"><h1>Swansea University<br>Windsurfing Club</h1></div>
 		<div id="navigation-div"></div>
 		<div class="article">
-		    <script>
+		    <!--<script>
     		    const urlParams = new URLSearchParams(window.location.search);
                 const accountCreated = urlParams.get('accountCreated');
                 if (accountCreated==="true") {
                     window.alert("Sucessfully created account");
                 }
                 
-    </script>
-		    <form action="/php/createAccount.php" method="post">
+            </script>-->
+		    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 		        <input type="text" placeholder="Name" name="nameInput" required><br>
 		        <input type="email" placeholder="Email Address" name="emailInput" required><br>
 		        <input type="password" placeholder="Password" name="passwordInput" required><br>
