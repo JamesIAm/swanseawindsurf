@@ -2,10 +2,10 @@
 
 include('connectionfile.php');
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$location = $_POST['location'];
-$sessionId = $_POST['session_id'];
+$name = cleanData($_POST['name']);
+$email = cleanData($_POST['email']);
+$location = cleanData($_POST['location']);
+$sessionId = cleanData($_POST['session_id']);
 
 try {
     $query = "INSERT INTO Attendees (name, email, session_id, location) VALUES (?,?,?,?)";
@@ -18,6 +18,12 @@ try {
     echo $email. "\n";
     echo $location. "\n";
     echo "Error: " . $sql . "<br>" . $e;
+}
+function cleanData ($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 ?>
 
