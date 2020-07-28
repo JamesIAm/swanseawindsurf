@@ -24,7 +24,7 @@ body {
     /*background-image : 
         linear-gradient(150deg, rgba(33,86,48,1) 20%, rgba(0,0,0,0)),
         url("/images/index/topbar.jpg");*/
-    height: auto;
+    height: 10vh;
     background-size: cover;
     /*width:100%;*/
     max-width: 100%;
@@ -33,9 +33,9 @@ body {
 .header h1 {
     color: var(--color-3);
     font-family: 'Muli', sans-serif;
-    font-size: 3vw;
+    font-size: 3.35vh;
     text-align: center;
-    padding: 10px 0px;
+    padding: 1vh 0px;
     margin: 0;
     width: 100%;
 }

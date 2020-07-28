@@ -4,19 +4,27 @@ import { Link } from "react-router-dom";
 class Navigation extends React.Component {
 	constructor(props) {
 		super(props);
-		this.displayNav = this.displayNav.bind(this);
+		this.toggleNav = this.toggleNav.bind(this);
+		this.minimiseNav = this.minimiseNav.bind(this);
 		this.state = {
 			isActive: false,
 		};
 	}
-	displayNav() {
+	componentDidMount() {
+		window.addEventListener("scroll", () => this.minimiseNav(this));
+	}
+	minimiseNav() {
+		this.setState({ isActive: false });
+	}
+	toggleNav() {
 		const currentState = this.state.isActive;
 		this.setState({ isActive: !currentState });
 	}
+
 	render() {
 		return (
 			<div>
-				<button onClick={this.displayNav} className="mobile_nav_button">
+				<button onClick={this.toggleNav} className="mobile_nav_button">
 					Menu
 				</button>
 
@@ -25,27 +33,42 @@ class Navigation extends React.Component {
 					style={{ display: this.state.isActive ? "block" : "" }}
 				>
 					<li>
-						<Link to="">Home</Link>
+						<Link to="" onClick={this.minimiseNav}>
+							Home
+						</Link>
 					</li>
 					<li>
-						<Link to="/about-us">Club Info</Link>
+						<Link to="/about-us" onClick={this.minimiseNav}>
+							Club Info
+						</Link>
 					</li>
 					<li>
-						<Link to="/committee">Meet the Committee</Link>
+						<Link to="/committee" onClick={this.minimiseNav}>
+							Meet the Committee
+						</Link>
 					</li>
 					<li>
-						<Link to="/session-sign-up">Sign Up</Link>
+						<Link to="/session-sign-up" onClick={this.minimiseNav}>
+							Sign Up
+						</Link>
 					</li>
 					<li>
-						<Link to="/events">SWA Events</Link>
+						<Link to="/events" onClick={this.minimiseNav}>
+							SWA Events
+						</Link>
 					</li>
 					<li>
-						<Link to="/competition-results">
+						<Link
+							to="/competition-results"
+							onClick={this.minimiseNav}
+						>
 							Competition Results
 						</Link>
 					</li>
 					<li>
-						<Link to="holiday">Sardinia 2018</Link>
+						<Link to="holiday" onClick={this.minimiseNav}>
+							Sardinia 2018
+						</Link>
 					</li>
 				</ul>
 			</div>
