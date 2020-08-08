@@ -12,6 +12,9 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "firebase": "^7.17.1",
+    "firebaseui": "^4.6.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

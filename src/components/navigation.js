@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 class Navigation extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showMobileNav: false,
+		};
 		this.toggleNav = this.toggleNav.bind(this);
 		this.minimiseNav = this.minimiseNav.bind(this);
-		this.state = {
-			isActive: false,
-		};
 	}
 	componentDidMount() {
 		window.addEventListener("scroll", () => this.minimiseNav(this));
 	}
 	minimiseNav() {
-		this.setState({ isActive: false });
+		this.setState({ showMobileNav: false });
 	}
 	toggleNav() {
-		const currentState = this.state.isActive;
-		this.setState({ isActive: !currentState });
+		const currentState = this.state.showMobileNav;
+		this.setState({ showMobileNav: !currentState });
 	}
 
 	render() {
@@ -30,7 +30,7 @@ class Navigation extends React.Component {
 
 				<ul
 					className="navlist"
-					style={{ display: this.state.isActive ? "block" : "" }}
+					style={{ display: this.state.showMobileNav ? "block" : "" }}
 				>
 					<li>
 						<Link to="" onClick={this.minimiseNav}>

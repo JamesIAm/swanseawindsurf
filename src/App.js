@@ -11,13 +11,19 @@ import CompetitionResults from "./pages/competition-results";
 import Holiday from "./pages/holiday";
 import SessionSignUp from "./pages/session-sign-up";
 import SWAEvents from "./pages/swa-events";
+import Login from "./pages/login.js";
 
+import firebase, { auth, provider } from "./components/firebase.js";
+//require("firebase/auth");
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			sticky: false,
+			user: null,
 		};
+		this.login = this.login.bind(this);
+		this.logout = this.logout.bind(this);
 	}
 	useEffect() {
 		window.scrollTo(0, 0);
@@ -26,10 +32,24 @@ class App extends Component {
 		window.addEventListener("scroll", () => this.stickyNav(this));
 		const height = window.innerHeight;
 		this.setState({ height });
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({ user });
+				console.log(this.state.user);
+			}
+		});
 	}
 	stickyNav() {
 		this.setState({
 			sticky: window.pageYOffset >= this.state.height * 0.1,
+		});
+	}
+	login(user) {
+		this.setState({ user });
+	}
+	logout() {
+		this.setState({
+			user: null,
 		});
 	}
 	render() {
@@ -49,10 +69,20 @@ class App extends Component {
 							: "navigation-div"
 					}
 				>
-					<Navigation />
+					<Navigation showMobileNav={this.state.showMobileNav} />
 				</div>
 				<div className="content">
 					<Switch>
+						<Route
+							path="/login"
+							render={(props) => (
+								<Login
+									logout={this.logout}
+									login={this.login}
+									user={this.state.user}
+								/>
+							)}
+						/>
 						<Route
 							path="/about-us"
 							render={(props) => <AboutUs {...props} />}
