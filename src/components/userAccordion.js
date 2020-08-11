@@ -9,9 +9,9 @@ class UserAccordion extends React.Component {
 		return (
 			<div>
 				<h3>{this.props.user.info.name}</h3>
-				<p>{this.props.user.role}</p>
-				<p>{this.props.user.info.studentNumber}</p>
-				<p>{this.props.uid}</p>
+				<p>Role: {this.props.user.role || "user"}</p>
+				<p>Student Number: {this.props.user.info.studentNumber}</p>
+				<p>Uid: {this.props.uid}</p>
 				<div className="account-buttons">
 					<div className="superAdminButton">
 						{this.props.user.role === "superAdmin" ? null : (

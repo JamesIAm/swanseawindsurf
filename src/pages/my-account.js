@@ -15,6 +15,7 @@ class MyAccount extends React.Component {
 			displayName: null,
 			email: null,
 			studentNumber: null,
+			userData: null,
 		};
 
 		this.handleError = this.handleError.bind(this);
@@ -22,7 +23,19 @@ class MyAccount extends React.Component {
 	componentDidMount() {
 		if (!this.props.user) {
 			this.setState({ redirect: true });
+		} else {
+			let uid = this.props.user.uid;
+			let usersData = firebase
+				.database()
+				.ref(`users/${uid}/info`)
+				.once("value")
+				.then((snapshot) => this.saveUserData(snapshot.val()))
+				.catch((error) => this.handleError(error));
 		}
+	}
+	saveUserData(userData) {
+		this.setState({ userData: userData });
+		console.log(this.state.userData);
 	}
 	handleError(errorCode) {
 		switch (errorCode) {
@@ -42,12 +55,15 @@ class MyAccount extends React.Component {
 			<div className="article">
 				<p>{this.state.errorMessage}</p>
 				<p>
-					Name: {this.props.user ? this.props.user.displayName : null}
+					Name:{" "}
+					{this.state.userData ? this.state.userData.name : null}
 				</p>
 				<p>Email: {this.props.user ? this.props.user.email : null}</p>
 				<p>
 					Student Number:{" "}
-					{this.props.user ? this.props.user.uid : null}
+					{this.state.userData
+						? this.state.userData.studentNumber
+						: null}
 				</p>
 			</div>
 		);

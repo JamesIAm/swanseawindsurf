@@ -73,25 +73,11 @@ class CreateAccount extends React.Component {
 		}
 	}
 	addUserDetails() {
-		var functions = firebase.functions();
-		var addUserRole = firebase.functions().httpsCallable("addMessage");
-		addMessage({ text: messageText })
-			.then(function (result) {
-				// Read result of the Cloud Function.
-				var sanitizedMessage = result.data.text;
-			})
-			.catch(function (error) {
-				// Getting the Error details.
-				var code = error.code;
-				var message = error.message;
-				var details = error.details;
-				// ...
-			});
-		main.js;
-		// this.props.updateDetails({
-		// 	studentNumber: this.state.studentNumberInput,
-		// 	displayName: this.state.nameInput,
-		// }); //TODO: This won't work, as I have set up manual tables for admin privilages
+		let uid = firebase.auth().currentUser.uid;
+		firebase.database().ref(`users/${uid}/info`).set({
+			name: this.state.nameInput,
+			studentNumber: this.state.studentNumberInput,
+		});
 	}
 	handleSucess() {
 		this.setState({ successMessage: succMsgCreated });
