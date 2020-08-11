@@ -1,19 +1,15 @@
 import React from "react";
-import firebase, {
-	auth,
-	provider,
-	functions,
-	database,
-} from "../components/firebase.js";
+import firebase, { auth, provider, database } from "../components/firebase.js";
 import UserAccordion from "../components/userAccordion";
 //TODO: delete functions
 import { Redirect } from "react-router-dom";
+import SessionCreator from "../components/sessionCreator.js";
 
 const errMsgUnknown =
 	"Something went on our end, please try again or contact us";
 const errMsgPermissions =
 	"Unfortunately you don't have the required permissions to view this data";
-class Admin extends React.Component {
+class SuperAdmin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -118,9 +114,10 @@ class Admin extends React.Component {
 							);
 					  })
 					: null}
+				<SessionCreator />
 			</div>
 		);
 	}
 }
 
-export default Admin;
+export default SuperAdmin;
