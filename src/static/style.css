@@ -40,6 +40,24 @@ body {
     width: 100%;
 }
 
+.header .account-buttons {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.header .account-buttons a {
+    width: 8em;
+    background-color: transparent;
+    color: var(--color-3);
+    display: block;
+    padding: 2px;
+}
+
+/*.header .account-buttons button::hover {
+    cursor: pointer;
+}*/
+
 #footer .row {
     width: 100%;
 }

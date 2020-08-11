@@ -1,10 +1,11 @@
 import React from "react";
 import firebase, { auth, provider } from "../components/firebase.js";
+import { Redirect } from "react-router-dom";
 
-const loginErrorMsgWrong = "Incorrect username or password, please try again";
-const loginErrorMsgSpam =
+const errMsgWrong = "Incorrect username or password, please try again";
+const errMsgSpam =
 	"You've entered the incorrect username or password too many times, please try again later";
-const loginErrorMsgSerious =
+const errMsgUnknown =
 	"Something went on our end, please try again or contact us";
 class Login extends React.Component {
 	constructor(props) {
@@ -13,6 +14,7 @@ class Login extends React.Component {
 			emailInput: "",
 			passwordInput: "",
 			errorMessage: "",
+			redirect: false,
 		};
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -20,6 +22,11 @@ class Login extends React.Component {
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
 		this.handleError = this.handleError.bind(this);
+	}
+	componentDidUpdate() {
+		if (this.props.user) {
+			this.setState({ redirect: true });
+		}
 	}
 	handleEmailChange(event) {
 		this.setState({ emailInput: event.target.value });
@@ -29,58 +36,66 @@ class Login extends React.Component {
 	}
 	handleLogin(event) {
 		event.preventDefault();
+		this.setState({ errorMessage: "" });
 		if (!this.props.user) {
-			console.log(this);
 			firebase
 				.auth()
 				.signInWithEmailAndPassword(
 					this.state.emailInput,
 					this.state.passwordInput
 				)
-				.then(this.props.login(this.currentUser))
 				.catch((error) => this.handleError(error.code));
 		}
 	}
 	handleLogout() {
-		if (this.props.user) {
-			firebase
-				.auth()
-				.signOut()
-				.then(this.props.logout)
-				.catch(function (error) {
-					handleError("logout");
-				});
-		}
+		admin
+			.auth()
+			.setCustomUserClaims("HlTQ9pZJddfIR6gxyveEIWa5oxG2", {
+				admin: true,
+			})
+			.then(() => {});
+		// if (this.props.user) {
+		// 	firebase
+		// 		.auth()
+		// 		.signOut()
+		// 		.catch(function (error) {
+		// 			handleError("logout");
+		// 		});
+		// }
 	}
 	handleError(errorCode) {
 		switch (errorCode) {
 			case "auth/wrong-password":
 				this.setState({
-					errorMessage: loginErrorMsgWrong,
+					errorMessage: errMsgWrong,
 				});
 				break;
 			case "auth/user-not-found":
 				this.setState({
-					errorMessage: loginErrorMsgWrong,
+					errorMessage: errMsgWrong,
 				});
 				break;
 			case "auth/too-many-requests":
 				this.setState({
-					errorMessage: loginErrorMsgSpam,
+					errorMessage: errMsgSpam,
 				});
 				break;
 			default:
 				this.setState({
-					errorMessage: loginErrorMsgSerious,
+					errorMessage: errMsgUnknown,
 				});
+				console.error(errorMessage);
 				console.error(errorCode);
 				break;
 		}
 	}
 	render() {
+		if (this.state.redirect) {
+			return <Redirect push to="/my-account" />;
+		}
 		return (
 			<div className="article">
-				{this.state.errorMessage}
+				<p>{this.state.errorMessage}</p>
 				<form onSubmit={this.handleLogin}>
 					<label>
 						Email Address:
@@ -88,6 +103,7 @@ class Login extends React.Component {
 							type="email"
 							value={this.state.emailInput}
 							onChange={this.handleEmailChange}
+							required
 						/>
 					</label>
 					<label>
@@ -96,6 +112,7 @@ class Login extends React.Component {
 							type="password"
 							value={this.state.passwordInput}
 							onChange={this.handlePasswordChange}
+							required
 						/>
 					</label>
 					<button type="submit" value="Log In">

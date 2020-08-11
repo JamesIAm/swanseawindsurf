@@ -3,15 +3,24 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Navigation from "./components/navigation";
 import ScrollToTop from "./components/scrollToTop";
-import Footer from "./components/footer.js";
-import Index from "./pages/home.js";
+import Footer from "./components/footer";
+import Index from "./pages/home";
 import AboutUs from "./pages/about-us";
 import Committee from "./pages/committee";
 import CompetitionResults from "./pages/competition-results";
 import Holiday from "./pages/holiday";
 import SessionSignUp from "./pages/session-sign-up";
 import SWAEvents from "./pages/swa-events";
-import Login from "./pages/login.js";
+import Login from "./pages/login";
+import CreateAccount from "./pages/createAccount";
+import MyAccount from "./pages/my-account";
+import Admin from "./pages/admin";
+import {
+	LoginButton,
+	CreateAccountButton,
+	LogoutButton,
+	MyAccountButton,
+} from "./components/accountButtons";
 
 import firebase, { auth, provider } from "./components/firebase.js";
 //require("firebase/auth");
@@ -21,9 +30,11 @@ class App extends Component {
 		this.state = {
 			sticky: false,
 			user: null,
+			newUserDetails: null,
 		};
-		this.login = this.login.bind(this);
-		this.logout = this.logout.bind(this);
+		this.updateDetails = this.updateDetails.bind(this);
+		this.updateUserRemote = this.updateUserRemote.bind(this);
+		this.updateUserState = this.updateUserState.bind(this);
 	}
 	useEffect() {
 		window.scrollTo(0, 0);
@@ -35,22 +46,36 @@ class App extends Component {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
-				console.log(this.state.user);
+				if (this.state.newUserDetails) {
+					console.log(this);
+					this.updateUserRemote(user);
+				}
+			} else {
+				this.setState({ user: null });
 			}
 		});
+	}
+	updateUserState() {
+		let user = firebase.auth().currentUser;
+		this.setState({ user });
 	}
 	stickyNav() {
 		this.setState({
 			sticky: window.pageYOffset >= this.state.height * 0.1,
 		});
 	}
-	login(user) {
-		this.setState({ user });
+	updateUserRemote(user) {
+		console.log(this.state.newUserDetails);
+		console.log(user);
+		user.updateProfile(this.state.newUserDetails)
+			.then(() => this.setState({ newUserDetails: null }))
+			.then(() => this.updateUserState);
 	}
-	logout() {
-		this.setState({
-			user: null,
-		});
+	updateDetails(newDetails) {
+		this.setState({ newUserDetails: newDetails });
+		if (this.props.user) {
+			this.updateUserRemote(this.props.user);
+		}
 	}
 	render() {
 		return (
@@ -61,6 +86,19 @@ class App extends Component {
 						<br />
 						Windsurfing Club
 					</h1>
+					<div className="account-buttons">
+						{this.state.user ? (
+							<div>
+								<LogoutButton user={this.state.user} />
+								<MyAccountButton user={this.state.user} />
+							</div>
+						) : (
+							<div>
+								<LoginButton />
+								<CreateAccountButton />
+							</div>
+						)}
+					</div>
 				</div>
 				<div
 					className={
@@ -75,13 +113,26 @@ class App extends Component {
 					<Switch>
 						<Route
 							path="/login"
+							render={(props) => <Login user={this.state.user} />}
+						/>
+						<Route
+							path="/create-account"
 							render={(props) => (
-								<Login
-									logout={this.logout}
-									login={this.login}
+								<CreateAccount
 									user={this.state.user}
+									updateDetails={this.updateDetails}
 								/>
 							)}
+						/>
+						<Route
+							path="/my-account"
+							render={(props) => (
+								<MyAccount user={this.state.user} />
+							)}
+						/>
+						<Route
+							path="/admin"
+							render={(props) => <Admin user={this.state.user} />}
 						/>
 						<Route
 							path="/about-us"
