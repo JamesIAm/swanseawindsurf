@@ -11,7 +11,9 @@ class Navigation extends React.Component {
 		this.minimiseNav = this.minimiseNav.bind(this);
 	}
 	componentDidMount() {
-		window.addEventListener("scroll", () => this.minimiseNav(this));
+		window.addEventListener("scroll", () =>
+			this.state.showMobileNav ? this.minimiseNav(this) : null
+		);
 	}
 	minimiseNav() {
 		this.setState({ showMobileNav: false });
