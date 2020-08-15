@@ -14,7 +14,7 @@ import SWAEvents from "./pages/swa-events";
 import Login from "./pages/login";
 import CreateAccount from "./pages/createAccount";
 import MyAccount from "./pages/my-account";
-import SuperAdmin from "./pages/super-admin";
+import Admin from "./pages/admin";
 import {
 	LoginButton,
 	CreateAccountButton,
@@ -144,9 +144,9 @@ class App extends Component {
 							)}
 						/>
 						<Route
-							path="/super-admin"
+							path="/admin"
 							render={(props) => (
-								<SuperAdmin
+								<Admin
 									user={this.state.user}
 									userPermissions={this.state.userPermissions}
 								/>
@@ -172,7 +172,9 @@ class App extends Component {
 						/>
 						<Route
 							path="/session-sign-up"
-							render={(props) => <SessionSignUp {...props} />}
+							render={(props) => (
+								<SessionSignUp user={this.state.user} />
+							)}
 						/>
 						<Route
 							path="/events"

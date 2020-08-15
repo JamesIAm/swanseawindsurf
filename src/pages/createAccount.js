@@ -1,5 +1,5 @@
 import React from "react";
-import firebase, { auth, provider, functions } from "../components/firebase.js"; //TODO: delete functions
+import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect } from "react-router-dom";
 
 const errMsgLoggedIn = "You are already logged in";

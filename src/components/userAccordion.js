@@ -23,17 +23,8 @@ class UserAccordion extends React.Component {
 	}
 	componentDidMount() {
 		if (this.props.user) {
-			let uid = this.props.user.uid;
 			if (!this.state.allUsers) {
 				this.getUsers();
-				// let userPermissions = firebase
-				// 	.database()
-				// 	.ref(`users/${uid}/role`)
-				// 	.once("value")
-				// 	.then(function (snapshot) {
-				// 		console.log(snapshot.val());
-				// 	})
-				// 	.catch((error) => this.handleError(error));
 			}
 		}
 	}
@@ -179,7 +170,7 @@ class UserAccordion extends React.Component {
 									</div>
 									{this.props.userPermissions ===
 									"superAdmin" ? (
-										<div class="Super-Admin-Buttons">
+										<div className="Super-Admin-Buttons">
 											<div className="superAdminButton">
 												{user.role ===
 												"superAdmin" ? null : (
