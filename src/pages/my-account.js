@@ -29,13 +29,9 @@ class MyAccount extends React.Component {
 				.database()
 				.ref(`users/${uid}/info`)
 				.once("value")
-				.then((snapshot) => this.saveUserData(snapshot.val()))
+				.then((snapshot) => this.setState({ userData: snapshot.val() }))
 				.catch((error) => this.handleError(error));
 		}
-	}
-	saveUserData(userData) {
-		this.setState({ userData: userData });
-		console.log(this.state.userData);
 	}
 	handleError(errorCode) {
 		switch (errorCode) {
@@ -56,14 +52,26 @@ class MyAccount extends React.Component {
 				<p>{this.state.errorMessage}</p>
 				<p>
 					Name:{" "}
-					{this.state.userData ? this.state.userData.name : null}
+					{this.state.userData
+						? this.state.userData.public.name
+						: null}
 				</p>
 				<p>Email: {this.props.user ? this.props.user.email : null}</p>
 				<p>
 					Student Number:{" "}
 					{this.state.userData
-						? this.state.userData.studentNumber
+						? this.state.userData.public.studentNumber
 						: null}
+				</p>
+				<p>
+					Membership Status:{" "}
+					{this.state.userData
+						? this.state.userData.private
+							? this.state.userData.private.membership
+								? "true"
+								: "false"
+							: "false"
+						: "false"}
 				</p>
 			</div>
 		);

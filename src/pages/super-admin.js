@@ -41,7 +41,10 @@ class SuperAdmin extends React.Component {
 		}
 		return (
 			<div className="article">
-				<UserAccordion user={this.props.user} />
+				<UserAccordion
+					user={this.props.user}
+					userPermissions={this.props.userPermissions}
+				/>
 				<SessionCreator />
 			</div>
 		);

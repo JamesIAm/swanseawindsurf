@@ -18,7 +18,8 @@ class UserAccordion extends React.Component {
 		this.makeSuperAdmin = this.makeSuperAdmin.bind(this);
 		this.makeAdmin = this.makeAdmin.bind(this);
 		this.makeUser = this.makeUser.bind(this);
-		this.saveUsers = this.saveUsers.bind(this);
+		this.addMembership = this.addMembership.bind(this);
+		this.revokeMembership = this.revokeMembership.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.user) {
@@ -45,15 +46,42 @@ class UserAccordion extends React.Component {
 	}
 
 	makeSuperAdmin(uid) {
-		firebase.database().ref(`users/${uid}/role`).set("superAdmin");
+		firebase
+			.database()
+			.ref(`users/${uid}/role`)
+			.set("superAdmin")
+			.catch((error) => this.handleError(error));
 		this.getUsers();
 	}
 	makeAdmin(uid) {
-		firebase.database().ref(`users/${uid}/role`).set("admin");
+		firebase
+			.database()
+			.ref(`users/${uid}/role`)
+			.set("admin")
+			.catch((error) => this.handleError(error));
 		this.getUsers();
 	}
 	makeUser(uid) {
-		firebase.database().ref(`users/${uid}/role`).set("user");
+		firebase
+			.database()
+			.ref(`users/${uid}/role`)
+			.set("user")
+			.catch((error) => this.handleError(error));
+		this.getUsers();
+	}
+	addMembership(uid) {
+		firebase
+			.database()
+			.ref(`users/${uid}/info/private/membership`)
+			.set(true);
+		this.getUsers();
+	}
+	revokeMembership(uid) {
+		firebase
+			.database()
+			.ref(`users/${uid}/info/private/membership`)
+			.set(false)
+			.catch((error) => this.handleError(error));
 		this.getUsers();
 	}
 	getUsers() {
@@ -61,15 +89,13 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref("users")
 			.once("value")
-			.then((snapshot) => this.saveUsers(snapshot.val()))
+			.then((snapshot) =>
+				this.setState({
+					allUsers: snapshot.val(),
+					userKeys: Object.keys(snapshot.val()),
+				})
+			)
 			.catch((error) => this.handleError(error));
-	}
-	saveUsers(users) {
-		let userArray = Object.keys(users);
-		this.setState({
-			userKeys: userArray,
-			allUsers: users,
-		});
 	}
 	handleError(error) {
 		let errorCode = error.code;
@@ -98,52 +124,105 @@ class UserAccordion extends React.Component {
 					? this.state.userKeys.map((userKey) => {
 							let user = this.state.allUsers[userKey];
 							return (
-								<div>
-									<h3>{user.info.name}</h3>
+								<div key={userKey}>
+									<h3>{user.info.public.name}</h3>
 									<p>Role: {user.role || "user"}</p>
 									<p>
 										Student Number:{" "}
-										{user.info.studentNumber}
+										{user.info.public.studentNumber}
 									</p>
 									<p>Uid: {userKey}</p>
-									<div className="account-buttons">
-										<div className="superAdminButton">
-											{user.role ===
-											"superAdmin" ? null : (
+									<p>
+										Membership Status:{" "}
+										{user.info.private
+											? user.info.private.membership
+												? "true"
+												: "false"
+											: "false"}
+									</p>
+									<div className="Admin-Buttons">
+										<div className="addMembership">
+											{user.info.private ? (
+												user.info.private.membership ? (
+													<button
+														onClick={() =>
+															this.revokeMembership(
+																userKey
+															)
+														}
+													>
+														Remove membership
+													</button>
+												) : (
+													<button
+														onClick={() =>
+															this.addMembership(
+																userKey
+															)
+														}
+													>
+														Add membership
+													</button>
+												)
+											) : (
 												<button
 													onClick={() =>
-														this.makeSuperAdmin(
+														this.addMembership(
 															userKey
 														)
 													}
 												>
-													Make superAdmin
-												</button>
-											)}
-										</div>
-										<div className="adminButton">
-											{user.role === "admin" ? null : (
-												<button
-													onClick={() =>
-														this.makeAdmin(userKey)
-													}
-												>
-													Make admin
-												</button>
-											)}
-										</div>
-										<div className="userButton">
-											{user.role === "user" ? null : (
-												<button
-													onClick={() =>
-														this.makeUser(userKey)
-													}
-												>
-													Make user
+													Add membership
 												</button>
 											)}
 										</div>
 									</div>
+									{this.props.userPermissions ===
+									"superAdmin" ? (
+										<div class="Super-Admin-Buttons">
+											<div className="superAdminButton">
+												{user.role ===
+												"superAdmin" ? null : (
+													<button
+														onClick={() =>
+															this.makeSuperAdmin(
+																userKey
+															)
+														}
+													>
+														Make superAdmin
+													</button>
+												)}
+											</div>
+											<div className="adminButton">
+												{user.role ===
+												"admin" ? null : (
+													<button
+														onClick={() =>
+															this.makeAdmin(
+																userKey
+															)
+														}
+													>
+														Make admin
+													</button>
+												)}
+											</div>
+											<div className="userButton">
+												{user.role === "user" ? null : (
+													<button
+														onClick={() =>
+															this.makeUser(
+																userKey
+															)
+														}
+													>
+														Make user
+													</button>
+												)}
+											</div>
+										</div>
+									) : null}
 								</div>
 							);
 					  })

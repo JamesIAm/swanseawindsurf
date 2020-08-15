@@ -74,7 +74,7 @@ class CreateAccount extends React.Component {
 	}
 	addUserDetails() {
 		let uid = firebase.auth().currentUser.uid;
-		firebase.database().ref(`users/${uid}/info`).set({
+		firebase.database().ref(`users/${uid}/info/public`).set({
 			name: this.state.nameInput,
 			studentNumber: this.state.studentNumberInput,
 		});

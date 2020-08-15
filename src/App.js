@@ -31,10 +31,12 @@ class App extends Component {
 			sticky: false,
 			user: null,
 			newUserDetails: null,
+			userPermissions: null,
 		};
-		this.updateDetails = this.updateDetails.bind(this);
-		this.updateUserRemote = this.updateUserRemote.bind(this);
-		this.updateUserState = this.updateUserState.bind(this);
+		// this.updateDetails = this.updateDetails.bind(this);
+		// this.updateUserRemote = this.updateUserRemote.bind(this);
+		// this.updateUserState = this.updateUserState.bind(this);
+		this.getPermissions = this.getPermissions.bind(this);
 	}
 	useEffect() {
 		window.scrollTo(0, 0);
@@ -46,37 +48,48 @@ class App extends Component {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
-				if (this.state.newUserDetails) {
-					console.log(this);
-					this.updateUserRemote(user);
-				}
+				this.getPermissions(user.uid);
+				// if (this.state.newUserDetails) {
+				// 	console.log(this);
+				// 	this.updateUserRemote(user);
+				// }
 			} else {
 				this.setState({ user: null });
 			}
 		});
 	}
-	updateUserState() {
-		let user = firebase.auth().currentUser;
-		this.setState({ user });
+	getPermissions(uid) {
+		let usersData = firebase
+			.database()
+			.ref(`users/${uid}/role`)
+			.once("value")
+			.then((snapshot) =>
+				this.setState({ userPermissions: snapshot.val() })
+			)
+			.catch((error) => this.handleError(error));
 	}
+	// updateUserState() {
+	// 	let user = firebase.auth().currentUser;
+	// 	this.setState({ user });
+	// }
 	stickyNav() {
 		this.setState({
 			sticky: window.pageYOffset >= this.state.height * 0.1,
 		});
 	}
-	updateUserRemote(user) {
-		console.log(this.state.newUserDetails);
-		console.log(user);
-		user.updateProfile(this.state.newUserDetails)
-			.then(() => this.setState({ newUserDetails: null }))
-			.then(() => this.updateUserState);
-	}
-	updateDetails(newDetails) {
-		this.setState({ newUserDetails: newDetails });
-		if (this.props.user) {
-			this.updateUserRemote(this.props.user);
-		}
-	}
+	// updateUserRemote(user) {
+	// 	console.log(this.state.newUserDetails);
+	// 	console.log(user);
+	// 	user.updateProfile(this.state.newUserDetails)
+	// 		.then(() => this.setState({ newUserDetails: null }))
+	// 		.then(() => this.updateUserState);
+	// }
+	// updateDetails(newDetails) {
+	// 	this.setState({ newUserDetails: newDetails });
+	// 	if (this.props.user) {
+	// 		this.updateUserRemote(this.props.user);
+	// 	}
+	// }
 	render() {
 		return (
 			<Router>
@@ -133,7 +146,10 @@ class App extends Component {
 						<Route
 							path="/super-admin"
 							render={(props) => (
-								<SuperAdmin user={this.state.user} />
+								<SuperAdmin
+									user={this.state.user}
+									userPermissions={this.state.userPermissions}
+								/>
 							)}
 						/>
 						<Route
