@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import UserAccordion from "../components/userAccordion";
-import SessionCreator from "../components/sessionCreator";
+import SessionBuilder from "../components/sessionBuilder";
 import SessionAccordion from "../components/sessionAccordion";
 
 class SuperAdmin extends React.Component {
@@ -42,7 +42,7 @@ class SuperAdmin extends React.Component {
 			return (
 				<div className="article">
 					<h2>Create a session</h2>
-					<SessionCreator />
+					<SessionBuilder />
 					<h2>Users</h2>
 					<UserAccordion
 						user={this.props.user}

@@ -25,6 +25,11 @@ import {
 
 import firebase, { auth, provider } from "./components/firebase.js";
 //require("firebase/auth");
+
+const errMsgUnknown =
+	"Something went on our end, please try again or contact us";
+const errMsgPermissions =
+	"Unfortunately you don't have the required permissions to view this data";
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -37,9 +42,7 @@ class App extends Component {
 			userName: null,
 			userStudentNumber: null,
 		};
-		// this.updateDetails = this.updateDetails.bind(this);
-		// this.updateUserRemote = this.updateUserRemote.bind(this);
-		// this.updateUserState = this.updateUserState.bind(this);
+		this.handleError = this.handleError.bind(this);
 		this.getData = this.getData.bind(this);
 	}
 	useEffect() {
@@ -77,28 +80,30 @@ class App extends Component {
 			)
 			.catch((error) => this.handleError(error));
 	}
-	// updateUserState() {
-	// 	let user = firebase.auth().currentUser;
-	// 	this.setState({ user });
-	// }
 	stickyNav() {
 		this.setState({
 			sticky: window.pageYOffset >= this.state.height * 0.1,
 		});
 	}
-	// updateUserRemote(user) {
-	// 	console.log(this.state.newUserDetails);
-	// 	console.log(user);
-	// 	user.updateProfile(this.state.newUserDetails)
-	// 		.then(() => this.setState({ newUserDetails: null }))
-	// 		.then(() => this.updateUserState);
-	// }
-	// updateDetails(newDetails) {
-	// 	this.setState({ newUserDetails: newDetails });
-	// 	if (this.props.user) {
-	// 		this.updateUserRemote(this.props.user);
-	// 	}
-	// }
+	handleError(error) {
+		let errorCode = error.code;
+		let errorMessage = error.message;
+		switch (errorCode) {
+			case "PERMISSION_DENIED":
+				this.setState({
+					errorMessage: errMsgPermissions,
+				});
+				break;
+			default:
+				this.setState({
+					errorMessage: errMsgUnknown,
+				});
+				console.error(
+					"Code: " + errorCode + "\nMessage: " + errorMessage
+				);
+				break;
+		}
+	}
 	accountButtons = () => {
 		if (
 			this.state.user &&

@@ -1,17 +1,17 @@
 import React from "react";
-import firebase, { auth, provider, database } from "../components/firebase.js";
+import firebase, { auth, provider, database } from "./firebase.js";
 
 const succSessionCreated = "Session Created sucessfully";
-class SessionCreator extends React.Component {
+class SessionBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			sessionNameInput: "",
-			descriptionInput: "",
-			sessionStartTimeInput: "",
-			sessionEndTimeInput: "",
-			placeLimitInput: 15,
-			membershipInput: "trial",
+			sessionNameInput: this.props?.session?.name || "",
+			descriptionInput: this.props?.session?.description || "",
+			sessionStartTimeInput: this.props?.session?.startTime || "",
+			sessionEndTimeInput: this.props?.session?.endTime || "",
+			placeLimitInput: this.props?.session?.placeLimit || 15,
+			membershipInput: this.props?.session?.members || "trial",
 			successMessage: "",
 		};
 		this.handleMembershipChange = this.handleMembershipChange.bind(this);
@@ -21,6 +21,7 @@ class SessionCreator extends React.Component {
 		this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
 		this.handlePlaceLimitChange = this.handlePlaceLimitChange.bind(this);
 		this.createSession = this.createSession.bind(this);
+		this.updateSession = this.updateSession.bind(this);
 	}
 	handleMembershipChange(event) {
 		this.setState({ membershipInput: event.target.value });
@@ -66,11 +67,32 @@ class SessionCreator extends React.Component {
 				})
 			);
 	}
+	updateSession(event) {
+		event.preventDefault();
+		firebase
+			.database()
+			.ref(`/pages/sign-up/sessions/${this.props.sessionKey}`)
+			.update({
+				name: this.state.sessionNameInput,
+				description: this.state.descriptionInput,
+				startTime: this.state.sessionStartTimeInput,
+				endTime: this.state.sessionEndTimeInput,
+				placeLimit: this.state.placeLimitInput,
+				members: this.state.membershipInput,
+			})
+			.then(() => this.props.closeModal());
+	}
 	render() {
 		return (
 			<div>
 				<div>{this.state.successMessage}</div>
-				<form onSubmit={this.createSession}>
+				<form
+					onSubmit={
+						this.props.update
+							? this.updateSession
+							: this.createSession
+					}
+				>
 					<label>
 						Session Name
 						<input
@@ -156,11 +178,13 @@ class SessionCreator extends React.Component {
 						/>{" "}
 						Closed
 					</label>
-					<button type="submit">Create session</button>
+					<button type="submit">
+						{this.props.update ? "Save session" : "Create session"}
+					</button>
 				</form>
 			</div>
 		);
 	}
 }
 
-export default SessionCreator;
+export default SessionBuilder;
