@@ -20,6 +20,7 @@ import {
 	CreateAccountButton,
 	LogoutButton,
 	MyAccountButton,
+	AdminButton,
 } from "./components/accountButtons";
 
 import firebase, { auth, provider } from "./components/firebase.js";
@@ -98,6 +99,42 @@ class App extends Component {
 	// 		this.updateUserRemote(this.props.user);
 	// 	}
 	// }
+	accountButtons = () => {
+		if (
+			this.state.user &&
+			(this.userPermissions === "admin" ||
+				this.userPermissions === "superAdmin")
+		) {
+			return (
+				<div className="account-buttons">
+					<div>
+						<LogoutButton user={this.state.user} />
+						<MyAccountButton user={this.state.user} />
+						<AdminButton user={this.state.user} />
+					</div>
+				</div>
+			);
+		} else if (this.state.user) {
+			return (
+				<div className="account-buttons">
+					<div>
+						<LogoutButton user={this.state.user} />
+						<MyAccountButton user={this.state.user} />
+						<AdminButton user={this.state.user} />
+					</div>
+				</div>
+			);
+		} else {
+			return (
+				<div className="account-buttons">
+					<div>
+						<LoginButton />
+						<CreateAccountButton />
+					</div>
+				</div>
+			);
+		}
+	};
 	render() {
 		return (
 			<Router>
@@ -107,19 +144,7 @@ class App extends Component {
 						<br />
 						Windsurfing Club
 					</h1>
-					<div className="account-buttons">
-						{this.state.user ? (
-							<div>
-								<LogoutButton user={this.state.user} />
-								<MyAccountButton user={this.state.user} />
-							</div>
-						) : (
-							<div>
-								<LoginButton />
-								<CreateAccountButton />
-							</div>
-						)}
-					</div>
+					{this.accountButtons()}
 				</div>
 				<div
 					className={
@@ -156,7 +181,7 @@ class App extends Component {
 							render={(props) => (
 								<Admin
 									user={this.state.user}
-									userPermissions={this.state.userPermissions}
+									permissions={this.state.userPermissions}
 								/>
 							)}
 						/>

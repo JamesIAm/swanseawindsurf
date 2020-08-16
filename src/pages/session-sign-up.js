@@ -13,9 +13,10 @@ class SessionSignUp extends React.Component {
 				<SessionAccordion
 					user={this.props.user}
 					membership={this.props.membership}
+					mode={"user"}
 				/>
 			</div>
-		);
+		); //TODO: Add a register membership and a sign up component here
 	}
 }
 

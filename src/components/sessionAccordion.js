@@ -1,6 +1,6 @@
 import React from "react";
 import firebase, { auth, provider, database } from "../components/firebase.js";
-
+//TODO: Add admin version
 const errMsgUnknown =
 	"Something went on our end, please try again or contact us";
 const errMsgPermissions =
@@ -11,16 +11,21 @@ class SessionAccordion extends React.Component {
 		this.state = {
 			allSessions: null,
 			eligibleToBook: false,
+			allUsers: null,
 		};
 		this.handleError = this.handleError.bind(this);
 		this.bookSession = this.bookSession.bind(this);
 		this.cancelBooking = this.cancelBooking.bind(this);
 		this.checkMembership = this.checkMembership.bind(this);
+		this.getUsers = this.getUsers.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.user) {
 			if (!this.state.allSessions) {
 				this.getSessions();
+			}
+			if (this.props.mode === "admin") {
+				this.getUsers();
 			}
 		}
 	}
@@ -28,6 +33,9 @@ class SessionAccordion extends React.Component {
 		if (this.props.user) {
 			if (!this.state.allSessions && !this.state.errorMessage) {
 				this.getSessions();
+			}
+			if (this.props.mode === "admin" && !this.state.allUsers) {
+				this.getUsers();
 			}
 		}
 	}
@@ -43,6 +51,18 @@ class SessionAccordion extends React.Component {
 				})
 			)
 			.then(() => this.checkMembership())
+			.catch((error) => this.handleError(error));
+	}
+	getUsers() {
+		let users = firebase
+			.database()
+			.ref("users")
+			.once("value")
+			.then((snapshot) =>
+				this.setState({
+					allUsers: snapshot.val(),
+				})
+			)
 			.catch((error) => this.handleError(error));
 	}
 	checkMembership() {
@@ -108,12 +128,36 @@ class SessionAccordion extends React.Component {
 					?.attendees?.${this.props.user.uid}`) ? (
 					<button onClick={() => this.cancelBooking(sessionKey)}>
 						Cancel Booking
-					</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE PAST IN RULES
+					</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
 				) : (
 					<button onClick={() => this.bookSession(sessionKey)}>
 						Book
 					</button>
 				)}
+			</div>
+		);
+	};
+	DisplayMembers = (sessionKey) => {
+		let attendees = this.state.allSessions[sessionKey].attendees;
+		let uids = Object.keys(attendees);
+		return (
+			<div>
+				{uids.map((uid) => {
+					if (eval(`this.state.allUsers?.${uid}`)) {
+						let user = eval(`this.state.allUsers.${uid}`);
+						return (
+							<div key={uid}>
+								<p>{user.info.public.name}</p>
+								<p>{user.info.public.studentNumber}</p>
+								<p>
+									{user.info.private.membership
+										? "Has purchased Sports Swansea Membership"
+										: "Hasn't purchased Sports Swansea Membership"}
+								</p>
+							</div>
+						);
+					}
+				})}
 			</div>
 		);
 	};
@@ -144,7 +188,9 @@ class SessionAccordion extends React.Component {
 											Is the session open to everyone:{" "}
 											{session.members}
 										</p>
-										{this.BookCancelButton(sessionKey)}
+										{this.props.mode === "admin"
+											? this.DisplayMembers(sessionKey)
+											: this.BookCancelButton(sessionKey)}
 									</div>
 								);
 							} else {

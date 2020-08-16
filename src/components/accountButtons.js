@@ -40,5 +40,16 @@ class MyAccountButton extends React.Component {
 		return <Link to="/my-account">My Account</Link>;
 	}
 }
+class AdminButton extends React.Component {
+	render() {
+		return <Link to="/admin">Admin</Link>;
+	}
+}
 
-export { LoginButton, CreateAccountButton, LogoutButton, MyAccountButton };
+export {
+	LoginButton,
+	CreateAccountButton,
+	LogoutButton,
+	MyAccountButton,
+	AdminButton,
+};

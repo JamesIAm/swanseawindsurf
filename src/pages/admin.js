@@ -1,9 +1,9 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 import UserAccordion from "../components/userAccordion";
-//TODO: delete functions
-import { Redirect } from "react-router-dom";
-import SessionCreator from "../components/sessionCreator.js";
+import SessionCreator from "../components/sessionCreator";
+import SessionAccordion from "../components/sessionAccordion";
 
 class SuperAdmin extends React.Component {
 	constructor(props) {
@@ -46,7 +46,13 @@ class SuperAdmin extends React.Component {
 					<h2>Users</h2>
 					<UserAccordion
 						user={this.props.user}
-						userPermissions={this.props.userPermissions}
+						permissions={this.props.permissions}
+					/>
+					<h2>Sessions</h2>
+					<SessionAccordion
+						user={this.props.user}
+						permissions={this.props.permissions}
+						mode={"admin"}
 					/>
 				</div>
 			);

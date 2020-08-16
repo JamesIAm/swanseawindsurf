@@ -168,8 +168,7 @@ class UserAccordion extends React.Component {
 											)}
 										</div>
 									</div>
-									{this.props.userPermissions ===
-									"superAdmin" ? (
+									{this.props.permissions === "superAdmin" ? (
 										<div className="Super-Admin-Buttons">
 											<div className="superAdminButton">
 												{user.role ===
