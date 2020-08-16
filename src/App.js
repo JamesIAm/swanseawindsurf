@@ -30,13 +30,16 @@ class App extends Component {
 		this.state = {
 			sticky: false,
 			user: null,
-			newUserDetails: null,
+			// newUserDetails: null,
 			userPermissions: null,
+			userMembership: null,
+			userName: null,
+			userStudentNumber: null,
 		};
 		// this.updateDetails = this.updateDetails.bind(this);
 		// this.updateUserRemote = this.updateUserRemote.bind(this);
 		// this.updateUserState = this.updateUserState.bind(this);
-		this.getPermissions = this.getPermissions.bind(this);
+		this.getData = this.getData.bind(this);
 	}
 	useEffect() {
 		window.scrollTo(0, 0);
@@ -48,7 +51,7 @@ class App extends Component {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
-				this.getPermissions(user.uid);
+				this.getData(user.uid);
 				// if (this.state.newUserDetails) {
 				// 	console.log(this);
 				// 	this.updateUserRemote(user);
@@ -58,13 +61,18 @@ class App extends Component {
 			}
 		});
 	}
-	getPermissions(uid) {
+	getData(uid) {
 		let usersData = firebase
 			.database()
-			.ref(`users/${uid}/role`)
+			.ref(`users/${uid}`)
 			.once("value")
 			.then((snapshot) =>
-				this.setState({ userPermissions: snapshot.val() })
+				this.setState({
+					userPermissions: snapshot.val().role,
+					userMembership: snapshot.val().info.private.membership,
+					userName: snapshot.val().info.public.name,
+					userStudentNumber: snapshot.val().info.public.studentNumber,
+				})
 			)
 			.catch((error) => this.handleError(error));
 	}
@@ -173,7 +181,10 @@ class App extends Component {
 						<Route
 							path="/session-sign-up"
 							render={(props) => (
-								<SessionSignUp user={this.state.user} />
+								<SessionSignUp
+									user={this.state.user}
+									membership={this.state.userMembership}
+								/>
 							)}
 						/>
 						<Route

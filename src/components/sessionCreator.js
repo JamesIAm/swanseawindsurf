@@ -11,14 +11,19 @@ class SessionCreator extends React.Component {
 			sessionStartTimeInput: "",
 			sessionEndTimeInput: "",
 			placeLimitInput: 15,
+			membershipInput: "trial",
 			successMessage: "",
 		};
+		this.handleMembershipChange = this.handleMembershipChange.bind(this);
 		this.handleSessionNameChange = this.handleSessionNameChange.bind(this);
 		this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
 		this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
 		this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
 		this.handlePlaceLimitChange = this.handlePlaceLimitChange.bind(this);
 		this.createSession = this.createSession.bind(this);
+	}
+	handleMembershipChange(event) {
+		this.setState({ membershipInput: event.target.value });
 	}
 	handleSessionNameChange(event) {
 		this.setState({ sessionNameInput: event.target.value });
@@ -47,6 +52,7 @@ class SessionCreator extends React.Component {
 				startTime: `${this.state.sessionStartTimeInput}`,
 				endTime: `${this.state.sessionEndTimeInput}`,
 				placeLimit: `${this.state.placeLimitInput}`,
+				members: `${this.state.membershipInput}`,
 			})
 			.then(
 				this.setState({
@@ -56,6 +62,7 @@ class SessionCreator extends React.Component {
 					sessionStartTimeInput: "",
 					sessionEndTimeInput: "",
 					placeLimitInput: "",
+					membershipInput: "trial",
 				})
 			);
 	}
@@ -107,6 +114,47 @@ class SessionCreator extends React.Component {
 							value={this.state.placeLimitInput}
 							onChange={this.handlePlaceLimitChange}
 						/>
+					</label>
+					<label>
+						Who is the session open to?
+						<br />
+						(Open: Anyone can attend,
+						<br />
+						Trial: People can attend if it's their first session or
+						if they have membership,
+						<br />
+						Closed: Only members can attend)
+						<br />
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="sessionType"
+							value="open"
+							checked={this.state.membershipInput === "open"}
+							onChange={this.handleMembershipChange}
+						/>{" "}
+						Open
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="sessionType"
+							value="trial"
+							checked={this.state.membershipInput === "trial"}
+							onChange={this.handleMembershipChange}
+						/>{" "}
+						Trial
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="sessionType"
+							value="closed"
+							checked={this.state.membershipInput === "closed"}
+							onChange={this.handleMembershipChange}
+						/>{" "}
+						Closed
 					</label>
 					<button type="submit">Create session</button>
 				</form>

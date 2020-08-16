@@ -10,7 +10,10 @@ class SessionSignUp extends React.Component {
 				<h2 className="content-text">
 					Sign up here for next week's session!
 				</h2>
-				<SessionAccordion user={this.props.user} />
+				<SessionAccordion
+					user={this.props.user}
+					membership={this.props.membership}
+				/>
 			</div>
 		);
 	}

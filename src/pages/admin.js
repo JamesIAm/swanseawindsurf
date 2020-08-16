@@ -38,16 +38,19 @@ class SuperAdmin extends React.Component {
 	render() {
 		if (this.state.redirect) {
 			return <Redirect push to="/my-account" />;
+		} else {
+			return (
+				<div className="article">
+					<h2>Create a session</h2>
+					<SessionCreator />
+					<h2>Users</h2>
+					<UserAccordion
+						user={this.props.user}
+						userPermissions={this.props.userPermissions}
+					/>
+				</div>
+			);
 		}
-		return (
-			<div className="article">
-				<UserAccordion
-					user={this.props.user}
-					userPermissions={this.props.userPermissions}
-				/>
-				<SessionCreator />
-			</div>
-		);
 	}
 }
 
