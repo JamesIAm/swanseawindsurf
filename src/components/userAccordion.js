@@ -1,6 +1,6 @@
 import React from "react";
 import firebase, { auth, provider, database } from "../components/firebase.js";
-
+import "../static/accordion.css";
 const errMsgUnknown =
 	"Something went on our end, please try again or contact us";
 const errMsgPermissions =
@@ -13,6 +13,7 @@ class UserAccordion extends React.Component {
 			updatePage: null,
 			userKeys: null,
 			errorMessage: null,
+			openAccordion: null,
 		};
 		this.handleError = this.handleError.bind(this);
 		this.makeSuperAdmin = this.makeSuperAdmin.bind(this);
@@ -20,6 +21,7 @@ class UserAccordion extends React.Component {
 		this.makeUser = this.makeUser.bind(this);
 		this.addMembership = this.addMembership.bind(this);
 		this.revokeMembership = this.revokeMembership.bind(this);
+		this.toggleAccordion = this.toggleAccordion.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.user) {
@@ -107,6 +109,69 @@ class UserAccordion extends React.Component {
 				break;
 		}
 	}
+	toggleAccordion(userKey) {
+		if (this.state.openAccordion === userKey) {
+			this.setState({
+				openAccordion: null,
+			});
+		} else {
+			this.setState({
+				openAccordion: userKey,
+			});
+		}
+	}
+	adminButtons = (user, userKey) => {
+		return (
+			<div className="Admin-Buttons">
+				<div className="addMembership">
+					{user.info.private ? (
+						user.info.private.membership ? (
+							<button
+								onClick={() => this.revokeMembership(userKey)}
+							>
+								Remove membership
+							</button>
+						) : (
+							<button onClick={() => this.addMembership(userKey)}>
+								Add membership
+							</button>
+						)
+					) : (
+						<button onClick={() => this.addMembership(userKey)}>
+							Add membership
+						</button>
+					)}
+				</div>
+			</div>
+		);
+	};
+	superAdminButtons = (user, userKey) => {
+		return (
+			<div className="Super-Admin-Buttons">
+				<div className="superAdminButton">
+					{user.role === "superAdmin" ? null : (
+						<button onClick={() => this.makeSuperAdmin(userKey)}>
+							Make superAdmin
+						</button>
+					)}
+				</div>
+				<div className="adminButton">
+					{user.role === "admin" ? null : (
+						<button onClick={() => this.makeAdmin(userKey)}>
+							Make admin
+						</button>
+					)}
+				</div>
+				<div className="userButton">
+					{user.role === "user" ? null : (
+						<button onClick={() => this.makeUser(userKey)}>
+							Make user
+						</button>
+					)}
+				</div>
+			</div>
+		);
+	};
 	render() {
 		return (
 			<div>
@@ -116,103 +181,45 @@ class UserAccordion extends React.Component {
 							let user = this.state.allUsers[userKey];
 							return (
 								<div key={userKey}>
-									<h3>{user.info.public.name}</h3>
-									<p>Role: {user.role || "user"}</p>
-									<p>
-										Student Number:{" "}
-										{user.info.public.studentNumber}
-									</p>
-									<p>Uid: {userKey}</p>
-									<p>
-										Membership Status:{" "}
-										{user.info.private
-											? user.info.private.membership
+									<button
+										className="accordion"
+										onClick={() =>
+											this.toggleAccordion(userKey)
+										}
+									>
+										{user.info.public.name}
+									</button>
+									<div
+										className="accordion-panel"
+										style={{
+											display:
+												this.state.openAccordion ===
+												userKey
+													? "block"
+													: "none",
+										}}
+									>
+										<p>Role: {user.role || "user"}</p>
+										<p>
+											Student Number:{" "}
+											{user.info.public.studentNumber}
+										</p>
+										<p>Uid: {userKey}</p>
+										<p>
+											Membership Status:{" "}
+											{user.info?.private?.membership
 												? "true"
-												: "false"
-											: "false"}
-									</p>
-									<div className="Admin-Buttons">
-										<div className="addMembership">
-											{user.info.private ? (
-												user.info.private.membership ? (
-													<button
-														onClick={() =>
-															this.revokeMembership(
-																userKey
-															)
-														}
-													>
-														Remove membership
-													</button>
-												) : (
-													<button
-														onClick={() =>
-															this.addMembership(
-																userKey
-															)
-														}
-													>
-														Add membership
-													</button>
-												)
-											) : (
-												<button
-													onClick={() =>
-														this.addMembership(
-															userKey
-														)
-													}
-												>
-													Add membership
-												</button>
-											)}
-										</div>
+												: "false"}
+										</p>
+
+										{this.adminButtons(user, userKey)}
+										{this.props.permissions === "superAdmin"
+											? this.superAdminButtons(
+													user,
+													userKey
+											  )
+											: null}
 									</div>
-									{this.props.permissions === "superAdmin" ? (
-										<div className="Super-Admin-Buttons">
-											<div className="superAdminButton">
-												{user.role ===
-												"superAdmin" ? null : (
-													<button
-														onClick={() =>
-															this.makeSuperAdmin(
-																userKey
-															)
-														}
-													>
-														Make superAdmin
-													</button>
-												)}
-											</div>
-											<div className="adminButton">
-												{user.role ===
-												"admin" ? null : (
-													<button
-														onClick={() =>
-															this.makeAdmin(
-																userKey
-															)
-														}
-													>
-														Make admin
-													</button>
-												)}
-											</div>
-											<div className="userButton">
-												{user.role === "user" ? null : (
-													<button
-														onClick={() =>
-															this.makeUser(
-																userKey
-															)
-														}
-													>
-														Make user
-													</button>
-												)}
-											</div>
-										</div>
-									) : null}
 								</div>
 							);
 					  })

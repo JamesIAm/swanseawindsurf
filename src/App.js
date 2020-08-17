@@ -81,9 +81,11 @@ class App extends Component {
 			.catch((error) => this.handleError(error));
 	}
 	stickyNav() {
-		this.setState({
-			sticky: window.pageYOffset >= this.state.height * 0.1,
-		});
+		let sticky = window.pageYOffset >= this.state.height * 0.1;
+		if (sticky !== this.state.sticky)
+			this.setState({
+				sticky,
+			});
 	}
 	handleError(error) {
 		let errorCode = error.code;

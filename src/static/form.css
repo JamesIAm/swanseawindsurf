@@ -1,0 +1,9 @@
+.submit {
+	width: 100%;
+	padding: 1%;
+	margin-top: 3%;
+	border-radius: 5px;
+	border-width: 0;
+	background-color: var(--color-1);
+	color: var(--color-3);
+}

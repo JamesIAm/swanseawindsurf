@@ -1,5 +1,6 @@
 import React from "react";
 import firebase, { auth, provider, database } from "./firebase.js";
+import "../static/form.css";
 
 const succSessionCreated = "Session Created sucessfully";
 class SessionBuilder extends React.Component {
@@ -93,92 +94,88 @@ class SessionBuilder extends React.Component {
 							: this.createSession
 					}
 				>
-					<label>
-						Session Name
-						<input
-							type="text"
-							required
-							value={this.state.sessionNameInput}
-							onChange={this.handleSessionNameChange}
-						/>
+					<label htmlFor="sessionName">Session Name</label>
+					<input
+						type="text"
+						className="form-control"
+						id="sessionName"
+						required
+						value={this.state.sessionNameInput}
+						onChange={this.handleSessionNameChange}
+					/>
+					<label htmlFor="description">Description</label>
+					<input
+						type="text"
+						className="form-control"
+						id="description"
+						required
+						value={this.state.descriptionInput}
+						onChange={this.handleDescriptionChange}
+					/>
+					<label htmlFor="startTime">Session Start Time</label>
+					<input
+						type="datetime-local"
+						className="form-control"
+						id="startTime"
+						required
+						value={this.state.sessionStartTimeInput}
+						onChange={this.handleStartTimeChange}
+					/>
+					<label htmlFor="endTime">Session End Time</label>
+					<input
+						type="datetime-local"
+						className="form-control"
+						id="endTime"
+						required
+						value={this.state.sessionEndTimeInput}
+						onChange={this.handleEndTimeChange}
+					/>
+					<label htmlFor="placeLimit">Place Limit</label>
+					<input
+						type="number"
+						className="form-control"
+						id="placeLimit"
+						value={this.state.placeLimitInput}
+						onChange={this.handlePlaceLimitChange}
+					/>
+					<label htmlFor="openSession">
+						Open (Anyone can attend)
 					</label>
-					<label>
-						Description
-						<input
-							type="text"
-							required
-							value={this.state.descriptionInput}
-							onChange={this.handleDescriptionChange}
-						/>
+					<input
+						type="radio"
+						name="sessionType"
+						className="form-control"
+						id="openSession"
+						value="open"
+						checked={this.state.membershipInput === "open"}
+						onChange={this.handleMembershipChange}
+					/>
+					<label htmlFor="trialSession">
+						Trial (People can attend if it's their first session or
+						if they have membership)
 					</label>
-					<label>
-						Session Start Time
-						<input
-							type="datetime-local"
-							required
-							value={this.state.sessionStartTimeInput}
-							onChange={this.handleStartTimeChange}
-						/>
+					<input
+						type="radio"
+						name="sessionType"
+						className="form-control"
+						id="trialSession"
+						value="trial"
+						checked={this.state.membershipInput === "trial"}
+						onChange={this.handleMembershipChange}
+					/>
+					<label htmlFor="closedSession">
+						Closed (Only members can attend)
 					</label>
-					<label>
-						Session End Time
-						<input
-							type="datetime-local"
-							required
-							value={this.state.sessionEndTimeInput}
-							onChange={this.handleEndTimeChange}
-						/>
-					</label>
-					<label>
-						Place Limit
-						<input
-							type="number"
-							value={this.state.placeLimitInput}
-							onChange={this.handlePlaceLimitChange}
-						/>
-					</label>
-					<label>
-						Who is the session open to?
-						<br />
-						(Open: Anyone can attend,
-						<br />
-						Trial: People can attend if it's their first session or
-						if they have membership,
-						<br />
-						Closed: Only members can attend)
-						<br />
-					</label>
-					<label>
-						<input
-							type="radio"
-							name="sessionType"
-							value="open"
-							checked={this.state.membershipInput === "open"}
-							onChange={this.handleMembershipChange}
-						/>{" "}
-						Open
-					</label>
-					<label>
-						<input
-							type="radio"
-							name="sessionType"
-							value="trial"
-							checked={this.state.membershipInput === "trial"}
-							onChange={this.handleMembershipChange}
-						/>{" "}
-						Trial
-					</label>
-					<label>
-						<input
-							type="radio"
-							name="sessionType"
-							value="closed"
-							checked={this.state.membershipInput === "closed"}
-							onChange={this.handleMembershipChange}
-						/>{" "}
-						Closed
-					</label>
-					<button type="submit">
+					<input
+						type="radio"
+						name="sessionType"
+						className="form-control"
+						id="closedSession"
+						value="closed"
+						checked={this.state.membershipInput === "closed"}
+						onChange={this.handleMembershipChange}
+					/>
+					<button type="submit" class="submit">
 						{this.props.update ? "Save session" : "Create session"}
 					</button>
 				</form>

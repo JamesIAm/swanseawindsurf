@@ -162,6 +162,17 @@ class SessionAccordion extends React.Component {
 				break;
 		}
 	}
+	toggleAccordion(sessionKey) {
+		if (this.state.openAccordion === sessionKey) {
+			this.setState({
+				openAccordion: null,
+			});
+		} else {
+			this.setState({
+				openAccordion: sessionKey,
+			});
+		}
+	}
 	BookCancelButton = (sessionKey) => {
 		return (
 			<div>
@@ -183,19 +194,23 @@ class SessionAccordion extends React.Component {
 		if (attendees) {
 			let uids = Object.keys(attendees);
 			return (
-				<div>
+				<div className="sub-accordion">
 					{uids.map((uid) => {
 						if (eval(`this.state.allUsers?.${uid}`)) {
 							let user = eval(`this.state.allUsers.${uid}`);
 							return (
 								<div key={uid}>
-									<p>{user.info.public.name}</p>
-									<p>{user.info.public.studentNumber}</p>
-									<p>
-										{user.info.private.membership
-											? "Has purchased Sports Swansea Membership"
-											: "Hasn't purchased Sports Swansea Membership"}
-									</p>
+									<ul>
+										<li>{user.info.public.name}</li>
+										<li>
+											{user.info.public.studentNumber}
+										</li>
+										{/* <li>
+											{user.info?.private?.membership
+												? "Has purchased Sports Swansea Membership"
+												: "Hasn't purchased Sports Swansea Membership"}
+										</li> */}
+									</ul>
 								</div>
 							);
 						}
@@ -272,23 +287,47 @@ class SessionAccordion extends React.Component {
 							) {
 								return (
 									<div key={sessionKey}>
-										<h3>{session.name}</h3>
-										<p>{session.description}</p>
-										<p>{session.startTime}</p>
-										<p>{session.endTime}</p>
-										<p>
-											Is the session open to everyone:{" "}
-											{session.members}
-										</p>
-										{this.props.mode === "admin"
-											? this.DisplayMembers(sessionKey)
-											: this.BookCancelButton(sessionKey)}
-										{this.props.mode === "admin"
-											? this.AdminOptions(
-													sessionKey,
-													session
-											  )
-											: null}
+										<button
+											className="accordion"
+											onClick={() =>
+												this.toggleAccordion(sessionKey)
+											}
+										>
+											{session.name +
+												" " +
+												session.startTime}
+										</button>
+										<div
+											className="accordion-panel"
+											style={{
+												display:
+													this.state.openAccordion ===
+													sessionKey
+														? "block"
+														: "none",
+											}}
+										>
+											<p>{session.description}</p>
+											<p>{session.startTime}</p>
+											<p>{session.endTime}</p>
+											<p>
+												Is the session open to everyone:{" "}
+												{session.members}
+											</p>
+											{this.props.mode === "admin"
+												? this.DisplayMembers(
+														sessionKey
+												  )
+												: this.BookCancelButton(
+														sessionKey
+												  )}
+											{this.props.mode === "admin"
+												? this.AdminOptions(
+														sessionKey,
+														session
+												  )
+												: null}
+										</div>
 									</div>
 								);
 							} else {
