@@ -128,51 +128,56 @@ class CreateAccount extends React.Component {
 		}
 		return (
 			<div className="article">
+				<h1>Create An Account</h1>
 				<p>{this.state.successMessage}</p>
 				<p>{this.state.errorMessage}</p>
 
 				<form onSubmit={this.handleCreateAccount}>
-					<label>
-						Full Name:
-						<input
-							type="text"
-							value={this.state.nameInput}
-							onChange={this.handleNameChange}
-							required
-						/>
-					</label>
-					<label>
-						Student Number:
-						<input
-							type="number"
-							value={this.state.studentNumberInput}
-							onChange={this.handleStudentNumberChange}
-							min="100000"
-							max="9999999"
-							required
-						/>
-					</label>
-					<label>
-						Email Address:
-						<input
-							type="email"
-							value={this.state.emailInput}
-							onChange={this.handleEmailChange}
-							autoComplete="none"
-							required
-						/>
-					</label>
-					<label>
-						Password:
-						<input
-							type="password"
-							value={this.state.passwordInput}
-							onChange={this.handlePasswordChange}
-							autoComplete="new-password"
-							required
-						/>
-					</label>
-					<label>
+					<label htmlFor="name">Full Name:</label>
+					<input
+						type="text"
+						className="form-control"
+						id="name"
+						value={this.state.nameInput}
+						onChange={this.handleNameChange}
+						required
+					/>
+
+					<label htmlFor="studentNumber">Student Number:</label>
+					<input
+						type="number"
+						className="form-control"
+						id="studentNumber"
+						value={this.state.studentNumberInput}
+						onChange={this.handleStudentNumberChange}
+						min="100000"
+						max="9999999"
+						required
+					/>
+
+					<label htmlFor="email">Email Address:</label>
+					<input
+						type="email"
+						className="form-control"
+						id="email"
+						value={this.state.emailInput}
+						onChange={this.handleEmailChange}
+						autoComplete="none"
+						required
+					/>
+
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						className="form-control"
+						id="password"
+						value={this.state.passwordInput}
+						onChange={this.handlePasswordChange}
+						autoComplete="new-password"
+						required
+					/>
+
+					<label htmlFor="T&Cs">
 						I agree with the Swansea University Windsurfing club{" "}
 						<a href={constitution} target="_blank">
 							constitution
@@ -181,9 +186,15 @@ class CreateAccount extends React.Component {
 						<a href={privacyPolicy} target="_blank">
 							privacy policy
 						</a>
-						<input type="checkbox" required />
 					</label>
-					<button type="submit" value="Log In">
+					<input
+						type="checkbox"
+						className="form-control"
+						id="T&Cs"
+						required
+					/>
+
+					<button type="submit" className="submit" value="Log In">
 						Create Account
 					</button>
 				</form>

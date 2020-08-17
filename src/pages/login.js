@@ -20,7 +20,6 @@ class Login extends React.Component {
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
-		this.handleLogout = this.handleLogout.bind(this);
 		this.handleError = this.handleError.bind(this);
 	}
 	componentDidUpdate() {
@@ -46,22 +45,6 @@ class Login extends React.Component {
 				)
 				.catch((error) => this.handleError(error.code));
 		}
-	}
-	handleLogout() {
-		admin
-			.auth()
-			.setCustomUserClaims("HlTQ9pZJddfIR6gxyveEIWa5oxG2", {
-				admin: true,
-			})
-			.then(() => {});
-		// if (this.props.user) {
-		// 	firebase
-		// 		.auth()
-		// 		.signOut()
-		// 		.catch(function (error) {
-		// 			handleError("logout");
-		// 		});
-		// }
 	}
 	handleError(errorCode) {
 		switch (errorCode) {
@@ -95,37 +78,33 @@ class Login extends React.Component {
 		}
 		return (
 			<div className="article">
+				<h1>Log in</h1>
 				<p>{this.state.errorMessage}</p>
 				<form onSubmit={this.handleLogin}>
-					<label>
-						Email Address:
-						<input
-							type="email"
-							value={this.state.emailInput}
-							onChange={this.handleEmailChange}
-							required
-						/>
-					</label>
-					<label>
-						Password:
-						<input
-							type="password"
-							value={this.state.passwordInput}
-							onChange={this.handlePasswordChange}
-							required
-						/>
-					</label>
-					<button type="submit" value="Log In">
+					<label htmlFor="email">Email Address:</label>
+					<input
+						type="email"
+						className="form-control"
+						id="email"
+						value={this.state.emailInput}
+						onChange={this.handleEmailChange}
+						required
+					/>
+
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						className="form-control"
+						id="password"
+						value={this.state.passwordInput}
+						onChange={this.handlePasswordChange}
+						required
+					/>
+
+					<button type="submit" value="Log In" className="submit">
 						Log In
 					</button>
 				</form>
-				<button
-					type="submit"
-					value="Log In"
-					onClick={this.handleLogout}
-				>
-					Log Out
-				</button>
 			</div>
 		);
 	}
