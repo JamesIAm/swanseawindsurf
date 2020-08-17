@@ -5,7 +5,7 @@ import UserAccordion from "../components/userAccordion";
 import SessionBuilder from "../components/sessionBuilder";
 import SessionAccordion from "../components/sessionAccordion";
 
-class SuperAdmin extends React.Component {
+class Admin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -60,4 +60,4 @@ class SuperAdmin extends React.Component {
 	}
 }
 
-export default SuperAdmin;
+export default Admin;

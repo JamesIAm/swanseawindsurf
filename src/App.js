@@ -37,6 +37,7 @@ class App extends Component {
 			sticky: false,
 			user: null,
 			// newUserDetails: null,
+			userInfo: null,
 			userPermissions: null,
 			userMembership: null,
 			userName: null,
@@ -72,6 +73,7 @@ class App extends Component {
 			.once("value")
 			.then((snapshot) =>
 				this.setState({
+					userInfo: snapshot.val().info,
 					userPermissions: snapshot.val().role,
 					userMembership: snapshot.val().info.private.membership,
 					userName: snapshot.val().info.public.name,
@@ -180,7 +182,10 @@ class App extends Component {
 						<Route
 							path="/my-account"
 							render={(props) => (
-								<MyAccount user={this.state.user} />
+								<MyAccount
+									user={this.state.user}
+									userInfo={this.state.userInfo}
+								/>
 							)}
 						/>
 						<Route

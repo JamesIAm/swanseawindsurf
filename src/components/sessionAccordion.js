@@ -255,10 +255,18 @@ class SessionAccordion extends React.Component {
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<button onClick={() => this.deleteSession(sessionKey)}>
+						<button
+							class="submit"
+							onClick={() => this.deleteSession(sessionKey)}
+						>
 							Yes
 						</button>
-						<button onClick={() => this.cancelDelete()}>No</button>
+						<button
+							class="submit"
+							onClick={() => this.cancelDelete()}
+						>
+							No
+						</button>
 					</Modal.Body>
 				</Modal>
 				<button id={sessionKey} onClick={this.deleteConfirmation}>

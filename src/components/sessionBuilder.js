@@ -175,7 +175,7 @@ class SessionBuilder extends React.Component {
 						checked={this.state.membershipInput === "closed"}
 						onChange={this.handleMembershipChange}
 					/>
-					<button type="submit" class="submit">
+					<button type="submit" className="submit">
 						{this.props.update ? "Save session" : "Create session"}
 					</button>
 				</form>
