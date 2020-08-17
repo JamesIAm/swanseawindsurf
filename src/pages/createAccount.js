@@ -1,6 +1,12 @@
 import React from "react";
 import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect } from "react-router-dom";
+//import {} from "../files";
+// require("../files/constitution.pdf");
+// require("../files/suwc_privay_policy.pdf");
+
+import constitution from "../files/constitution.pdf";
+import privacyPolicy from "../files/suwc_privacy_policy.pdf";
 
 const errMsgLoggedIn = "You are already logged in";
 const errMsgEmailInUse =
@@ -165,6 +171,17 @@ class CreateAccount extends React.Component {
 							autoComplete="new-password"
 							required
 						/>
+					</label>
+					<label>
+						I agree with the Swansea University Windsurfing club{" "}
+						<a href={constitution} target="_blank">
+							constitution
+						</a>{" "}
+						and{" "}
+						<a href={privacyPolicy} target="_blank">
+							privacy policy
+						</a>
+						<input type="checkbox" required />
 					</label>
 					<button type="submit" value="Log In">
 						Create Account
