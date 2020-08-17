@@ -53,6 +53,9 @@ class App extends Component {
 		window.addEventListener("scroll", () => this.stickyNav(this));
 		const height = window.innerHeight;
 		this.setState({ height });
+		// if (this.state.user) {
+		// 	getData();
+		// }
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
@@ -111,8 +114,8 @@ class App extends Component {
 	accountButtons = () => {
 		if (
 			this.state.user &&
-			(this.userPermissions === "admin" ||
-				this.userPermissions === "superAdmin")
+			(this.state.userPermissions === "admin" ||
+				this.state.userPermissions === "superAdmin")
 		) {
 			return (
 				<div className="account-buttons">
@@ -129,7 +132,6 @@ class App extends Component {
 					<div>
 						<LogoutButton user={this.state.user} />
 						<MyAccountButton user={this.state.user} />
-						<AdminButton user={this.state.user} />
 					</div>
 				</div>
 			);

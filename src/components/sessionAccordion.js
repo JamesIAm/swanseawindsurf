@@ -5,6 +5,7 @@ import SessionBuilder from "./sessionBuilder";
 // user={this.props.user} - Recommended props
 // membership={this.props.membership}
 // mode={"user"}
+const cutOffHour = 12;
 const errMsgUnknown =
 	"Something went on our end, please try again or contact us";
 const errMsgPermissions =
@@ -14,10 +15,10 @@ class SessionAccordion extends React.Component {
 		super(props);
 		this.state = {
 			allSessions: null,
-			eligibleToBook: false,
 			allUsers: null,
 			updateModal: null,
 			deleteModal: null,
+			count: null,
 		};
 		this.handleError = this.handleError.bind(this);
 		this.bookSession = this.bookSession.bind(this);
@@ -173,21 +174,31 @@ class SessionAccordion extends React.Component {
 			});
 		}
 	}
-	BookCancelButton = (sessionKey) => {
-		return (
-			<div>
-				{eval(`this.state.allSessions[sessionKey]
+	BookCancelButton = (session, sessionKey) => {
+		if (
+			this.props.membership ||
+			(session.members === "trial" && this.state.count === 0) ||
+			session.members === "open" ||
+			eval(
+				`this.state.allSessions[sessionKey]?.attendees?.${this.props.user.uid}`
+			) ||
+			this.props.mode === "admin"
+		) {
+			return (
+				<div>
+					{eval(`this.state.allSessions[sessionKey]
 					?.attendees?.${this.props.user.uid}`) ? (
-					<button onClick={() => this.cancelBooking(sessionKey)}>
-						Cancel Booking
-					</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
-				) : (
-					<button onClick={() => this.bookSession(sessionKey)}>
-						Book
-					</button>
-				)}
-			</div>
-		);
+						<button onClick={() => this.cancelBooking(sessionKey)}>
+							Cancel Booking
+						</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
+					) : (
+						<button onClick={() => this.bookSession(sessionKey)}>
+							Book
+						</button>
+					)}
+				</div>
+			);
+		}
 	};
 	DisplayMembers = (sessionKey) => {
 		let attendees = this.state.allSessions[sessionKey]?.attendees;
@@ -276,23 +287,14 @@ class SessionAccordion extends React.Component {
 		);
 	};
 	render() {
-		//TODO: Only show sessions that users without membership can book onto
 		return (
 			<div>
 				<p>{this.state.errorMessage}</p>
 				{this.state.allSessions
 					? this.state.sessionKeys.map((sessionKey) => {
 							let session = this.state.allSessions[sessionKey];
-							if (
-								this.props.membership ||
-								(session.members === "trial" &&
-									this.state.count === 0) ||
-								session.members === "open" ||
-								eval(
-									`this.state.allSessions[sessionKey]?.attendees?.${this.props.user.uid}`
-								) ||
-								this.props.mode === "admin"
-							) {
+							let startDate = new Date(session.startTime);
+							if (startDate > Date.now() - 3600000 * cutOffHour) {
 								return (
 									<div key={sessionKey}>
 										<button
@@ -322,11 +324,20 @@ class SessionAccordion extends React.Component {
 												Is the session open to everyone:{" "}
 												{session.members}
 											</p>
+											{this.state.count >= 0 && //TODO: Link to instructions to email us to get membership approved
+											!this.props.membership ? (
+												<p>
+													You will need to purchase
+													membership to continue
+													booking sessions
+												</p>
+											) : null}
 											{this.props.mode === "admin"
 												? this.DisplayMembers(
 														sessionKey
 												  )
 												: this.BookCancelButton(
+														session,
 														sessionKey
 												  )}
 											{this.props.mode === "admin"
@@ -338,8 +349,6 @@ class SessionAccordion extends React.Component {
 										</div>
 									</div>
 								);
-							} else {
-								return null;
 							}
 					  })
 					: null}

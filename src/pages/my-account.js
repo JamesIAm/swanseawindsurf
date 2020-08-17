@@ -12,7 +12,6 @@ class MyAccount extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			redirect: false,
 			displayName: null,
 			email: null,
 			studentNumber: null,
@@ -26,9 +25,7 @@ class MyAccount extends React.Component {
 		this.cancelDelete = this.cancelDelete.bind(this);
 	}
 	componentDidMount() {
-		if (!this.props.user) {
-			this.setState({ redirect: true });
-		} else {
+		if (this.props.user) {
 			let uid = this.props.user.uid;
 			let usersData = firebase
 				.database()
@@ -154,7 +151,8 @@ class MyAccount extends React.Component {
 		);
 	};
 	render() {
-		if (this.state.redirect) {
+		console.log(this.props);
+		if (!this.props.user) {
 			return <Redirect push to="/login" />;
 		}
 		return (
