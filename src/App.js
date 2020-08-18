@@ -65,7 +65,14 @@ class App extends Component {
 				// 	this.updateUserRemote(user);
 				// }
 			} else {
-				this.setState({ user: null });
+				this.setState({
+					user: null,
+					userInfo: null,
+					userPermissions: null,
+					userMembership: null,
+					userName: null,
+					userStudentNumber: null,
+				});
 			}
 		});
 	}

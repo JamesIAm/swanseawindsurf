@@ -2,6 +2,7 @@ import React from "react";
 import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect, useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import AccountBuilder from "../components/accountBuilder";
 
 const errMsgWrong = "Incorrect username or password, please try again";
 const errMsgSpam =
@@ -18,63 +19,54 @@ class MyAccount extends React.Component {
 			userData: this.props.userInfo,
 			allSessions: null,
 			sessionKeys: null,
+			deleteModal: false,
+			updateModal: false,
 		};
 
 		this.handleError = this.handleError.bind(this);
-		this.confirmDeletion = this.confirmDeletion.bind(this);
-		this.cancelDelete = this.cancelDelete.bind(this);
+		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
+		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
+		this.getUserData = this.getUserData.bind(this);
 	}
 	componentDidMount() {
 		if (this.props.user) {
-			let uid = this.props.user.uid;
-			let usersData = firebase
-				.database()
-				.ref(`users/${uid}/info`)
-				.once("value")
-				.then((snapshot) => this.setState({ userData: snapshot.val() }))
-				.catch((error) => this.handleError(error));
+			this.getUserData();
 		}
 	}
-	confirmDeletion() {
+	getUserData() {
+		let uid = this.props.user.uid;
+		let usersData = firebase
+			.database()
+			.ref(`users/${uid}/info`)
+			.once("value")
+			.then((snapshot) => this.setState({ userData: snapshot.val() }))
+			.catch((error) => this.handleError(error));
+	}
+	toggleDeleteModal() {
 		this.setState({
-			deleteModal: true,
+			deleteModal: !this.state.deleteModal,
 		});
 	}
-	cancelDelete() {
+	toggleUpdateModal() {
 		this.setState({
-			deleteModal: false,
+			updateModal: !this.state.updateModal,
 		});
 	}
-	handleDelete() {
-		// firebase
-		// 	.database()
-		// 	.ref(`/pages/sign-up/sessions/${sessionKey}`)
-		// 	.remove()
-		// 	.then(() => this.cancelDelete())
-		// 	.then(() => this.getSessionsForDeletion())
-		// 	.catch((error) => this.handleError(error));
-		this.getSessionsForDeletion();
-	}
-	async getSessionsForDeletion(sessions) {
-		firebase
+
+	async handleDelete() {
+		// this.getSessionsForDeletion();
+		await firebase
 			.database()
 			.ref("pages/sign-up/sessions")
 			.once("value")
 			.then((snapshot) =>
-				this.setState(
-					{
-						allSessions: snapshot.val(),
-						sessionKeys: Object.keys(snapshot.val()),
-					},
-					() => {
-						console.log(this.deleteAttendance());
-					}
-				)
+				this.setState({
+					allSessions: snapshot.val(),
+					sessionKeys: Object.keys(snapshot.val()),
+				})
 			)
 			.catch((error) => this.handleError(error));
-	}
-	deleteAttendance() {
-		this.state.sessionKeys.map((sessionKey) => {
+		await this.state.sessionKeys.map((sessionKey) => {
 			if (
 				eval(
 					`this.state?.allSessions[sessionKey]?.attendees?.${this.props.user.uid}`
@@ -89,18 +81,16 @@ class MyAccount extends React.Component {
 					.catch((error) => this.handleError(error));
 			}
 		});
-		this.deleteAccount();
-	}
-	deleteAccount() {
-		firebase
+		await firebase
 			.database()
 			.ref(`/users/${this.props.user.uid}/info/public`)
 			.remove()
 			.then(firebase.auth().currentUser.delete())
-			.then(this.cancelDelete())
+			.then(this.toggleDeleteModal())
 			.then(() => this.setState({ redirect: true }))
 			.catch((error) => this.handleError(error));
 	}
+
 	handleError(errorCode) {
 		switch (errorCode) {
 			default:
@@ -117,31 +107,31 @@ class MyAccount extends React.Component {
 				<button
 					className="submit"
 					style={{ backgroundColor: "maroon" }}
-					onClick={this.confirmDeletion}
+					onClick={this.toggleDeleteModal}
 				>
 					Delete Account
 				</button>
 				<Modal
 					show={this.state.deleteModal}
-					onHide={this.cancelDelete}
+					onHide={this.toggleDeleteModal}
 					backdrop="static"
 					keyboard={false}
 				>
 					<Modal.Header closeButton>
 						<Modal.Title>
-							Are you sure you want to delete this session
+							Are you sure you want to delete your account
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<button
-							class="submit"
+							className="submit"
 							onClick={() => this.handleDelete()}
 						>
 							Yes
 						</button>
 						<button
-							class="submit"
-							onClick={() => this.cancelDelete()}
+							className="submit"
+							onClick={() => this.toggleDeleteModal()}
 						>
 							No
 						</button>
@@ -150,8 +140,39 @@ class MyAccount extends React.Component {
 			</div>
 		);
 	};
+	updateButton = () => {
+		if (this.state.userData) {
+			return (
+				<div>
+					<button className="submit" onClick={this.toggleUpdateModal}>
+						Update Account Details
+					</button>
+					<Modal
+						show={this.state.updateModal}
+						onHide={this.toggleUpdateModal}
+						backdrop="static"
+						keyboard={false}
+					>
+						<Modal.Header closeButton>
+							<Modal.Title>Update account details</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<AccountBuilder
+								user={this.props.user}
+								userData={this.state.userData}
+								mode={"update"}
+								toggleUpdateModal={this.toggleUpdateModal}
+								getUserData={this.getUserData}
+							/>
+						</Modal.Body>
+					</Modal>
+				</div>
+			);
+		} else {
+			return <p>Loading...</p>;
+		}
+	};
 	render() {
-		console.log(this.props);
 		if (!this.props.user) {
 			return <Redirect push to="/login" />;
 		}
@@ -181,6 +202,7 @@ class MyAccount extends React.Component {
 							: "false"
 						: "false"}
 				</p>
+				{this.updateButton()}
 				{this.deleteButton()}
 			</div>
 		);
