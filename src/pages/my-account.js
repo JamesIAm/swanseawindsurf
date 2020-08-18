@@ -220,7 +220,7 @@ class MyAccount extends React.Component {
 					</div>
 				) : this.state?.userData?.private?.membership ? (
 					<p>Membership Status: true</p>
-				) : (
+				) : this.state?.userData?.public ? (
 					<div>
 						<p>Membership Status: false </p>
 						<p>
@@ -237,6 +237,8 @@ class MyAccount extends React.Component {
 							Request Membership Approval
 						</button>
 					</div>
+				) : (
+					<p>Loading...</p>
 				)}
 				{this.updateButton()}
 				{this.deleteButton()}

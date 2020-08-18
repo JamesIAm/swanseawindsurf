@@ -46,12 +46,15 @@ class Login extends React.Component {
 						.signInWithEmailAndPassword(
 							this.state.emailInput,
 							this.state.passwordInput
-						);
+						)
+						.catch((error) => this.handleError(error));
 				})
-				.catch((error) => this.handleError(error.code));
+				.catch((error) => this.handleError(error));
 		}
 	}
-	handleError(errorCode) {
+	handleError(error) {
+		let errorCode = error.code;
+		let errorMessage = error.message;
 		switch (errorCode) {
 			case "auth/wrong-password":
 				this.setState({

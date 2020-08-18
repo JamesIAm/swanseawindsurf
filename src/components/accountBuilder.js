@@ -73,7 +73,8 @@ class AccountBuilder extends React.Component {
 						.createUserWithEmailAndPassword(
 							this.state.emailInput,
 							this.state.passwordInput
-						);
+						)
+						.catch((error) => this.handleError(error.code));
 				})
 				.then(() => this.addUserDetails())
 				.then(() => this.setState({ successMessage: succMsgCreated }))
