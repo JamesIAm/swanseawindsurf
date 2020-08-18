@@ -20,6 +20,7 @@ class UserAccordion extends React.Component {
 		this.makeAdmin = this.makeAdmin.bind(this);
 		this.makeUser = this.makeUser.bind(this);
 		this.addMembership = this.addMembership.bind(this);
+		this.denyRequest = this.denyRequest.bind(this);
 		this.revokeMembership = this.revokeMembership.bind(this);
 		this.toggleAccordion = this.toggleAccordion.bind(this);
 	}
@@ -62,11 +63,26 @@ class UserAccordion extends React.Component {
 			.catch((error) => this.handleError(error));
 		this.getUsers();
 	}
-	addMembership(uid) {
-		firebase
+	async addMembership(uid, user) {
+		await firebase
 			.database()
 			.ref(`users/${uid}/info/private/membership`)
 			.set(true);
+		if (user.info?.public?.requested !== null) {
+			await firebase
+				.database()
+				.ref(`users/${uid}/info/public/requested`)
+				.remove();
+		}
+		this.getUsers();
+	}
+	async denyRequest(uid, user) {
+		if (user.info?.public?.requested !== null) {
+			await firebase
+				.database()
+				.ref(`users/${uid}/info/public/requested`)
+				.remove();
+		}
 		this.getUsers();
 	}
 	revokeMembership(uid) {
@@ -124,23 +140,22 @@ class UserAccordion extends React.Component {
 		return (
 			<div className="Admin-Buttons">
 				<div className="addMembership">
-					{user.info.private ? (
-						user.info.private.membership ? (
-							<button
-								onClick={() => this.revokeMembership(userKey)}
-							>
-								Remove membership
-							</button>
-						) : (
-							<button onClick={() => this.addMembership(userKey)}>
-								Add membership
-							</button>
-						)
+					{user.info.private?.membership ? (
+						<button onClick={() => this.revokeMembership(userKey)}>
+							Remove membership
+						</button>
 					) : (
-						<button onClick={() => this.addMembership(userKey)}>
+						<button
+							onClick={() => this.addMembership(userKey, user)}
+						>
 							Add membership
 						</button>
 					)}
+					{user.info?.public?.requested ? (
+						<button onClick={() => this.denyRequest(userKey, user)}>
+							Deny request
+						</button>
+					) : null}
 				</div>
 			</div>
 		);
@@ -187,6 +202,14 @@ class UserAccordion extends React.Component {
 											onClick={() =>
 												this.toggleAccordion(userKey)
 											}
+											style={
+												user.info.public.requested
+													? {
+															backgroundColor:
+																"maroon",
+													  }
+													: null
+											}
 										>
 											{user.info.public.name}
 										</button>
@@ -208,7 +231,10 @@ class UserAccordion extends React.Component {
 											<p>Uid: {userKey}</p>
 											<p>
 												Membership Status:{" "}
-												{user.info?.private?.membership
+												{user?.info?.public?.requested
+													? "requested"
+													: user.info?.private
+															?.membership
 													? "true"
 													: "false"}
 											</p>

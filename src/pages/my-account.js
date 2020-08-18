@@ -3,6 +3,7 @@ import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect, useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import AccountBuilder from "../components/accountBuilder";
+import emailjs from "emailjs-com";
 
 const errMsgWrong = "Incorrect username or password, please try again";
 const errMsgSpam =
@@ -26,6 +27,7 @@ class MyAccount extends React.Component {
 		this.handleError = this.handleError.bind(this);
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
+		this.requestMembership = this.requestMembership.bind(this);
 		this.getUserData = this.getUserData.bind(this);
 	}
 	componentDidMount() {
@@ -51,6 +53,20 @@ class MyAccount extends React.Component {
 		this.setState({
 			updateModal: !this.state.updateModal,
 		});
+	}
+	requestMembership() {
+		emailjs.send(
+			"gmail",
+			"template_AoDOdYv5",
+			{ uid: this.props.user.uid },
+			"user_FmdvbZkj8WWD2IjEwwXis"
+		);
+		firebase
+			.database()
+			.ref(`users/${this.props.user.uid}/info/public/requested`)
+			.set(true)
+			.then(() => this.getUserData())
+			.catch((error) => this.handleError(error));
 	}
 
 	async handleDelete() {
@@ -192,16 +208,36 @@ class MyAccount extends React.Component {
 						? this.state.userData.public.studentNumber
 						: null}
 				</p>
-				<p>
-					Membership Status:{" "}
-					{this.state.userData
-						? this.state.userData.private
-							? this.state.userData.private.membership
-								? "true"
-								: "false"
-							: "false"
-						: "false"}
-				</p>
+				{this.state?.userData?.public?.requested ? (
+					<div>
+						<p>Membership Status: requested</p>
+						<p>
+							We will strive to fulfil your request as soon as
+							possible, but if you need any further assistance
+							please contact one of the members of the committee
+							on Facebook.
+						</p>
+					</div>
+				) : this.state?.userData?.private?.membership ? (
+					<p>Membership Status: true</p>
+				) : (
+					<div>
+						<p>Membership Status: false </p>
+						<p>
+							If you have bought membership on the Swansea Union
+							website, click below to let us know. We'll double
+							check the data and then update your membership
+							status.
+						</p>
+						<button
+							id="membership-button"
+							className="submit"
+							onClick={() => this.requestMembership()}
+						>
+							Request Membership Approval
+						</button>
+					</div>
+				)}
 				{this.updateButton()}
 				{this.deleteButton()}
 			</div>
