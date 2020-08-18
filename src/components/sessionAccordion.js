@@ -2,6 +2,7 @@ import React from "react";
 import firebase, { auth, provider, database } from "../components/firebase.js";
 import Modal from "react-bootstrap/Modal";
 import SessionBuilder from "./sessionBuilder";
+import moment from "moment";
 // user={this.props.user} - Recommended props
 // membership={this.props.membership}
 // mode={"user"}
@@ -57,10 +58,31 @@ class SessionAccordion extends React.Component {
 			.ref("pages/sign-up/sessions")
 			.once("value")
 			.then((snapshot) =>
-				this.setState({
-					allSessions: snapshot.val(),
-					sessionKeys: Object.keys(snapshot.val()),
-				})
+				this.setState(
+					{
+						allSessions: snapshot.val(),
+					},
+					() => {
+						this.setState({
+							sessionKeys: Object.keys(snapshot.val()).sort(
+								(sessionKeyA, sessionKeyB) => {
+									return (
+										new Date(
+											this.state.allSessions[
+												sessionKeyA
+											].startTime
+										) -
+										new Date(
+											this.state.allSessions[
+												sessionKeyB
+											].startTime
+										)
+									);
+								}
+							),
+						});
+					}
+				)
 			)
 			.then(() => this.checkMembership())
 			.catch((error) => this.handleError(error));
@@ -205,7 +227,7 @@ class SessionAccordion extends React.Component {
 		if (attendees) {
 			let uids = Object.keys(attendees);
 			return (
-				<div className="sub-accordion">
+				<div className="accordion-row">
 					{uids.map((uid) => {
 						if (eval(`this.state.allUsers?.${uid}`)) {
 							let user = eval(`this.state.allUsers.${uid}`);
@@ -216,11 +238,13 @@ class SessionAccordion extends React.Component {
 										<li>
 											{user.info.public.studentNumber}
 										</li>
-										{/* <li>
-											{user.info?.private?.membership
-												? "Has purchased Sports Swansea Membership"
-												: "Hasn't purchased Sports Swansea Membership"}
-										</li> */}
+										{
+											<li>
+												{user.info?.private?.membership
+													? "Member"
+													: "Non-Member"}
+											</li>
+										}
 									</ul>
 								</div>
 							);
@@ -290,10 +314,17 @@ class SessionAccordion extends React.Component {
 		return (
 			<div>
 				<p>{this.state.errorMessage}</p>
-				{this.state.allSessions
+				{this.state.sessionKeys
 					? this.state.sessionKeys.map((sessionKey) => {
 							let session = this.state.allSessions[sessionKey];
 							let startDate = new Date(session.startTime);
+							let placesLeft = session.placeLimit;
+							if (eval(session.attendees)) {
+								placesLeft -= Object.values(
+									session.attendees
+								).filter((attendee) => attendee === true)
+									.length;
+							}
 							if (startDate > Date.now() - 3600000 * cutOffHour) {
 								return (
 									<div key={sessionKey}>
@@ -303,9 +334,20 @@ class SessionAccordion extends React.Component {
 												this.toggleAccordion(sessionKey)
 											}
 										>
-											{session.name +
-												" " +
-												session.startTime}
+											<div className="accordion-row">
+												<ul>
+													<li>{session.name}</li>
+													<li>
+														{moment(
+															session.startTime
+														).format("DD-MM-YYYY")}
+													</li>
+													<li>
+														{placesLeft +
+															" Places left"}
+													</li>
+												</ul>
+											</div>
 										</button>
 										<div
 											className="accordion-panel"
@@ -318,14 +360,27 @@ class SessionAccordion extends React.Component {
 											}}
 										>
 											<p>{session.description}</p>
-											<p>{session.startTime}</p>
-											<p>{session.endTime}</p>
+											<p>
+												Starts:{" "}
+												{moment(
+													session.startTime
+												).format(
+													"dddd, MMMM Do YYYY, hh:mm a"
+												)}
+											</p>
+											<p>
+												Ends:{" "}
+												{moment(session.endTime).format(
+													"dddd, MMMM Do YYYY, hh:mm a"
+												)}
+											</p>
 											<p>
 												Is the session open to everyone:{" "}
 												{session.members}
 											</p>
 											{this.state.count >= 0 && //TODO: Link to instructions to email us to get membership approved
-											!this.props.membership ? (
+											!this.props.membership &&
+											this.props.mode !== "admin" ? (
 												<p>
 													You will need to purchase
 													membership to continue

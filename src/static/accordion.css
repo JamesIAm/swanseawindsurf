@@ -30,28 +30,28 @@ button:focus {
 	margin: 1px 0px 1px 0px
 }
 
-.sub-accordion div {
+.accordion-row div {
 	background-color: var(--color-2);
 }
 
 @media (min-width:850px) {
-	.sub-accordion div ul {
+	.accordion-row ul {
 		margin-bottom: 0.2vh;
 		padding: 0;
 	}
-	.sub-accordion div ul li {
+	.accordion-row ul li {
 		display: inline-block;
-		width: 50%;
+		width: 33%;
 		margin: 0;
-		padding-left: 20%;
+		text-align: center;
 	}
 }
 
 @media (max-width:849px) {
-	.sub-accordion div ul {
+	.accordion-row ul {
 		margin-bottom: 1vh
 	}
-	.sub-accordion div ul li {
+	.accordion-row ul li {
 		text-align: center;
 	}
 }
