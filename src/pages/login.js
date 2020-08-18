@@ -39,10 +39,15 @@ class Login extends React.Component {
 		if (!this.props.user) {
 			firebase
 				.auth()
-				.signInWithEmailAndPassword(
-					this.state.emailInput,
-					this.state.passwordInput
-				)
+				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+				.then(() => {
+					firebase
+						.auth()
+						.signInWithEmailAndPassword(
+							this.state.emailInput,
+							this.state.passwordInput
+						);
+				})
 				.catch((error) => this.handleError(error.code));
 		}
 	}
