@@ -15,13 +15,6 @@ import Login from "./pages/login";
 import CreateAccount from "./pages/createAccount";
 import MyAccount from "./pages/my-account";
 import Admin from "./pages/admin";
-import {
-	LoginButton,
-	CreateAccountButton,
-	LogoutButton,
-	MyAccountButton,
-	AdminButton,
-} from "./components/accountButtons";
 
 import firebase, { auth, provider } from "./components/firebase.js";
 //require("firebase/auth");
@@ -118,41 +111,6 @@ class App extends Component {
 				break;
 		}
 	}
-	accountButtons = () => {
-		if (
-			this.state.user &&
-			(this.state.userPermissions === "admin" ||
-				this.state.userPermissions === "superAdmin")
-		) {
-			return (
-				<div className="account-buttons">
-					<div>
-						<LogoutButton user={this.state.user} />
-						<MyAccountButton user={this.state.user} />
-						<AdminButton user={this.state.user} />
-					</div>
-				</div>
-			);
-		} else if (this.state.user) {
-			return (
-				<div className="account-buttons">
-					<div>
-						<LogoutButton user={this.state.user} />
-						<MyAccountButton user={this.state.user} />
-					</div>
-				</div>
-			);
-		} else {
-			return (
-				<div className="account-buttons">
-					<div>
-						<LoginButton />
-						<CreateAccountButton />
-					</div>
-				</div>
-			);
-		}
-	};
 	render() {
 		return (
 			<Router>
@@ -162,7 +120,6 @@ class App extends Component {
 						<br />
 						Windsurfing Club
 					</h1>
-					{this.accountButtons()}
 				</div>
 				<div
 					className={
@@ -171,7 +128,11 @@ class App extends Component {
 							: "navigation-div"
 					}
 				>
-					<Navigation showMobileNav={this.state.showMobileNav} />
+					<Navigation
+						user={this.state.user}
+						permissions={this.state.userPermissions}
+						showMobileNav={this.state.showMobileNav}
+					/>
 				</div>
 				<div className="content">
 					<Switch>

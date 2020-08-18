@@ -10,29 +10,8 @@ class Admin extends React.Component {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount() {
-		// if (this.props.user) {
-		// 	let uid = this.props.user.uid;
-		// 	if (!this.state.allUsers) {
-		// 		this.getUsers();
-		// let userPermissions = firebase
-		// 	.database()
-		// 	.ref(`users/${uid}/role`)
-		// 	.once("value")
-		// 	.then(function (snapshot) {
-		// 		console.log(snapshot.val());
-		// 	})
-		// 	.catch((error) => this.handleError(error));
-		// 	}
-		// }
-	}
-	componentDidUpdate() {
-		// if (this.props.user) {
-		// 	if (!this.state.allUsers && !this.state.errorMessage) {
-		// 		this.getUsers();
-		// 	}
-		// }
-	}
+	componentDidMount() {}
+	componentDidUpdate() {}
 	render() {
 		// TODO: if (this.props.permissions !== ("admin" || "superAdmin")) {
 		// 	return <Redirect push to="/my-account" />;

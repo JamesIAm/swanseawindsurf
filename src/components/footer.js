@@ -34,7 +34,7 @@ class Footer extends React.Component {
 					<div className="col-8">
 						<p>
 							If you have any issues, please report them to&nbsp;
-							<a href="mailto:james.nahajski+swanseawindsurf@gmail.com?subject=Website issue">
+							<a href="mailto:windsurfing+website@swansea-sports.co.uk?subject=Website issue">
 								James
 							</a>
 						</p>

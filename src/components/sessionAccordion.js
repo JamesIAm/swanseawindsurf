@@ -1,5 +1,6 @@
 import React from "react";
 import firebase, { auth, provider, database } from "../components/firebase.js";
+import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import SessionBuilder from "./sessionBuilder";
 import moment from "moment";
@@ -314,6 +315,19 @@ class SessionAccordion extends React.Component {
 		return (
 			<div>
 				<p>{this.state.errorMessage}</p>
+				{this.state.count >= 0 && //TODO: Link to instructions to email us to get membership approved
+				!this.props.membership &&
+				this.props.mode !== "admin" ? (
+					<p>
+						You will need to purchase Windsurfing membership on the{" "}
+						<a href="https://www.swansea-union.co.uk/activities/club/windsurfing/">
+							Swansea Union Website
+						</a>{" "}
+						to continue booking sessions. If you have already done
+						this, you can request that we update your status in{" "}
+						<Link to="/my-account">My Account</Link>
+					</p>
+				) : null}
 				{this.state.sessionKeys
 					? this.state.sessionKeys.map((sessionKey) => {
 							let session = this.state.allSessions[sessionKey];

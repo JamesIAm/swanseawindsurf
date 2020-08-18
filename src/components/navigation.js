@@ -1,35 +1,107 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../static/style.css";
+import {
+	LoginButton,
+	CreateAccountButton,
+	LogoutButton,
+	MyAccountButton,
+	AdminButton,
+} from "./accountButtons";
 
 class Navigation extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showMobileNav: false,
+			showMobileAccountNav: false,
 		};
 		this.toggleNav = this.toggleNav.bind(this);
+		this.toggleAccountNav = this.toggleAccountNav.bind(this);
 		this.minimiseNav = this.minimiseNav.bind(this);
 	}
 	componentDidMount() {
 		window.addEventListener("scroll", () =>
-			this.state.showMobileNav ? this.minimiseNav(this) : null
+			this.state.showMobileNav || this.state.showMobileAccountNav
+				? this.minimiseNav(this)
+				: null
 		);
 	}
 	minimiseNav() {
-		this.setState({ showMobileNav: false });
+		this.setState({ showMobileNav: false, showMobileAccountNav: false });
 	}
 	toggleNav() {
-		const currentState = this.state.showMobileNav;
-		this.setState({ showMobileNav: !currentState });
+		let currentState = this.state.showMobileNav;
+		this.setState({
+			showMobileNav: !currentState,
+			showMobileAccountNav: false,
+		});
+	}
+	toggleAccountNav() {
+		let currentState = this.state.showMobileAccountNav;
+		this.setState({
+			showMobileAccountNav: !currentState,
+			showMobileNav: false,
+		});
 	}
 
 	render() {
 		return (
 			<div>
-				<button onClick={this.toggleNav} className="mobile_nav_button">
+				<button
+					onClick={() => this.toggleNav()}
+					className="mobile_nav_button"
+				>
 					Menu
 				</button>
-
+				<button
+					onClick={() => this.toggleAccountNav()}
+					className="mobile_nav_button"
+					id="account_nav_button"
+				>
+					Account
+				</button>
+				<ul
+					className="navlist"
+					style={{
+						display: this.state.showMobileAccountNav ? "block" : "",
+					}}
+					id="account_nav"
+				>
+					{this.props.user &&
+					(this.props.permissions === "admin" ||
+						this.props.permissions === "superAdmin") ? (
+						<div>
+							<li>
+								<LogoutButton user={this.props.user} />
+							</li>
+							<li>
+								<MyAccountButton user={this.props.user} />
+							</li>
+							<li>
+								<AdminButton user={this.props.user} />
+							</li>
+						</div>
+					) : this.props.user ? (
+						<div>
+							<li>
+								<LogoutButton user={this.props.user} />
+							</li>
+							<li>
+								<MyAccountButton user={this.props.user} />
+							</li>
+						</div>
+					) : (
+						<div>
+							<li>
+								<LoginButton />
+							</li>
+							<li>
+								<CreateAccountButton />
+							</li>
+						</div>
+					)}
+				</ul>
 				<ul
 					className="navlist"
 					style={{ display: this.state.showMobileNav ? "block" : "" }}

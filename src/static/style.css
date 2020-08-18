@@ -97,6 +97,9 @@ body {
         padding: 15px 0px;
         display: none
     }
+    #account_nav {
+        right: 0;
+    }
     .navlist li {
         padding: 10px;
         background-color: var(--color-4);
@@ -111,8 +114,11 @@ body {
         background-color: var(--color-4);
         border-color: var(--color-5);
         border-radius: 4px;
-        vertical-align: center;
         box-shadow: 0px 0px 2px var(--color-5);
+    }
+    #account_nav_button {
+        left: auto;
+        right: 15px;
     }
 }
 
@@ -120,6 +126,15 @@ body {
     /*@MEDIA HERE**********************************/
     .navigation-div {
         position: static;
+    }
+    #account_nav {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: auto;
+        min-width: auto;
+        height: auto;
+        padding: 0;
     }
     .navlist {
         display: flex;
@@ -134,6 +149,9 @@ body {
     .navlist li {
         padding: 0;
         display: inline-block;
+    }
+    #account_nav li {
+        display: block;
     }
     .mobile_nav_button {
         display: none;
@@ -150,6 +168,14 @@ body {
 .sticky+.content {
     padding-top: 54px;
     /*Must be the same as the #navigation-div height*/
+}
+
+.sticky #account_nav {
+    display: none;
+}
+
+#account_nav li {
+    display: block;
 }
 
 /*FOOTER*/

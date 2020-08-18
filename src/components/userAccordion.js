@@ -68,7 +68,7 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref(`users/${uid}/info/private/membership`)
 			.set(true);
-		if (user.info?.public?.requested !== null) {
+		if (user.info?.public?.requested) {
 			await firebase
 				.database()
 				.ref(`users/${uid}/info/public/requested`)

@@ -23,7 +23,7 @@ button:focus {
 
 .accordion-panel button {
 	width: 100%;
-	padding: 5px;
+	padding: 1vh;
 	border-width: 0;
 	background-color: var(--color-1);
 	color: var(--color-3);

@@ -1,7 +1,7 @@
 .submit {
 	width: 100%;
-	padding: 1%;
-	margin-top: 3%;
+	padding: 1.5vh;
+	margin-top: 2%;
 	border-radius: 5px;
 	border-width: 0;
 	background-color: var(--color-1);
