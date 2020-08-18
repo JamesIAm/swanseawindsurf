@@ -54,7 +54,7 @@ class SessionAccordion extends React.Component {
 		}
 	}
 	getSessions() {
-		let sessions = firebase
+		firebase
 			.database()
 			.ref("pages/sign-up/sessions")
 			.once("value")
@@ -64,28 +64,32 @@ class SessionAccordion extends React.Component {
 						allSessions: snapshot.val(),
 					},
 					() => {
-						this.setState({
-							sessionKeys: Object.keys(snapshot.val()).sort(
-								(sessionKeyA, sessionKeyB) => {
-									return (
-										new Date(
-											this.state.allSessions[
-												sessionKeyA
-											].startTime
-										) -
-										new Date(
-											this.state.allSessions[
-												sessionKeyB
-											].startTime
-										)
-									);
-								}
-							),
-						});
+						this.setState(
+							{
+								sessionKeys: Object.keys(snapshot.val()).sort(
+									(sessionKeyA, sessionKeyB) => {
+										return (
+											new Date(
+												this.state.allSessions[
+													sessionKeyA
+												].startTime
+											) -
+											new Date(
+												this.state.allSessions[
+													sessionKeyB
+												].startTime
+											)
+										);
+									}
+								),
+							},
+							() => {
+								this.checkMembership();
+							}
+						);
 					}
 				)
 			)
-			.then(() => this.checkMembership())
 			.catch((error) => this.handleError(error));
 	}
 	getUsers() {
@@ -103,9 +107,13 @@ class SessionAccordion extends React.Component {
 	checkMembership() {
 		let count = 0;
 		let uid = this.props.user.uid;
-		this.state.sessionKeys.filter((value, index, array) => {
+		this.state?.sessionKeys.map((sessionKey) => {
 			//console.log(this.state.allSessions[value]);
-			if (eval(`this.state.allSessions[value]?.attendees?.${uid}`)) {
+			if (
+				Object.keys(
+					this.state?.allSessions[sessionKey]?.attendees
+				).includes(uid)
+			) {
 				count++;
 			}
 		});
@@ -197,20 +205,22 @@ class SessionAccordion extends React.Component {
 			});
 		}
 	}
-	BookCancelButton = (session, sessionKey) => {
+	BookCancelButton = (session, sessionKey, startDate) => {
 		if (
-			this.props.membership ||
-			(session.members === "trial" && this.state.count === 0) ||
-			session.members === "open" ||
-			eval(
-				`this.state.allSessions[sessionKey]?.attendees?.${this.props.user.uid}`
-			) ||
-			this.props.mode === "admin"
+			(this.props.membership ||
+				(session.members === "trial" && this.state.count === 0) ||
+				session.members === "open" ||
+				this.state.allSessions[sessionKey]?.attendees?.[
+					this.props.user.uid
+				] ||
+				this.props.mode === "admin") &&
+			startDate > Date.now() - 3600000 * cutOffHour //TODO: plus?
 		) {
 			return (
 				<div>
-					{eval(`this.state.allSessions[sessionKey]
-					?.attendees?.${this.props.user.uid}`) ? (
+					{this.state.allSessions[sessionKey]?.attendees?.[
+						this.props.user.uid
+					] ? (
 						<button onClick={() => this.cancelBooking(sessionKey)}>
 							Cancel Booking
 						</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
@@ -230,8 +240,8 @@ class SessionAccordion extends React.Component {
 			return (
 				<div className="accordion-row">
 					{uids.map((uid) => {
-						if (eval(`this.state.allUsers?.${uid}`)) {
-							let user = eval(`this.state.allUsers.${uid}`);
+						if (Object.keys(this.state?.allUsers).includes(uid)) {
+							let user = this.state.allUsers[uid];
 							return (
 								<div key={uid}>
 									<ul>
@@ -333,13 +343,18 @@ class SessionAccordion extends React.Component {
 							let session = this.state.allSessions[sessionKey];
 							let startDate = new Date(session.startTime);
 							let placesLeft = session.placeLimit;
-							if (eval(session.attendees)) {
+							if (session.attendees) {
 								placesLeft -= Object.values(
 									session.attendees
 								).filter((attendee) => attendee === true)
 									.length;
 							}
-							if (startDate > Date.now() - 3600000 * cutOffHour) {
+							if (
+								startDate > Date.now() - 3600000 * cutOffHour ||
+								this.state.allSessions[sessionKey]?.attendees?.[
+									this.props.user.uid
+								]
+							) {
 								return (
 									<div key={sessionKey}>
 										<button
@@ -405,10 +420,13 @@ class SessionAccordion extends React.Component {
 												? this.DisplayMembers(
 														sessionKey
 												  )
-												: this.BookCancelButton(
+												: placesLeft >= 0
+												? this.BookCancelButton(
 														session,
-														sessionKey
-												  )}
+														sessionKey,
+														startDate
+												  )
+												: null}
 											{this.props.mode === "admin"
 												? this.AdminOptions(
 														sessionKey,

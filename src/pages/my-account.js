@@ -84,9 +84,9 @@ class MyAccount extends React.Component {
 			.catch((error) => this.handleError(error));
 		await this.state.sessionKeys.map((sessionKey) => {
 			if (
-				eval(
-					`this.state?.allSessions[sessionKey]?.attendees?.${this.props.user.uid}`
-				)
+				this.state?.allSessions[sessionKey]?.attendees?.[
+					this.props.user.uid
+				]
 			) {
 				firebase
 					.database()
