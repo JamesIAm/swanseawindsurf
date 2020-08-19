@@ -7,6 +7,10 @@
 	border-color: var(--color-5);
 }
 
+.booked {
+	background-color: var(--color-5);
+}
+
 .accordion:hover {
 	background-color: var(--color-2);
 }

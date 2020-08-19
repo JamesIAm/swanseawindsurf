@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import SessionBuilder from "./sessionBuilder";
 import moment from "moment";
+import "../static/accordion.css";
 // user={this.props.user} - Recommended props
 // membership={this.props.membership}
 // mode={"user"}
@@ -109,19 +110,20 @@ class SessionAccordion extends React.Component {
 		let uid = this.props.user.uid;
 		this.state?.sessionKeys.map((sessionKey) => {
 			//console.log(this.state.allSessions[value]);
-			if (
-				Object.keys(
-					this.state?.allSessions[sessionKey]?.attendees
-				).includes(uid)
-			) {
-				count++;
+			if (this.state?.allSessions[sessionKey]?.attendees) {
+				if (
+					Object.keys(
+						this.state?.allSessions[sessionKey]?.attendees
+					).includes(uid)
+				) {
+					count++;
+				}
 			}
 		});
-		if (count === 0 || this.props.membership) {
-			this.setState({
-				count,
-			});
-		}
+
+		this.setState({
+			count,
+		});
 	}
 	bookSession(sessionId) {
 		firebase
@@ -205,33 +207,27 @@ class SessionAccordion extends React.Component {
 			});
 		}
 	}
-	BookCancelButton = (session, sessionKey, startDate) => {
-		if (
-			(this.props.membership ||
-				(session.members === "trial" && this.state.count === 0) ||
-				session.members === "open" ||
-				this.state.allSessions[sessionKey]?.attendees?.[
+	BookCancelButton = (session, sessionKey, startDate, placesLeft) => {
+		return (
+			<div>
+				{this.state.allSessions[sessionKey]?.attendees?.[
 					this.props.user.uid
-				] ||
-				this.props.mode === "admin") &&
-			startDate > Date.now() - 3600000 * cutOffHour //TODO: plus?
-		) {
-			return (
-				<div>
-					{this.state.allSessions[sessionKey]?.attendees?.[
-						this.props.user.uid
-					] ? (
-						<button onClick={() => this.cancelBooking(sessionKey)}>
-							Cancel Booking
-						</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
-					) : (
-						<button onClick={() => this.bookSession(sessionKey)}>
-							Book
-						</button>
-					)}
-				</div>
-			);
-		}
+				] && startDate > Date.now() ? (
+					<button onClick={() => this.cancelBooking(sessionKey)}>
+						Cancel Booking
+					</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
+				) : (this.props.membership ||
+						(session.members === "trial" &&
+							this.state.count === 0) ||
+						session.members === "open") &&
+				  startDate > Date.now() - 3600000 * cutOffHour &&
+				  placesLeft > 0 ? (
+					<button onClick={() => this.bookSession(sessionKey)}>
+						Book
+					</button>
+				) : null}
+			</div>
+		);
 	};
 	DisplayMembers = (sessionKey) => {
 		let attendees = this.state.allSessions[sessionKey]?.attendees;
@@ -325,7 +321,7 @@ class SessionAccordion extends React.Component {
 		return (
 			<div>
 				<p>{this.state.errorMessage}</p>
-				{this.state.count >= 0 && //TODO: Link to instructions to email us to get membership approved
+				{this.state.count > 0 &&
 				!this.props.membership &&
 				this.props.mode !== "admin" ? (
 					<p>
@@ -350,7 +346,7 @@ class SessionAccordion extends React.Component {
 									.length;
 							}
 							if (
-								startDate > Date.now() - 3600000 * cutOffHour ||
+								startDate > Date.now() ||
 								this.state.allSessions[sessionKey]?.attendees?.[
 									this.props.user.uid
 								]
@@ -358,7 +354,15 @@ class SessionAccordion extends React.Component {
 								return (
 									<div key={sessionKey}>
 										<button
-											className="accordion"
+											className={
+												this.state.allSessions[
+													sessionKey
+												]?.attendees?.[
+													this.props.user.uid
+												]
+													? "accordion booked"
+													: "accordion"
+											}
 											onClick={() =>
 												this.toggleAccordion(sessionKey)
 											}
@@ -420,13 +424,12 @@ class SessionAccordion extends React.Component {
 												? this.DisplayMembers(
 														sessionKey
 												  )
-												: placesLeft >= 0
-												? this.BookCancelButton(
+												: this.BookCancelButton(
 														session,
 														sessionKey,
-														startDate
-												  )
-												: null}
+														startDate,
+														placesLeft
+												  )}
 											{this.props.mode === "admin"
 												? this.AdminOptions(
 														sessionKey,

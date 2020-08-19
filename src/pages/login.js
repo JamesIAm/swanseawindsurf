@@ -41,7 +41,7 @@ class Login extends React.Component {
 				.auth()
 				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 				.then(() => {
-					firebase
+					return firebase
 						.auth()
 						.signInWithEmailAndPassword(
 							this.state.emailInput,

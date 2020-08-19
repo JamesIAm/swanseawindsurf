@@ -68,7 +68,7 @@ class AccountBuilder extends React.Component {
 				.auth()
 				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 				.then(() => {
-					firebase
+					return firebase
 						.auth()
 						.createUserWithEmailAndPassword(
 							this.state.emailInput,
