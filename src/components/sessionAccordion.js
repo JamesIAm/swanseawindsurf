@@ -220,7 +220,7 @@ class SessionAccordion extends React.Component {
 						(session.members === "trial" &&
 							this.state.count === 0) ||
 						session.members === "open") &&
-				  startDate > Date.now() - 3600000 * cutOffHour &&
+				  startDate > Date.now() + 3600000 * cutOffHour &&
 				  placesLeft > 0 ? (
 					<button onClick={() => this.bookSession(sessionKey)}>
 						Book
