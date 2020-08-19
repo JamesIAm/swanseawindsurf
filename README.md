@@ -1,26 +1,31 @@
-# SwanseaWindsurfSite
+# Swansea University Windsurfing Site
 
 TODO:
-Style update:
-Style update completed:
-Index - Library
-swa events - Library
-meet the committee - Top trumps
-session sign up - Want to check it still works online before continuing - article
-sign up complete - Could also do with more work once online - article
-Club info - Gallery, article
-sardinia 18 - Gallery, article
-competition results - article
-  
-Speed up images
-sardinia 19
-Where can I join - Snippet - home screen
 
-Gallery
-Modal images
-Footer image sizing
+FIXES
+- [ ] Admin redirect
+- [ ] Mobile account nav doesn't collapse on click
 
-Anon feedback
-Admin account
-User accounts
-Sign up require session selection
+Short Term
+- [x] Speed up images
+- [ ] sardinia 19
+- [ ] Where can I join - home screen snippet
+- [ ] Forgot password
+- [ ] 2019/20 results
+- [ ] 2019/20 Events
+
+Medium Term
+- [ ] Gallery
+- [ ] Modal images
+- [ ] Footer image sizing
+- [ ] Videos on the home screen
+- [ ] Show deleted accounts through the admin screen
+- [ ] Combine delete modals
+
+Long Term
+- [ ] Anon feedback
+- [ ] Animate Accodions and menus
+- [ ] Add loading animation
+- [x] Admin account
+- [x] User accounts
+- [x] Sign up required for session selection
