@@ -4,7 +4,7 @@ TODO:
 
 FIXES
 
--   [ ] Admin redirect
+-   [x] Admin redirect
 -   [x] Mobile account nav doesn't collapse on click
 -   [ ] Updating to admin whilst logged in, doesn't show admin button in nav (unconfirmed)?
 

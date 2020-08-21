@@ -31,7 +31,7 @@ class App extends Component {
 			user: null,
 			// newUserDetails: null,
 			userInfo: null,
-			userPermissions: null,
+			userPermissions: "none",
 			userMembership: null,
 			userName: null,
 			userStudentNumber: null,
@@ -61,7 +61,7 @@ class App extends Component {
 				this.setState({
 					user: null,
 					userInfo: null,
-					userPermissions: null,
+					userPermissions: "none",
 					userMembership: null,
 					userName: null,
 					userStudentNumber: null,
