@@ -38,7 +38,18 @@ const Committee = () => {
 								</div>
 							</div>
 						</div>
-						<ul></ul>
+						<ul>
+							<li>Studies: Material Engineering</li>
+							<li>Windsurfing Level: Intermediate</li>
+							<li>
+								Joe started windsurfing when he was younger but
+								only properly got back into it 2 years ago. He
+								is now trying to constantly improve his skills
+								while at the same to provide as many laughs to
+								the club at both sessions and events as humanly
+								possible.
+							</li>
+						</ul>
 					</div>
 					<div className="col-md-6 col-sm-12 top_trump">
 						{/*<!--Harry-->*/}

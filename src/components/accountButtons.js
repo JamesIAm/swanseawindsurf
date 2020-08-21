@@ -8,6 +8,7 @@ class LogoutButton extends React.Component {
 		this.handleLogout = this.handleLogout.bind(this);
 	}
 	handleLogout() {
+		this.props.minimiseNav();
 		if (this.props.user) {
 			firebase
 				.auth()
@@ -27,22 +28,38 @@ class LogoutButton extends React.Component {
 }
 class LoginButton extends React.Component {
 	render() {
-		return <Link to="/login">Log In</Link>;
+		return (
+			<Link to="/login" onClick={this.props.minimiseNav}>
+				Log In
+			</Link>
+		);
 	}
 }
 class CreateAccountButton extends React.Component {
 	render() {
-		return <Link to="/create-account">Create Account</Link>;
+		return (
+			<Link to="/create-account" onClick={this.props.minimiseNav}>
+				Create Account
+			</Link>
+		);
 	}
 }
 class MyAccountButton extends React.Component {
 	render() {
-		return <Link to="/my-account">My Account</Link>;
+		return (
+			<Link to="/my-account" onClick={this.props.minimiseNav}>
+				My Account
+			</Link>
+		);
 	}
 }
 class AdminButton extends React.Component {
 	render() {
-		return <Link to="/admin">Admin</Link>;
+		return (
+			<Link to="/admin" onClick={this.props.minimiseNav}>
+				Admin
+			</Link>
+		);
 	}
 }
 

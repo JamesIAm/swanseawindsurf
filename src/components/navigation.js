@@ -73,31 +73,48 @@ class Navigation extends React.Component {
 						this.props.permissions === "superAdmin") ? (
 						<div>
 							<li>
-								<LogoutButton user={this.props.user} />
+								<LogoutButton
+									user={this.props.user}
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 							<li>
-								<MyAccountButton user={this.props.user} />
+								<MyAccountButton
+									user={this.props.user}
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 							<li>
-								<AdminButton user={this.props.user} />
+								<AdminButton
+									user={this.props.user}
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 						</div>
 					) : this.props.user ? (
 						<div>
 							<li>
-								<LogoutButton user={this.props.user} />
+								<LogoutButton
+									user={this.props.user}
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 							<li>
-								<MyAccountButton user={this.props.user} />
+								<MyAccountButton
+									user={this.props.user}
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 						</div>
 					) : (
 						<div>
 							<li>
-								<LoginButton />
+								<LoginButton minimiseNav={this.minimiseNav} />
 							</li>
 							<li>
-								<CreateAccountButton />
+								<CreateAccountButton
+									minimiseNav={this.minimiseNav}
+								/>
 							</li>
 						</div>
 					)}
