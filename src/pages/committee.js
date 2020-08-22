@@ -69,6 +69,14 @@ const Committee = () => {
 						<ul>
 							<li>Studies: Aerospace Engineering</li>
 							<li>Windsurfing level: Intermediate</li>
+							<li>
+								Harry has been windsurfing on and off since he
+								was about 12 but only since starting at uni has
+								he made it into a weekly thing. And this year he
+								wants to push his ability even further into a
+								bit of racing. Also Harry loves any excuse for a
+								good night out.
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -150,7 +158,19 @@ const Committee = () => {
 								</div>
 							</div>
 						</div>
-						<ul></ul>
+						<ul>
+							<li>Studies: Criminology and Criminal Justice</li>
+							<li>Windsurfing level: Intermediate</li>
+							<li>
+								Guy joined the club last year as a fresher with
+								some experience windsurfing but has improved a
+								lot since last September. He is well versed in
+								the art of a good night out and is excited to
+								organise fun socials this year that everyone can
+								enjoy, as well as diving in to everything else
+								the club has to offer.
+							</li>
+						</ul>
 					</div>
 					<div className="col-md-6 col-sm-12 top_trump">
 						{/*<!--Iva-->*/}

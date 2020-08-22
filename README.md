@@ -16,6 +16,7 @@ Short Term
 -   [ ] Forgot password
 -   [ ] 2019/20 results
 -   [ ] 2019/20 Events
+-   [x] Update Committee descriptions
 
 Medium Term
 
