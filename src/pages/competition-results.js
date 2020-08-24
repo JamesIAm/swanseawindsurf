@@ -5,6 +5,107 @@ const CompetitionResults = () => {
 	return (
 		<div className="article">
 			<h2 className="content-text">Competition Results</h2>
+			{/*<--2021-->*/}
+			<section>
+				<h3>2020/21 Season</h3>
+				<p>
+					Whilst it's clear this season is going to be a bit different
+					to every previous one, we can't wait to get stuck in to some
+					racing.
+				</p>
+			</section>
+			<hr />
+			{/*<!--1920-->*/}
+			<section>
+				<h3>2019/20 Season</h3>
+				{/* <p className="content-text">
+					Team Members: Jake Roberts, James Nahajski, Orestis
+					Delardas, Max Graham, Joe Cave
+				</p> */}
+				<p className="content-text">
+					Another great season for Swansea with Jake picking up King
+					of the Wind and the team coming in second. But most
+					importantly, we saw a massive uptake in beginner racing,
+					with lots of our beginners getting out and having fun on a
+					relaxed course. The only negative was that the season was
+					cut short before nationals.
+				</p>
+
+				<section>
+					{/*<!--End of season awards-->*/}
+					<h4 className="content-text">End of Season SWA Awards</h4>
+					<ul className="content-text">
+						<li>Team Series: Swansea (2nd)</li>
+						<li>King of the wind: Jake Roberts</li>
+					</ul>
+				</section>
+				<section>
+					{/*<!--End of season positions-->*/}
+					<h4 className="content-text">End of Season positions</h4>
+					<h6>Freestyle Series:</h6>
+					<ul className="content-text">
+						<li>Jake Roberts (1st)</li>
+						<li>Thomas Addison (10th)</li>
+						<li>James Nahajski (13th)</li>
+						<li>Max Graham (14th)</li>
+						<li>Dom Fogden (17th)</li>
+					</ul>
+					<h6>Race Series:</h6>
+					<ul className="content-text">
+						<li>Jake Roberts (1st)</li>
+						<li>James Nahajski (25th)</li>
+						<li>Joe Cave (35th)</li>
+						<li>Harry Porteous (37th)</li>
+						<li>Helen Lucas (44th)</li>
+						<li>Johannes Steffens (45th)</li>
+						<li>Ivana Fristikova (56th)</li>
+						<li>Owen Lawrence (62nd)</li>
+					</ul>
+				</section>
+				<section>
+					{/*<!--Northern Monkey-->*/}
+					<h4 className="content-text">
+						Liverpool: Northern Monkey X
+					</h4>
+					<ul className="content-text">
+						<li>Team Racing: 1st</li>
+						<li>
+							Individual Racing (Advanced): Jake Roberts (2nd)
+						</li>
+						<li>Freestyle: Jake Roberts (3rd)</li>
+					</ul>
+				</section>
+
+				<section>
+					{/*<!--Pondlife-->*/}
+					<h4 className="content-text">Nottingham: Pondlife</h4>
+					<ul className="content-text">
+						<li>Team Racing: 3rd</li>
+						<li>
+							Individual Racing (Advanced): Jake Roberts (1st)
+						</li>
+						<li>Individual Racing (Beginner): Helen Lucas (3rd)</li>
+						<li>Freestyle: Jake Roberts (2nd)</li>
+					</ul>
+				</section>
+				<section>
+					{/*<!--Up the Brum-->*/}
+					<h4 className="content-text">Birmingham: Up the Brum IV</h4>
+					<ul className="content-text">
+						<li></li>
+						<li>
+							Individual Racing (Advanced): Jake Roberts (1st)
+						</li>
+						<li>Freestyle: Jake Roberts (1st)</li>
+					</ul>
+				</section>
+				<section>
+					{/*<!--Aussie Kiss-->*/}
+					<h4 className="content-text">Aussie Kiss 18</h4>
+					<ul className="content-text"></ul>
+				</section>
+			</section>
+			<hr />
 			{/*<!--1819-->*/}
 			<section>
 				<h3>2018/19 Season</h3>
@@ -36,12 +137,12 @@ const CompetitionResults = () => {
 						<li>Team Racing: 1st</li>
 						<li>
 							Individual Racing (Advanced): Tom Addison (2nd),
-							Jake Roberts (3rd), James Nahajski (`&gt`10th), Max
-							Graham (`&gt`10th)
+							Jake Roberts (3rd), James Nahajski ({">"}10th), Max
+							Graham ({">"}10th)
 						</li>
 						<li>
-							Individual Racing (Intermediate): Robin Szabo
-							(`&gt`10th), Eleanor Southwell (`&gt`10th)
+							Individual Racing (Intermediate): Robin Szabo ({">"}
+							10th), Eleanor Southwell ({">"}10th)
 						</li>
 						<li>
 							Freestyle: Tom Addison (2nd), Jake Roberts (4th)
