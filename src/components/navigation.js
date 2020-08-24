@@ -158,7 +158,7 @@ class Navigation extends React.Component {
 					</li>
 					<li>
 						<Link to="holiday" onClick={this.minimiseNav}>
-							Sardinia 2018
+							Holidays
 						</Link>
 					</li>
 				</ul>
