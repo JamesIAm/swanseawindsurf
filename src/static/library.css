@@ -17,10 +17,19 @@
     text-align: center;
 }
 
+.snippet_image {
+    /* max-height: 50vh; */
+    min-height: 50vh;
+}
+
 .snippet img {
     /*margin: 1vh 5vw;*/
-    max-width: 100%;
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
     /*transform: translate(0%, -50%);
     top: 50%;*/
 }

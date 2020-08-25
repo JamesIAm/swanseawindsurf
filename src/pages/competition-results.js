@@ -78,13 +78,34 @@ const CompetitionResults = () => {
 
 				<section>
 					{/*<!--Pondlife-->*/}
-					<h4 className="content-text">Nottingham: Pondlife</h4>
+					<h4 className="content-text">Nottingham: Pondlife XIII</h4>
 					<ul className="content-text">
 						<li>Team Racing: 3rd</li>
 						<li>
 							Individual Racing (Advanced): Jake Roberts (1st)
 						</li>
+						<li>
+							Individual Racing (Advanced): James Nahajski (5th)
+						</li>
+						<li>
+							Individual Racing (Intermediate): Joe Cave (7th)
+						</li>
+						<li>
+							Individual Racing (Intermediate): Harry Porteous
+							(10th)
+						</li>
 						<li>Individual Racing (Beginner): Helen Lucas (3rd)</li>
+						<li>
+							Individual Racing (Beginner): Johannes Steffens
+							(4th)
+						</li>
+						<li>
+							Individual Racing (Beginner): Ivana Fristikova
+							(11th)
+						</li>
+						<li>
+							Individual Racing (Beginner): Owen Lawrence (14th)
+						</li>
 						<li>Freestyle: Jake Roberts (2nd)</li>
 					</ul>
 				</section>
@@ -92,7 +113,6 @@ const CompetitionResults = () => {
 					{/*<!--Up the Brum-->*/}
 					<h4 className="content-text">Birmingham: Up the Brum IV</h4>
 					<ul className="content-text">
-						<li></li>
 						<li>
 							Individual Racing (Advanced): Jake Roberts (1st)
 						</li>
@@ -102,7 +122,14 @@ const CompetitionResults = () => {
 				<section>
 					{/*<!--Aussie Kiss-->*/}
 					<h4 className="content-text">Aussie Kiss 18</h4>
-					<ul className="content-text"></ul>
+					<ul className="content-text">
+						<li>Team Racing: 4th</li>
+						<li>Freestyle: Jake Roberts (2nd)</li>
+						<li>Freestyle: Thomas Addison (4th)</li>
+						<li>Freestyle: James Nahajski (5th)</li>
+						<li>Freestyle: Max Graham (6th)</li>
+						<li>Freestyle: Dom Fogden (8th)</li>
+					</ul>
 				</section>
 			</section>
 			<hr />
