@@ -14,7 +14,7 @@
 	"dependencies": {
 		"dotenv": "^8.2.0",
 		"emailjs-com": "^2.6.3",
-		"firebase": "^7.17.2",
+		"firebase": "^7.23.0",
 		"firebaseui": "^4.6.1",
 		"moment": "^2.27.0",
 		"react": "^16.13.1",

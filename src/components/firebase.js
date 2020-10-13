@@ -10,8 +10,12 @@ const firebaseConfig = {
 	storageBucket: "swanseawindsurf-ec2a6.appspot.com",
 	messagingSenderId: "828030262811",
 	appId: "1:828030262811:web:5794202b82a2c8041f22be",
+	//storageBucket: "gs://swanseawindsurf-ec2a6.appspot.com",
 };
 firebase.initializeApp(firebaseConfig);
 
+//var storage = firebase.storage();
+
 export default firebase;
+//export { storage };
 //TODO: LIMIT HTTP REFERRERS in https://console.developers.google.com/apis/credentials?
