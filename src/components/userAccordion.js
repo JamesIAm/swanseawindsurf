@@ -101,8 +101,19 @@ class UserAccordion extends React.Component {
 			.then((snapshot) =>
 				this.setState({
 					allUsers: snapshot.val(),
-					userKeys: Object.keys(snapshot.val()),
-				})
+					//userKeys: Object.keys(snapshot.val()),
+				},
+					() => {
+						this.setState(
+							{
+								userKeys: Object.keys(snapshot.val()).sort(
+									(userKeyA, userKeyB) => {
+										return (this.state.allUsers[userKeyA]?.info?.public?.name.
+											localeCompare(this.state.allUsers[userKeyB]?.info?.public?.name));
+									}),
+							}
+						);
+					})
 			)
 			.catch((error) => this.handleError(error));
 	}
@@ -191,7 +202,7 @@ class UserAccordion extends React.Component {
 		return (
 			<div>
 				<p>{this.state.errorMessage}</p>
-				{this.state.allUsers
+				{this.state.userKeys
 					? this.state.userKeys.map((userKey) => {
 						let user = this.state.allUsers[userKey];
 						if (user.info?.public) {
