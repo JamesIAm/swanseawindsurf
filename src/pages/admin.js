@@ -10,8 +10,6 @@ class Admin extends React.Component {
 		super(props);
 		this.state = {};
 	}
-	componentDidMount() {}
-	componentDidUpdate() {}
 	render() {
 		console.log(
 			this.props.permissions === "admin" ||

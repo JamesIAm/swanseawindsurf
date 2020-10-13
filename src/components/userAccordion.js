@@ -145,12 +145,12 @@ class UserAccordion extends React.Component {
 							Remove membership
 						</button>
 					) : (
-						<button
-							onClick={() => this.addMembership(userKey, user)}
-						>
-							Add membership
-						</button>
-					)}
+							<button
+								onClick={() => this.addMembership(userKey, user)}
+							>
+								Add membership
+							</button>
+						)}
 					{user.info?.public?.requested ? (
 						<button onClick={() => this.denyRequest(userKey, user)}>
 							Deny request
@@ -193,70 +193,65 @@ class UserAccordion extends React.Component {
 				<p>{this.state.errorMessage}</p>
 				{this.state.allUsers
 					? this.state.userKeys.map((userKey) => {
-							let user = this.state.allUsers[userKey];
-							if (user.info?.public) {
-								return (
-									<div key={userKey}>
-										<button
-											className="accordion"
-											onClick={() =>
-												this.toggleAccordion(userKey)
-											}
-											style={
-												user.info.public.requested
-													? {
-															backgroundColor:
-																"maroon",
-													  }
-													: null
-											}
-										>
-											{user.info.public.name}
-										</button>
-										<div
-											className="accordion-panel"
-											style={{
-												display:
-													this.state.openAccordion ===
+						let user = this.state.allUsers[userKey];
+						if (user.info?.public) {
+							return (
+								<div key={userKey}>
+									<button
+										className="accordion"
+										onClick={() =>
+											this.toggleAccordion(userKey)
+										}
+										style={
+											user.info.public.requested
+												? {
+													backgroundColor:
+														"maroon",
+												}
+												: null
+										}
+									>
+										{user.info.public.name}
+									</button>
+									<div
+										className="accordion-panel"
+										style={{
+											display:
+												this.state.openAccordion ===
 													userKey
-														? "block"
-														: "none",
-											}}
-										>
-											<p>Role: {user.role || "user"}</p>
-											<p>
-												Student Number:{" "}
-												{user.info.public.studentNumber}
-											</p>
-											<p>Uid: {userKey}</p>
-											<p>
-												Membership Status:{" "}
-												{user?.info?.public?.requested
-													? "requested"
-													: user.info?.private
-															?.membership
-													? "true"
-													: "false"}
-											</p>
+													? "block"
+													: "none",
+										}}
+									>
+										<p>Role: {user.role || "user"}</p>
+										<p>
+											Student Number:{" "}
+											{user.info.public.studentNumber}
+										</p>
+										<p>Uid: {userKey}</p>
+										<p>
+											Membership Status:{" "}
+											{user?.info?.private?.membership ? "true" : user?.info?.public?.requested ? "requested" : false}
+										</p>
 
-											{this.adminButtons(user, userKey)}
-											{this.props.permissions ===
+										{this.adminButtons(user, userKey)}
+										{this.props.permissions ===
 											"superAdmin"
-												? this.superAdminButtons(
-														user,
-														userKey
-												  )
-												: null}
-										</div>
+											? this.superAdminButtons(
+												user,
+												userKey
+											)
+											: null}
 									</div>
-								);
-							} else {
-								console.log(
-									userKey +
-										": has been deleted, and needs to be removed from the db"
-								);
-							}
-					  })
+								</div>
+							);
+						} else {
+							console.log(
+								userKey +
+								": has been deleted, and needs to be removed from the db"
+							);
+						}
+					})
 					: null}
 			</div>
 		);
