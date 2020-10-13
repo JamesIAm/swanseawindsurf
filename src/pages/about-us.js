@@ -32,11 +32,11 @@ const AboutUs = () => {
 				Below are a few things the club has to offer. We have plenty
 				more where this comes from however, so get in touch to find out
 				more via our club
-				<a href="facebook.com/SwanseaUniWindsurf/">Facebook page</a>,
+				<a href="facebook.com/SwanseaUniWindsurf/">Facebook page</a>{", "}
 				<a href="https://www.instagram.com/swanseawindsurf/">
 					Instagram
 				</a>
-				, or
+				{", or "}
 				<a href="https://twitter.com/SwanseaWindsurf">Twitter</a>.
 				Alternatively, you can email us at
 				windsurfing@swansea-sports.co.uk.
