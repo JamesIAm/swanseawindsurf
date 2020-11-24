@@ -1,6 +1,7 @@
 import React from "react";
 import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const errMsgWrong = "Incorrect username or password, please try again";
 const errMsgSpam =
@@ -112,6 +113,7 @@ class Login extends React.Component {
 					<button type="submit" value="Log In" className="submit">
 						Log In
 					</button>
+	<Link to={{pathname: "/reset-password", state: {email: this.state.emailInput}}}>Reset Your Password</Link>
 				</form>
 			</div>
 		);

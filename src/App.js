@@ -15,6 +15,7 @@ import Login from "./pages/login";
 import CreateAccount from "./pages/createAccount";
 import MyAccount from "./pages/my-account";
 import Admin from "./pages/admin";
+import ResetPassword from "./pages/resetPassword";
 
 import firebase, { auth, provider } from "./components/firebase.js";
 //require("firebase/auth");
@@ -197,6 +198,10 @@ class App extends Component {
 						<Route
 							path="/events"
 							render={(props) => <SWAEvents {...props} />}
+						/>
+						<Route
+							path="/reset-password"
+							render={(props) => <ResetPassword {...props} />}
 						/>
 						<Route
 							path="/"
