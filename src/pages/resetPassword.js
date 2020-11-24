@@ -26,9 +26,9 @@ class CreateAccount extends React.Component {
     handlePasswordReset(event) {
         event.preventDefault();
 		this.setState({ errorMessage: "" });
-		firebase.auth().sendPasswordResetEmail(this.state.emailInput).then(function() {
+		firebase.auth().sendPasswordResetEmail(this.state.emailInput).then(
             () => this.setState({passwordReset: true})
-          }).catch(() =>
+          ).catch(() =>
             this.setState({errorMessage: "The password reset email failed to send, please try again, or contact James to recieve further assistance"})
           );
     }
