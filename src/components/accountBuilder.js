@@ -4,26 +4,15 @@ import Modal from "react-bootstrap/Modal";
 
 import constitution from "../files/constitution.pdf";
 import privacyPolicy from "../files/suwc_privacy_policy.pdf";
+import { handleError } from "../functions/handleError";
+import { handleSuccess } from "../functions/handleSuccess.js";
 
-const errMsgLoggedIn = "You are already logged in";
-const errMsgEmailInUse =
-	"That email address is already in use, please log in or try a different email address";
-const errMsgInvalidEmail =
-	"That is not a valid email address, please try again";
-const errMsgWeakPassword =
-	"Your password is not secure enough, please make sure it is at least 6 characters long";
-const errMsgWrongPassword =
-	"The current password you entered is incorrect. Therefore any changes to the email or password will not have saved";
-const errMsgUnknown =
-	"Something went on our end, please try again or contact us";
-const succMsgCreated = "Account successfully created";
 class AccountBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			nameInput: this.props?.userData?.public?.name || "",
-			studentNumberInput:
-				this.props?.userData?.public?.studentNumber || "",
+			studentNumberInput: this.props?.userData?.public?.studentNumber || "",
 			emailInput: this.props?.user?.email || "",
 			passwordInput: "",
 			newPasswordInput: "",
@@ -35,12 +24,9 @@ class AccountBuilder extends React.Component {
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
-		this.handleStudentNumberChange = this.handleStudentNumberChange.bind(
-			this
-		);
+		this.handleStudentNumberChange = this.handleStudentNumberChange.bind(this);
 		this.handleCreateAccount = this.handleCreateAccount.bind(this);
 		this.handleUpdateAccount = this.handleUpdateAccount.bind(this);
-		this.handleError = this.handleError.bind(this);
 		this.addUserDetails = this.addUserDetails.bind(this);
 	}
 	handleNameChange(event) {
@@ -74,13 +60,13 @@ class AccountBuilder extends React.Component {
 							this.state.emailInput,
 							this.state.passwordInput
 						)
-						.catch((error) => this.handleError(error.code));
+						.catch((error) => handleError(error));
 				})
 				.then(() => this.addUserDetails())
-				.then(() => this.setState({ successMessage: succMsgCreated }))
-				.catch((error) => this.handleError(error));
+				.then(() => handleSuccess("Account created successfully"))
+				.catch((error) => handleError(error));
 		} else {
-			this.handleError("loggedIn");
+			handleError("loggedIn");
 		}
 	}
 	async handleUpdateAccount(event) {
@@ -90,8 +76,7 @@ class AccountBuilder extends React.Component {
 		let user = firebase.auth().currentUser;
 		if (
 			this.state.nameInput !== this.props.userData.public.name ||
-			this.state.studentNumberInput !==
-				this.props.userData.public.studentNumber
+			this.state.studentNumberInput !== this.props.userData.public.studentNumber
 		) {
 			await this.addUserDetails();
 		}
@@ -114,7 +99,7 @@ class AccountBuilder extends React.Component {
 					if (this.state.emailInput !== "")
 						user.updateEmail(this.state.emailInput);
 				})
-				.catch((error) => this.handleError(error));
+				.catch((error) => handleError(error));
 		}
 		if (this.state.errorMessage === "") {
 			this.props.toggleUpdateModal();
@@ -127,45 +112,6 @@ class AccountBuilder extends React.Component {
 			name: this.state.nameInput,
 			studentNumber: this.state.studentNumberInput,
 		});
-	}
-	handleError(error) {
-		let errorCode = error?.code;
-		let errorMessage = error?.message;
-		switch (errorCode) {
-			case "loggedIn":
-				this.setState({
-					errorMessage: errMsgLoggedIn,
-				});
-				break;
-			case "auth/email-already-in-use":
-				this.setState({
-					errorMessage: errMsgEmailInUse,
-				});
-				break;
-			case "auth/invalid-email":
-				this.setState({
-					errorMessage: errMsgInvalidEmail,
-				});
-				break;
-			case "auth/weak-password":
-				this.setState({
-					errorMessage: errMsgWeakPassword,
-				});
-				break;
-			case "auth/wrong-password":
-				this.setState({
-					errorMessage: errMsgWrongPassword,
-				});
-				break;
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(
-					"Code: " + errorCode + "\nMessage: " + errorMessage
-				);
-				break;
-		}
 	}
 
 	render() {
@@ -252,8 +198,7 @@ class AccountBuilder extends React.Component {
 					{this.props.mode !== "update" ? (
 						<div>
 							<label htmlFor="T&Cs">
-								I agree with the Swansea University Windsurfing
-								club{" "}
+								I agree with the Swansea University Windsurfing club{" "}
 								<a href={constitution} target="_blank">
 									constitution
 								</a>{" "}

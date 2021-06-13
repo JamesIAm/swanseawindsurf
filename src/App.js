@@ -16,6 +16,9 @@ import CreateAccount from "./pages/createAccount";
 import MyAccount from "./pages/my-account";
 import Admin from "./pages/admin";
 import ResetPassword from "./pages/resetPassword";
+import { handleError } from "./functions/handleError";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 import firebase, { auth, provider } from "./components/firebase.js";
 //require("firebase/auth");
@@ -37,7 +40,6 @@ class App extends Component {
 			userName: null,
 			userStudentNumber: null,
 		};
-		this.handleError = this.handleError.bind(this);
 		this.getData = this.getData.bind(this);
 	}
 	useEffect() {
@@ -84,7 +86,7 @@ class App extends Component {
 					userStudentNumber: snapshot.val().info.public.studentNumber,
 				})
 			)
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	stickyNav() {
 		let sticky = window.pageYOffset >= this.state.height * 0.1;
@@ -93,28 +95,10 @@ class App extends Component {
 				sticky,
 			});
 	}
-	handleError(error) {
-		let errorCode = error.code;
-		let errorMessage = error.message;
-		switch (errorCode) {
-			case "PERMISSION_DENIED":
-				this.setState({
-					errorMessage: errMsgPermissions,
-				});
-				break;
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(
-					"Code: " + errorCode + "\nMessage: " + errorMessage
-				);
-				break;
-		}
-	}
 	render() {
 		return (
 			<Router>
+				<ReactNotification />
 				<div className="header">
 					<h1>
 						Swansea University
@@ -124,9 +108,7 @@ class App extends Component {
 				</div>
 				<div
 					className={
-						this.state.sticky
-							? "navigation-div sticky"
-							: "navigation-div"
+						this.state.sticky ? "navigation-div sticky" : "navigation-div"
 					}
 				>
 					<Navigation
@@ -178,14 +160,9 @@ class App extends Component {
 						/>
 						<Route
 							path="/competition-results"
-							render={(props) => (
-								<CompetitionResults {...props} />
-							)}
+							render={(props) => <CompetitionResults {...props} />}
 						/>
-						<Route
-							path="/holiday"
-							render={(props) => <Holiday {...props} />}
-						/>
+						<Route path="/holiday" render={(props) => <Holiday {...props} />} />
 						<Route
 							path="/session-sign-up"
 							render={(props) => (
@@ -203,10 +180,7 @@ class App extends Component {
 							path="/reset-password"
 							render={(props) => <ResetPassword {...props} />}
 						/>
-						<Route
-							path="/"
-							render={(props) => <Index {...props} />}
-						/>
+						<Route path="/" render={(props) => <Index {...props} />} />
 					</Switch>
 				</div>
 				<div className="footer">
