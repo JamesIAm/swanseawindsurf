@@ -5,14 +5,11 @@ import Modal from "react-bootstrap/Modal";
 import SessionBuilder from "./sessionBuilder";
 import moment from "moment";
 import "../static/accordion.css";
+import { handleError } from "../functions/handleError";
 // user={this.props.user} - Recommended props
 // membership={this.props.membership}
 // mode={"user"}
 const cutOffHour = 12;
-const errMsgUnknown =
-	"Something went on our end, please try again or contact us";
-const errMsgPermissions =
-	"Unfortunately you don't have the required permissions to view this data";
 class SessionAccordion extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,7 +20,6 @@ class SessionAccordion extends React.Component {
 			deleteModal: null,
 			count: null,
 		};
-		this.handleError = this.handleError.bind(this);
 		this.bookSession = this.bookSession.bind(this);
 		this.cancelBooking = this.cancelBooking.bind(this);
 		this.checkMembership = this.checkMembership.bind(this);
@@ -70,16 +66,8 @@ class SessionAccordion extends React.Component {
 								sessionKeys: Object.keys(snapshot.val()).sort(
 									(sessionKeyA, sessionKeyB) => {
 										return (
-											new Date(
-												this.state.allSessions[
-													sessionKeyA
-												].startTime
-											) -
-											new Date(
-												this.state.allSessions[
-													sessionKeyB
-												].startTime
-											)
+											new Date(this.state.allSessions[sessionKeyA].startTime) -
+											new Date(this.state.allSessions[sessionKeyB].startTime)
 										);
 									}
 								),
@@ -91,7 +79,7 @@ class SessionAccordion extends React.Component {
 					}
 				)
 			)
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	getUsers() {
 		let users = firebase
@@ -103,7 +91,7 @@ class SessionAccordion extends React.Component {
 					allUsers: snapshot.val(),
 				})
 			)
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	checkMembership() {
 		let count = 0;
@@ -112,9 +100,9 @@ class SessionAccordion extends React.Component {
 			//console.log(this.state.allSessions[value]);
 			if (this.state?.allSessions[sessionKey]?.attendees) {
 				if (
-					Object.keys(
-						this.state?.allSessions[sessionKey]?.attendees
-					).includes(uid)
+					Object.keys(this.state?.allSessions[sessionKey]?.attendees).includes(
+						uid
+					)
 				) {
 					count++;
 				}
@@ -134,7 +122,7 @@ class SessionAccordion extends React.Component {
 			.set(true)
 			.then(() => this.getSessions())
 			.then(() => this.setState({ count: this.state.count + 1 }))
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	cancelBooking(sessionId) {
 		firebase
@@ -145,7 +133,7 @@ class SessionAccordion extends React.Component {
 			.remove()
 			.then(() => this.getSessions())
 			.then(() => this.setState({ count: this.state.count - 1 }))
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	openModal(event) {
 		this.setState({
@@ -175,26 +163,7 @@ class SessionAccordion extends React.Component {
 			.remove()
 			.then(() => this.cancelDelete())
 			.then(() => this.getSessions())
-			.catch((error) => this.handleError(error));
-	}
-	handleError(error) {
-		let errorCode = error.code;
-		let errorMessage = error.message;
-		switch (errorCode) {
-			case "PERMISSION_DENIED":
-				this.setState({
-					errorMessage: errMsgPermissions,
-				});
-				break;
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(
-					"Code: " + errorCode + "\nMessage: " + errorMessage
-				);
-				break;
-		}
+			.catch((error) => handleError(error));
 	}
 	toggleAccordion(sessionKey) {
 		if (this.state.openAccordion === sessionKey) {
@@ -210,21 +179,17 @@ class SessionAccordion extends React.Component {
 	BookCancelButton = (session, sessionKey, startDate, placesLeft) => {
 		return (
 			<div>
-				{this.state.allSessions[sessionKey]?.attendees?.[
-					this.props.user.uid
-				] && startDate > Date.now() ? (
+				{this.state.allSessions[sessionKey]?.attendees?.[this.props.user.uid] &&
+				startDate > Date.now() ? (
 					<button onClick={() => this.cancelBooking(sessionKey)}>
 						Cancel Booking
 					</button> //TODO: ONLY ALLOW CHANGES TO SESSIONS IN THE FUTURE IN RULES
 				) : (this.props.membership ||
-						(session.members === "trial" &&
-							this.state.count === 0) ||
+						(session.members === "trial" && this.state.count === 0) ||
 						session.members === "open") &&
 				  startDate > Date.now() + 3600000 * cutOffHour &&
 				  placesLeft > 0 ? (
-					<button onClick={() => this.bookSession(sessionKey)}>
-						Book
-					</button>
+					<button onClick={() => this.bookSession(sessionKey)}>Book</button>
 				) : null}
 			</div>
 		);
@@ -242,9 +207,7 @@ class SessionAccordion extends React.Component {
 								<div key={uid}>
 									<ul>
 										<li>{user.info.public.name}</li>
-										<li>
-											{user.info.public.studentNumber}
-										</li>
+										<li>{user.info.public.studentNumber}</li>
 										{
 											<li>
 												{user.info?.private?.membership
@@ -303,10 +266,7 @@ class SessionAccordion extends React.Component {
 						>
 							Yes
 						</button>
-						<button
-							class="submit"
-							onClick={() => this.cancelDelete()}
-						>
+						<button class="submit" onClick={() => this.cancelDelete()}>
 							No
 						</button>
 					</Modal.Body>
@@ -329,8 +289,8 @@ class SessionAccordion extends React.Component {
 						<a href="https://www.swansea-union.co.uk/activities/club/windsurfing/">
 							Swansea Union Website
 						</a>{" "}
-						to continue booking sessions. If you have already done
-						this, you can request that we update your status in{" "}
+						to continue booking sessions. If you have already done this, you can
+						request that we update your status in{" "}
 						<Link to="/my-account">My Account</Link>
 					</p>
 				) : null}
@@ -340,10 +300,9 @@ class SessionAccordion extends React.Component {
 							let startDate = new Date(session.startTime);
 							let placesLeft = session.placeLimit;
 							if (session.attendees) {
-								placesLeft -= Object.values(
-									session.attendees
-								).filter((attendee) => attendee === true)
-									.length;
+								placesLeft -= Object.values(session.attendees).filter(
+									(attendee) => attendee === true
+								).length;
 							}
 							if (
 								startDate > Date.now() ||
@@ -355,30 +314,21 @@ class SessionAccordion extends React.Component {
 									<div key={sessionKey}>
 										<button
 											className={
-												this.state.allSessions[
-													sessionKey
-												]?.attendees?.[
+												this.state.allSessions[sessionKey]?.attendees?.[
 													this.props.user.uid
 												]
 													? "accordion booked"
 													: "accordion"
 											}
-											onClick={() =>
-												this.toggleAccordion(sessionKey)
-											}
+											onClick={() => this.toggleAccordion(sessionKey)}
 										>
 											<div className="accordion-row">
 												<ul>
 													<li>{session.name}</li>
 													<li>
-														{moment(
-															session.startTime
-														).format("DD-MM-YYYY")}
+														{moment(session.startTime).format("DD-MM-YYYY")}
 													</li>
-													<li>
-														{placesLeft +
-															" Places left"}
-													</li>
+													<li>{placesLeft + " Places left"}</li>
 												</ul>
 											</div>
 										</button>
@@ -386,8 +336,7 @@ class SessionAccordion extends React.Component {
 											className="accordion-panel"
 											style={{
 												display:
-													this.state.openAccordion ===
-													sessionKey
+													this.state.openAccordion === sessionKey
 														? "block"
 														: "none",
 											}}
@@ -395,9 +344,7 @@ class SessionAccordion extends React.Component {
 											<p>{session.description}</p>
 											<p>
 												Starts:{" "}
-												{moment(
-													session.startTime
-												).format(
+												{moment(session.startTime).format(
 													"dddd, MMMM Do YYYY, hh:mm a"
 												)}
 											</p>
@@ -407,23 +354,17 @@ class SessionAccordion extends React.Component {
 													"dddd, MMMM Do YYYY, hh:mm a"
 												)}
 											</p>
-											<p>
-												Is the session open to everyone:{" "}
-												{session.members}
-											</p>
+											<p>Is the session open to everyone: {session.members}</p>
 											{this.state.count >= 0 && //TODO: Link to instructions to email us to get membership approved
 											!this.props.membership &&
 											this.props.mode !== "admin" ? (
 												<p>
-													You will need to purchase
-													membership to continue
+													You will need to purchase membership to continue
 													booking sessions
 												</p>
 											) : null}
 											{this.props.mode === "admin"
-												? this.DisplayMembers(
-														sessionKey
-												  )
+												? this.DisplayMembers(sessionKey)
 												: this.BookCancelButton(
 														session,
 														sessionKey,
@@ -431,10 +372,7 @@ class SessionAccordion extends React.Component {
 														placesLeft
 												  )}
 											{this.props.mode === "admin"
-												? this.AdminOptions(
-														sessionKey,
-														session
-												  )
+												? this.AdminOptions(sessionKey, session)
 												: null}
 										</div>
 									</div>

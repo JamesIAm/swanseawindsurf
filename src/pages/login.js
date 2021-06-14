@@ -2,12 +2,8 @@ import React from "react";
 import firebase, { auth, provider } from "../components/firebase.js";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { handleError } from "../functions/handleError";
 
-const errMsgWrong = "Incorrect username or password, please try again";
-const errMsgSpam =
-	"You've entered the incorrect username or password too many times, please try again later";
-const errMsgUnknown =
-	"Something went on our end, please try again or contact us";
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
@@ -21,7 +17,6 @@ class Login extends React.Component {
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
-		this.handleError = this.handleError.bind(this);
 	}
 	componentDidUpdate() {
 		if (this.props.user) {
@@ -48,37 +43,9 @@ class Login extends React.Component {
 							this.state.emailInput,
 							this.state.passwordInput
 						)
-						.catch((error) => this.handleError(error));
+						.catch((error) => handleError(error));
 				})
-				.catch((error) => this.handleError(error));
-		}
-	}
-	handleError(error) {
-		let errorCode = error.code;
-		let errorMessage = error.message;
-		switch (errorCode) {
-			case "auth/wrong-password":
-				this.setState({
-					errorMessage: errMsgWrong,
-				});
-				break;
-			case "auth/user-not-found":
-				this.setState({
-					errorMessage: errMsgWrong,
-				});
-				break;
-			case "auth/too-many-requests":
-				this.setState({
-					errorMessage: errMsgSpam,
-				});
-				break;
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(errorMessage);
-				console.error(errorCode);
-				break;
+				.catch((error) => handleError(error));
 		}
 	}
 	render() {
@@ -113,7 +80,14 @@ class Login extends React.Component {
 					<button type="submit" value="Log In" className="submit">
 						Log In
 					</button>
-	<Link to={{pathname: "/reset-password", state: {email: this.state.emailInput}}}>Reset Your Password</Link>
+					<Link
+						to={{
+							pathname: "/reset-password",
+							state: { email: this.state.emailInput },
+						}}
+					>
+						Reset Your Password
+					</Link>
 				</form>
 			</div>
 		);

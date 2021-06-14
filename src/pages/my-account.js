@@ -4,12 +4,9 @@ import { Redirect, useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import AccountBuilder from "../components/accountBuilder";
 import emailjs from "emailjs-com";
+import { handleError } from "../functions/handleError";
+import { handleSuccess } from "../functions/handleSuccess.js";
 
-const errMsgWrong = "Incorrect username or password, please try again";
-const errMsgSpam =
-	"You've entered the incorrect username or password too many times, please try again later";
-const errMsgUnknown =
-	"Something went on our end, please try again or contact us";
 class MyAccount extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,7 +21,6 @@ class MyAccount extends React.Component {
 			updateModal: false,
 		};
 
-		this.handleError = this.handleError.bind(this);
 		this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 		this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
 		this.requestMembership = this.requestMembership.bind(this);
@@ -42,7 +38,7 @@ class MyAccount extends React.Component {
 			.ref(`users/${uid}/info`)
 			.once("value")
 			.then((snapshot) => this.setState({ userData: snapshot.val() }))
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 	toggleDeleteModal() {
 		this.setState({
@@ -58,7 +54,7 @@ class MyAccount extends React.Component {
 		emailjs.send(
 			"gmail",
 			"template_AoDOdYv5",
-			{ uid: this.props.user.uid },
+			{ uid: this.props.user.name },
 			"user_FmdvbZkj8WWD2IjEwwXis"
 		);
 		firebase
@@ -66,7 +62,8 @@ class MyAccount extends React.Component {
 			.ref(`users/${this.props.user.uid}/info/public/requested`)
 			.set(true)
 			.then(() => this.getUserData())
-			.catch((error) => this.handleError(error));
+			.then(() => handleSuccess("Membership requested"))
+			.catch((error) => handleError(error));
 	}
 
 	async handleDelete() {
@@ -81,12 +78,10 @@ class MyAccount extends React.Component {
 					sessionKeys: Object.keys(snapshot.val()),
 				})
 			)
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 		await this.state.sessionKeys.map((sessionKey) => {
 			if (
-				this.state?.allSessions[sessionKey]?.attendees?.[
-					this.props.user.uid
-				]
+				this.state?.allSessions[sessionKey]?.attendees?.[this.props.user.uid]
 			) {
 				firebase
 					.database()
@@ -94,7 +89,7 @@ class MyAccount extends React.Component {
 						`/pages/sign-up/sessions/${sessionKey}/attendees/${this.props.user.uid}`
 					)
 					.remove()
-					.catch((error) => this.handleError(error));
+					.catch((error) => handleError(error));
 			}
 		});
 		await firebase
@@ -104,19 +99,9 @@ class MyAccount extends React.Component {
 			.then(firebase.auth().currentUser.delete())
 			.then(this.toggleDeleteModal())
 			.then(() => this.setState({ redirect: true }))
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 	}
 
-	handleError(errorCode) {
-		switch (errorCode) {
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(errorCode);
-				break;
-		}
-	}
 	deleteButton = () => {
 		return (
 			<div>
@@ -139,16 +124,10 @@ class MyAccount extends React.Component {
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<button
-							className="submit"
-							onClick={() => this.handleDelete()}
-						>
+						<button className="submit" onClick={() => this.handleDelete()}>
 							Yes
 						</button>
-						<button
-							className="submit"
-							onClick={() => this.toggleDeleteModal()}
-						>
+						<button className="submit" onClick={() => this.toggleDeleteModal()}>
 							No
 						</button>
 					</Modal.Body>
@@ -196,10 +175,7 @@ class MyAccount extends React.Component {
 			<div className="article">
 				<p>{this.state.errorMessage}</p>
 				<p>
-					Name:{" "}
-					{this.state.userData
-						? this.state.userData.public.name
-						: null}
+					Name: {this.state.userData ? this.state.userData.public.name : null}
 				</p>
 				<p>Email: {this.props.user ? this.props.user.email : null}</p>
 				<p>
@@ -212,10 +188,9 @@ class MyAccount extends React.Component {
 					<div>
 						<p>Membership Status: requested</p>
 						<p>
-							We will strive to fulfil your request as soon as
-							possible, but if you need any further assistance
-							please contact one of the members of the committee
-							on Facebook.
+							We will strive to fulfil your request as soon as possible, but if
+							you need any further assistance please contact one of the members
+							of the committee on Facebook.
 						</p>
 					</div>
 				) : this.state?.userData?.private?.membership ? (
@@ -224,10 +199,9 @@ class MyAccount extends React.Component {
 					<div>
 						<p>Membership Status: false </p>
 						<p>
-							If you have bought membership on the Swansea Union
-							website, click below to let us know. We'll double
-							check the data and then update your membership
-							status.
+							If you have bought membership on the Swansea Union website, click
+							below to let us know. We'll double check the data and then update
+							your membership status.
 						</p>
 						<button
 							id="membership-button"

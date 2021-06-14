@@ -1,10 +1,7 @@
 import React from "react";
 import firebase, { auth, provider, database } from "../components/firebase.js";
 import "../static/accordion.css";
-const errMsgUnknown =
-	"Something went on our end, please try again or contact us";
-const errMsgPermissions =
-	"Unfortunately you don't have the required permissions to view this data";
+import { handleError } from "../functions/handleError";
 class UserAccordion extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,7 +12,6 @@ class UserAccordion extends React.Component {
 			errorMessage: null,
 			openAccordion: null,
 		};
-		this.handleError = this.handleError.bind(this);
 		this.makeSuperAdmin = this.makeSuperAdmin.bind(this);
 		this.makeAdmin = this.makeAdmin.bind(this);
 		this.makeUser = this.makeUser.bind(this);
@@ -44,7 +40,7 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref(`users/${uid}/role`)
 			.set("superAdmin")
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 		this.getUsers();
 	}
 	makeAdmin(uid) {
@@ -52,7 +48,7 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref(`users/${uid}/role`)
 			.set("admin")
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 		this.getUsers();
 	}
 	makeUser(uid) {
@@ -60,7 +56,7 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref(`users/${uid}/role`)
 			.set("user")
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 		this.getUsers();
 	}
 	async addMembership(uid, user) {
@@ -90,7 +86,7 @@ class UserAccordion extends React.Component {
 			.database()
 			.ref(`users/${uid}/info/private/membership`)
 			.set(false)
-			.catch((error) => this.handleError(error));
+			.catch((error) => handleError(error));
 		this.getUsers();
 	}
 	getUsers() {
@@ -99,42 +95,27 @@ class UserAccordion extends React.Component {
 			.ref("users")
 			.once("value")
 			.then((snapshot) =>
-				this.setState({
-					allUsers: snapshot.val(),
-					//userKeys: Object.keys(snapshot.val()),
-				},
+				this.setState(
+					{
+						allUsers: snapshot.val(),
+						//userKeys: Object.keys(snapshot.val()),
+					},
 					() => {
-						this.setState(
-							{
-								userKeys: Object.keys(snapshot.val()).sort(
-									(userKeyA, userKeyB) => {
-										return (this.state.allUsers[userKeyA]?.info?.public?.name.
-											localeCompare(this.state.allUsers[userKeyB]?.info?.public?.name));
-									}),
-							}
-						);
-					})
+						this.setState({
+							userKeys: Object.keys(snapshot.val()).sort(
+								(userKeyA, userKeyB) => {
+									return this.state.allUsers[
+										userKeyA
+									]?.info?.public?.name.localeCompare(
+										this.state.allUsers[userKeyB]?.info?.public?.name
+									);
+								}
+							),
+						});
+					}
+				)
 			)
-			.catch((error) => this.handleError(error));
-	}
-	handleError(error) {
-		let errorCode = error.code;
-		let errorMessage = error.message;
-		switch (errorCode) {
-			case "PERMISSION_DENIED":
-				this.setState({
-					errorMessage: errMsgPermissions,
-				});
-				break;
-			default:
-				this.setState({
-					errorMessage: errMsgUnknown,
-				});
-				console.error(
-					"Code: " + errorCode + "\nMessage: " + errorMessage
-				);
-				break;
-		}
+			.catch((error) => handleError(error));
 	}
 	toggleAccordion(userKey) {
 		if (this.state.openAccordion === userKey) {
@@ -156,12 +137,10 @@ class UserAccordion extends React.Component {
 							Remove membership
 						</button>
 					) : (
-							<button
-								onClick={() => this.addMembership(userKey, user)}
-							>
-								Add membership
-							</button>
-						)}
+						<button onClick={() => this.addMembership(userKey, user)}>
+							Add membership
+						</button>
+					)}
 					{user.info?.public?.requested ? (
 						<button onClick={() => this.denyRequest(userKey, user)}>
 							Deny request
@@ -183,16 +162,12 @@ class UserAccordion extends React.Component {
 				</div>
 				<div className="adminButton">
 					{user.role === "admin" ? null : (
-						<button onClick={() => this.makeAdmin(userKey)}>
-							Make admin
-						</button>
+						<button onClick={() => this.makeAdmin(userKey)}>Make admin</button>
 					)}
 				</div>
 				<div className="userButton">
 					{user.role === "user" ? null : (
-						<button onClick={() => this.makeUser(userKey)}>
-							Make user
-						</button>
+						<button onClick={() => this.makeUser(userKey)}>Make user</button>
 					)}
 				</div>
 			</div>
@@ -204,65 +179,58 @@ class UserAccordion extends React.Component {
 				<p>{this.state.errorMessage}</p>
 				{this.state.userKeys
 					? this.state.userKeys.map((userKey) => {
-						let user = this.state.allUsers[userKey];
-						if (user.info?.public) {
-							return (
-								<div key={userKey}>
-									<button
-										className="accordion"
-										onClick={() =>
-											this.toggleAccordion(userKey)
-										}
-										style={
-											user.info.public.requested
-												? {
-													backgroundColor:
-														"maroon",
-												}
-												: null
-										}
-									>
-										{user.info.public.name}
-									</button>
-									<div
-										className="accordion-panel"
-										style={{
-											display:
-												this.state.openAccordion ===
-													userKey
-													? "block"
-													: "none",
-										}}
-									>
-										<p>Role: {user.role || "user"}</p>
-										<p>
-											Student Number:{" "}
-											{user.info.public.studentNumber}
-										</p>
-										<p>Uid: {userKey}</p>
-										<p>
-											Membership Status:{" "}
-											{user?.info?.private?.membership ? "true" : user?.info?.public?.requested ? "requested" : false}
-										</p>
+							let user = this.state.allUsers[userKey];
+							if (user.info?.public) {
+								return (
+									<div key={userKey}>
+										<button
+											className="accordion"
+											onClick={() => this.toggleAccordion(userKey)}
+											style={
+												user.info.public.requested
+													? {
+															backgroundColor: "maroon",
+													  }
+													: null
+											}
+										>
+											{user.info.public.name}
+										</button>
+										<div
+											className="accordion-panel"
+											style={{
+												display:
+													this.state.openAccordion === userKey
+														? "block"
+														: "none",
+											}}
+										>
+											<p>Role: {user.role || "user"}</p>
+											<p>Student Number: {user.info.public.studentNumber}</p>
+											<p>Uid: {userKey}</p>
+											<p>
+												Membership Status:{" "}
+												{user?.info?.private?.membership
+													? "true"
+													: user?.info?.public?.requested
+													? "requested"
+													: false}
+											</p>
 
-										{this.adminButtons(user, userKey)}
-										{this.props.permissions ===
-											"superAdmin"
-											? this.superAdminButtons(
-												user,
-												userKey
-											)
-											: null}
+											{this.adminButtons(user, userKey)}
+											{this.props.permissions === "superAdmin"
+												? this.superAdminButtons(user, userKey)
+												: null}
+										</div>
 									</div>
-								</div>
-							);
-						} else {
-							console.log(
-								userKey +
-								": has been deleted, and needs to be removed from the db"
-							);
-						}
-					})
+								);
+							} else {
+								console.log(
+									userKey +
+										": has been deleted, and needs to be removed from the db"
+								);
+							}
+					  })
 					: null}
 			</div>
 		);
