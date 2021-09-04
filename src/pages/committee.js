@@ -24,10 +24,10 @@ const Committee = () => {
 			<div className="deck">
 				<div className="row">
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--harry-->*/}
+						{/*<!--joe-->*/}
 						<div className="row">
 							<img
-								src={harry}
+								src={joe}
 								alt="Photo of the captain"
 								className="img-fluid"
 							/>
