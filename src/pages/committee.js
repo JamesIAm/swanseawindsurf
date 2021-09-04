@@ -33,7 +33,7 @@ const Committee = () => {
 							/>
 							<div className="col-6 name_box">
 								<div className="name_text left_text">
-									<h3>Joe Cave</h3>
+									<h3>Harry Porteous</h3>
 									<h4>President</h4>
 								</div>
 							</div>
