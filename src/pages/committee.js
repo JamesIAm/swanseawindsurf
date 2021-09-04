@@ -2,8 +2,8 @@ import React from "react";
 import "../static/topTrumps.css";
 import "../static/article.css";
 
-import joe from "../images/committee/current/joe.jpg";
 import harry from "../images/committee/current/harry.jpg";
+import joe from "../images/committee/current/joe.jpg";
 import owen from "../images/committee/current/owen.jpg";
 import max from "../images/committee/current/max.jpg";
 import guy from "../images/committee/current/guy.jpg";
@@ -24,10 +24,10 @@ const Committee = () => {
 			<div className="deck">
 				<div className="row">
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--joe-->*/}
+						{/*<!--harry-->*/}
 						<div className="row">
 							<img
-								src={joe}
+								src={harry}
 								alt="Photo of the captain"
 								className="img-fluid"
 							/>
@@ -51,7 +51,7 @@ const Committee = () => {
 						</ul>
 					</div>
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Harry-->*/}
+						{/*<!--joe-->*/}
 						<div className="row">
 							<div className="col-6 name_box">
 								<div className="name_text right_text">
@@ -60,7 +60,7 @@ const Committee = () => {
 								</div>
 							</div>
 							<img
-								src={harry}
+								src={joe}
 								alt="Photo of the vice captain"
 								className="img-fluid"
 							/>
