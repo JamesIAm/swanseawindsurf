@@ -24,10 +24,10 @@ const Committee = () => {
 			<div className="deck">
 				<div className="row">
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Joe-->*/}
+						{/*<!--harry-->*/}
 						<div className="row">
 							<img
-								src={joe}
+								src={harry}
 								alt="Photo of the captain"
 								className="img-fluid"
 							/>
@@ -39,15 +39,14 @@ const Committee = () => {
 							</div>
 						</div>
 						<ul>
-							<li>Studies: Material Engineering</li>
-							<li>Windsurfing Level: Intermediate</li>
+							<li>Studies: Aerospace Engineering</li>
+							<li>Windsurfing Level: Advanced</li>
 							<li>
-								Joe started windsurfing when he was younger but
-								only properly got back into it 2 years ago. He
-								is now trying to constantly improve his skills
-								while at the same to provide as many laughs to
-								the club at both sessions and events as humanly
-								possible.
+								Harry has been windsurfing on and off since he
+								was about. And this year he takes on the role of
+								pres. Also Harry loves any excuse for a
+								good night out and can't wait to be back out in swans
+								with all the old and new members.
 							</li>
 						</ul>
 					</div>
@@ -70,12 +69,12 @@ const Committee = () => {
 							<li>Studies: Aerospace Engineering</li>
 							<li>Windsurfing level: Intermediate</li>
 							<li>
-								Harry has been windsurfing on and off since he
-								was about 12 but only since starting at uni has
-								he made it into a weekly thing. And this year he
-								wants to push his ability even further into a
-								bit of racing. Also Harry loves any excuse for a
-								good night out.
+								Joe started windsurfing when he was younger but
+								only properly got back into it 2 years ago. He
+								is now trying to constantly improve his skills
+								while at the same to provide as many laughs to
+								the club at both sessions and events as humanly
+								possible.
 							</li>
 						</ul>
 					</div>
