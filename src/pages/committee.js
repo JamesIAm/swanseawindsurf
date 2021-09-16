@@ -27,7 +27,7 @@ const Committee = () => {
 						{/*<!--Harry-->*/}
 						<div className="row">
 							<img
-								src={joe}
+								src={harry}
 								alt="Photo of the captain"
 								className="img-fluid"
 							/>
@@ -44,7 +44,7 @@ const Committee = () => {
 							<li>
 								
 								Harry has been windsurfing on and off since he
-								was about 12 and takes on the role of President. 
+								was about 12 and this year takes on the role of President. 
 								And he wants to push the club as far as he can.
 								Also Harry loves any excuse for a
 								good night out and he cant wait to see all the 
@@ -83,7 +83,7 @@ const Committee = () => {
 				</div>
 				<div className="row">
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Owen-->*/}
+						{/*<!--Charles-->*/}
 						<div className="row">
 							<img
 								src={owen}
@@ -92,22 +92,19 @@ const Committee = () => {
 							/>
 							<div className="col-6 name_box">
 								<div className="name_text left_text">
-									<h3>Owen Lawrence</h3>
+									<h3>Charles Lycett</h3>
 									<h4>Treasurer</h4>
 								</div>
 							</div>
 						</div>
 						<ul>
-							<li>Studies: Computer Science</li>
-							<li>Windsurfing level: Improver</li>
+							<li>Studies: Aerospace Engineering</li>
+							<li>Windsurfing level: Advanced</li>
 							<li>
-								Owen began windsurfing when he joined the
-								windsurfing club last year, and has been
-								steadily honing his skills since. A few trips to
-								the core windsurfing events around the UK has
-								greatly boosted his performance in both
-								windsurfing and acting as sat-nav for the
-								journeys there and back.
+								Charles started at the club last year and 
+								loves being on the water. quickly earning the name 
+								silly fresher due to his antics on nights out and He is 
+								sure his maths skills will pay off with being treasure this year.
 							</li>
 						</ul>
 					</div>
@@ -116,7 +113,7 @@ const Committee = () => {
 						<div className="row">
 							<div className="col-6 name_box">
 								<div className="name_text right_text">
-									<h3>Max Graham</h3>
+									<h3>Sophie Pearce</h3>
 									<h4>Secretary</h4>
 								</div>
 							</div>
@@ -127,8 +124,8 @@ const Committee = () => {
 							/>
 						</div>
 						<ul>
-							<li>Studies: Mathematics</li>
-							<li>Windsurfing level: Advanced</li>
+							<li>Studies: Human Geography</li>
+							<li>Windsurfing level: Intermediate</li>
 							<li>
 								Dark horse of the year 2018/19, Max thrilled us
 								all with his antics on our last trip to
@@ -163,9 +160,9 @@ const Committee = () => {
 							<li>Studies: Criminology and Criminal Justice</li>
 							<li>Windsurfing level: Intermediate</li>
 							<li>
-								Guy joined the club last year as a fresher with
+								Guy joined the club in 2019 with
 								some experience windsurfing but has improved a
-								lot since last September. He is well versed in
+								lot since he joined in his first year. He is well versed in
 								the art of a good night out and is excited to
 								organise fun socials this year that everyone can
 								enjoy, as well as diving in to everything else
@@ -178,8 +175,8 @@ const Committee = () => {
 						<div className="row">
 							<div className="col-6 name_box">
 								<div className="name_text right_text">
-									<h3>Iva Fristikova</h3>
-									<h4>Social Secretary</h4>
+									<h3>Kathryn Lock</h3>
+									<h4>Events Manager</h4>
 								</div>
 							</div>
 							<img
@@ -189,52 +186,24 @@ const Committee = () => {
 							/>
 						</div>
 						<ul>
-							<li>Studies: Modern languages</li>
+							<li>Studies: clinical psychology masters</li>
 							<li>
-								Windsurfing level: Former Intermediate (tnks
-								CO19)
+								Windsurfing level: Intermediate
 							</li>
 							<li>
-								Iva joined our club only last year as a beginner
-								in windsurfing, but together with her energetic
-								easygoing personality, Slavic blood and stamina,
-								and spectacular DIY costume-making skills she is
-								starring this year as a social sec, ready to
-								dive in to the windsurfing again and make every
-								night out worth it.
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--James-->*/}
-						<div className="row">
-							<img
-								src={james}
-								alt="Photo of the events manager"
-								className="img-fluid"
-							/>
-							<div className="col-6 name_box">
-								<div className="name_text left_text">
-									<h3>James Nahajski</h3>
-									<h4>Events Manager</h4>
-								</div>
-							</div>
-						</div>
-						<ul>
-							<li>Studies: Computer Science</li>
-							<li>Windsurfing Level: Advanced</li>
-							<li>
-								James is an evergreen fresher. He started
-								windsurfing when he joined the windsurfing club
-								here in Swansea and has improved massively in
-								his three years, making his way into the first
-								team and joining in with some of the wave trips.
+								Hi everyone, I’m Kathryn and I’m incredibly excited to 
+								start my fifth year as a member of Swansea Windsurfing Club! 
+								Having being a member of the club for so many years you’d assume
+								that I was a skilled windsurfer… however, this is not the case.
+								I love spending time on the water, 
+								but I am definitely a more seasoned party goer rather than sailor. 
+								This year I will be juggling my role of events manager with my clinical psychology masters.
+								You can expect me to organise an incredible wave event, be forever nagging you
+								all to purchase tickets for the other amazing SWA events and see me cutting shapes 
+								on the dance floor to some sweet 00’s tunes.💃💫
 							</li>
 						</ul>
 					</div>
-				</div>
 			</div>
 		</div>
 	);
