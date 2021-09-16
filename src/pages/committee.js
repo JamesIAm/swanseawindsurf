@@ -24,7 +24,7 @@ const Committee = () => {
 			<div className="deck">
 				<div className="row">
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Joe-->*/}
+						{/*<!--Harry-->*/}
 						<div className="row">
 							<img
 								src={joe}
@@ -39,8 +39,37 @@ const Committee = () => {
 							</div>
 						</div>
 						<ul>
-							<li>Studies: Material Engineering</li>
-							<li>Windsurfing Level: Intermediate</li>
+							<li>Studies: Aerospace Engineering</li>
+							<li>Windsurfing Level: Advanced</li>
+							<li>
+								
+								Harry has been windsurfing on and off since he
+								was about 12 and takes on the role of President. 
+								And he wants to push the club as far as he can.
+								Also Harry loves any excuse for a
+								good night out and he cant wait to see all the 
+								new faces and old out on wind street.
+							</li>
+						</ul>
+					</div>
+					<div className="col-md-6 col-sm-12 top_trump">
+						{/*<!--Joe-->*/}
+						<div className="row">
+							<div className="col-6 name_box">
+								<div className="name_text right_text">
+									<h3>Joe Cave</h3>
+									<h4>Vice President</h4>
+								</div>
+							</div>
+							<img
+								src={joe}
+								alt="Photo of the vice captain"
+								className="img-fluid"
+							/>
+						</div>
+						<ul>
+							<li>Studies: Materials Engineering</li>
+							<li>Windsurfing level: Intermediate</li>
 							<li>
 								Joe started windsurfing when he was younger but
 								only properly got back into it 2 years ago. He
@@ -48,34 +77,6 @@ const Committee = () => {
 								while at the same to provide as many laughs to
 								the club at both sessions and events as humanly
 								possible.
-							</li>
-						</ul>
-					</div>
-					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Harry-->*/}
-						<div className="row">
-							<div className="col-6 name_box">
-								<div className="name_text right_text">
-									<h3>Harry Porteous</h3>
-									<h4>Vice President</h4>
-								</div>
-							</div>
-							<img
-								src={harry}
-								alt="Photo of the vice captain"
-								className="img-fluid"
-							/>
-						</div>
-						<ul>
-							<li>Studies: Aerospace Engineering</li>
-							<li>Windsurfing level: Intermediate</li>
-							<li>
-								Harry has been windsurfing on and off since he
-								was about 12 but only since starting at uni has
-								he made it into a weekly thing. And this year he
-								wants to push his ability even further into a
-								bit of racing. Also Harry loves any excuse for a
-								good night out.
 							</li>
 						</ul>
 					</div>
