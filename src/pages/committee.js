@@ -122,12 +122,10 @@ const Committee = () => {
 							<li>Studies: Human Geography</li>
 							<li>Windsurfing level: Intermediate</li>
 							<li>
-								Dark horse of the year 2018/19, Max thrilled us all with his
-								antics on our last trip to Sardinia, with an innocent nap in a
-								neighbouring field resulting in some very concerned windsurfers.
-								He was part of our BUCS winning team in 2019 though, so more
-								than made up for it. Max is also a intermediate windsurf
-								instructor who has been windsurfing since he was 14.
+								Meet Sophie. This will be her third year in the Windsurf club and 
+								she is excited to welcome lots of new faces to our windsurfing community.
+								If she isn't out on the water then you will find her with either 
+								a cup of tea or a cocktail.
 							</li>
 						</ul>
 					</div>
