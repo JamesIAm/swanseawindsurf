@@ -7,7 +7,7 @@ import harry from "../images/committee/current/harry.jpg";
 import owen from "../images/committee/current/owen.jpg";
 import sophie from "../images/committee/current/sophie website photo.jpg";
 import guy from "../images/committee/current/guy.jpg";
-import Kathryn from "../images/committee/kathryn.jpg";
+import iva from "../images/committee/kathryn.jpg";
 import james from "../images/committee/current/james.jpg";
 
 const Committee = () => {
@@ -159,7 +159,7 @@ const Committee = () => {
 						</ul>
 					</div>
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Kathryn-->*/}
+						{/*<!--iva-->*/}
 						<div className="row">
 							<div className="col-6 name_box">
 								<div className="name_text right_text">
@@ -168,7 +168,7 @@ const Committee = () => {
 								</div>
 							</div>
 							<img
-								src={kathryn}
+								src={iva}
 								alt="Photo of the social secratary"
 								className="img-fluid"
 							/>
