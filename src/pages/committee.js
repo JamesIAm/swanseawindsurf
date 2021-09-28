@@ -5,7 +5,7 @@ import "../static/article.css";
 import joe from "../images/committee/current/joe.jpg";
 import harry from "../images/committee/current/harry.jpg";
 import owen from "../images/committee/current/owen.jpg";
-import max from "../images/committee/current/max.jpg";
+import sophie from "../images/committee/current/sophie website photo.jpg";
 import guy from "../images/committee/current/guy.jpg";
 import iva from "../images/committee/current/iva.jpg";
 import james from "../images/committee/current/james.jpg";
@@ -104,7 +104,7 @@ const Committee = () => {
 						</ul>
 					</div>
 					<div className="col-md-6 col-sm-12 top_trump">
-						{/*<!--Max-->*/}
+						{/*<!--sophie-->*/}
 						<div className="row">
 							<div className="col-6 name_box">
 								<div className="name_text right_text">
@@ -113,7 +113,7 @@ const Committee = () => {
 								</div>
 							</div>
 							<img
-								src={max}
+								src={sophie}
 								alt="Photo of the secratary"
 								className="img-fluid"
 							/>
